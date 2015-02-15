@@ -103,14 +103,17 @@ def save_report(request):
     liste_data = request.body.split("&")
     for i in liste_data:
         response_data[i.split("=")[0]] = i.split("=")[1]
-    if response_data['text'] and response_data['text'] != "" :
-        message = response_data['text'].split("*")
-        if len(message) > 3:
-            rapport = Raport(montant=int(message[3]), lampes_vendues=int(message[1]), lampes_rechargees=int(message[2]))
-            rapport.save()
-            return {'Ok': True}
+    if response_data['text']  :
+        if response_data['text'] != "":
+            message = response_data['text'].split("%2A")
+            if len(message) > 3:
+                rapport = Raport(montant=int(message[3]), lampes_vendues=int(message[1]), lampes_rechargees=int(message[2]))
+                rapport.save()
+                return {'Ok': True}
+            else:
+                return {'Text incorect': True}
         else:
-            return {'Text incorect': True}
+            return {'Text empty': True}
     else:
         return {'Text incorect': True}
 
