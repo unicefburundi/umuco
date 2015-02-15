@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from injira.views import ContactList, ContactDetail, save_embed, piechart
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 urlpatterns = patterns('',
@@ -17,3 +18,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', save_embed),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+#In development, static files should be served from app static directories
+urlpatterns += staticfiles_urlpatterns()
