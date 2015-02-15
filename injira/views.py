@@ -10,6 +10,7 @@ import json
 from rest_framework.permissions import  AllowAny
 from rest_framework.decorators import permission_classes
 from django.views.decorators.csrf import csrf_exempt
+from jsonview.decorators import json_view
 
 class ContactMixin(object):
     """
@@ -63,11 +64,14 @@ def save_contacts(request):
 
 
 @csrf_exempt
-@permission_classes((AllowAny, ))
+@json_view
 def save_embed(request):
     # permission_classes = (AllowAny,)
     response_data = {}
     if request.method == "POST":
+        import ipdb; ipdb.set_trace()
+        response_data = {}
+        liste_data = request.body.split("&")
         # form = ContactForm(request.POST)
         # if form.is_valid():
         #     response_data['forme'] = 'irivalide'
@@ -82,7 +86,9 @@ def save_embed(request):
         #     return HttpResponseBadRequest(json.dumps(form.errors),
         #         content_type="application/json")
         #     response_data['erreurs forms'] = 'oui'
-        return HttpResponse("%s %s" % (request.method, request.body))
+        for i in liste_data:
+            response_data[i.split("=")[0]] = i.split("=")[1]
+        return response_data
     else:
         # form = ContactEmbeded()
         response_data['siPost'] = 'oui'
