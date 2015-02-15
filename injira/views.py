@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from injira.models import Contact, Raport
-from injira.serializers import ContactSerializer, UserSerializer
+from injira.serializers import ContactSerializer, UserSerializer, RaportSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from django.contrib.auth.models import User
 from rest_framework import viewsets, serializers
@@ -9,6 +9,7 @@ from injira.forms import ContactForm
 import json
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
+from django.db.models import Count
 
 class ContactMixin(object):
     """
@@ -66,31 +67,14 @@ def save_contacts(request):
 @csrf_exempt
 @json_view
 def save_embed(request):
-    # permission_classes = (AllowAny,)
     response_data = {}
     if request.method == "POST":
-        # import ipdb; ipdb.set_trace()
         response_data = {}
         liste_data = request.body.split("&")
-        # form = ContactForm(request.POST)
-        # if form.is_valid():
-        #     response_data['forme'] = 'irivalide'
-        #     r = form.cleaned_data['values']
-        #     jsons = r.json()
-        #     serializer = ContactSerializer(data=jsons)
-        #     if serializer.is_valid():
-        #         response_data['serializer'] = 'yashoboye kuba serialized'
-        #         embed = serializer.save()
-        #         return HttpResponse(json.dumps(embed), content_type="application/json")
-        # else:
-        #     return HttpResponseBadRequest(json.dumps(form.errors),
-        #         content_type="application/json")
-        #     response_data['erreurs forms'] = 'oui'
         for i in liste_data:
             response_data[i.split("=")[0]] = i.split("=")[1]
         return response_data
     else:
-        # form = ContactEmbeded()
         response_data['siPost'] = 'oui'
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")
@@ -98,7 +82,6 @@ def save_embed(request):
 @csrf_exempt
 @json_view
 def save_report(request):
-    # import ipdb; ipdb.set_trace()
     response_data = {}
     liste_data = request.body.split("&")
     for i in liste_data:
@@ -117,3 +100,14 @@ def save_report(request):
     else:
         return {'Text incorect': True}
 
+def piechart(request):
+    responses_pie =  Raport.objects.values("montant").annotate(Count("id"))
+    # import ipdb; ipdb.set_trace()
+    res = []
+    for cat in responses_pie:
+        res.append([
+            cat["montant"],
+            cat["id__count"],
+            ])
+    queryset = Raport.objects.all()
+    return render(request, 'pivotable.html', {'responses_pie_json': queryset.values('montant', 'lampes_vendues', 'lampes_rechargees')})
