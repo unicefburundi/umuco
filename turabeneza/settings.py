@@ -95,3 +95,5 @@ MEDIA_ROOT = BASE_DIR + '/media/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
 )
+
+APPEND_SLASH=False
