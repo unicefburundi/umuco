@@ -1,14 +1,12 @@
 from django.shortcuts import render
-from injira.models import Contact
+from injira.models import Contact, Raport
 from injira.serializers import ContactSerializer, UserSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from django.contrib.auth.models import User
 from rest_framework import viewsets, serializers
-from django.http import HttpResponse,  HttpResponseBadRequest
+from django.http import HttpResponse
 from injira.forms import ContactForm
 import json
-from rest_framework.permissions import  AllowAny
-from rest_framework.decorators import permission_classes
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 
@@ -25,12 +23,14 @@ class ContactList(ContactMixin, ListCreateAPIView):
     Return a list of all the contacts, or
     create new ones
     """
-
+    @json_view
     def pre_save(request):
-        valeurs = ''
         if request.method == 'POST':
-            valeurs = request.POST[0]
-            print valeurs
+            response_data = {}
+            liste_data = request.body.split("&")
+            for i in liste_data:
+                response_data[i.split("=")[0]] = i.split("=")[1]
+            return response_data
 
 class ContactDetail(ContactMixin, RetrieveUpdateDestroyAPIView):
     """
@@ -94,3 +94,23 @@ def save_embed(request):
         response_data['siPost'] = 'oui'
 
     return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+@csrf_exempt
+@json_view
+def save_report(request):
+    # import ipdb; ipdb.set_trace()
+    response_data = {}
+    liste_data = request.body.split("&")
+    for i in liste_data:
+        response_data[i.split("=")[0]] = i.split("=")[1]
+    if response_data['text'] and response_data['text'] != "" :
+        message = response_data['text'].split("*")
+        if len(message) > 3:
+            rapport = Raport(montant=int(message[3]), lampes_vendues=int(message[1]), lampes_rechargees=int(message[2]))
+            rapport.save()
+            return {'Ok': True}
+        else:
+            return {'Text incorect': True}
+    else:
+        return {'Text incorect': True}
+
