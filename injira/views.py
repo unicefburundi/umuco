@@ -69,7 +69,7 @@ def save_embed(request):
     # permission_classes = (AllowAny,)
     response_data = {}
     if request.method == "POST":
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         response_data = {}
         liste_data = request.body.split("&")
         # form = ContactForm(request.POST)
