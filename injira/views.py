@@ -83,13 +83,14 @@ def save_embed(request):
 @json_view
 def save_report(request):
     response_data = {}
+    # import ipdb; ipdb.set_trace()
     liste_data = request.body.split("&")
     for i in liste_data:
         response_data[i.split("=")[0]] = i.split("=")[1]
     if response_data['text']  :
         if response_data['text'] != "":
             message = response_data['text'].split("%2A")
-            if len(message) > 3:
+            if len(message) >= 3:
                 rapport = Raport(montant=int(message[3]), lampes_vendues=int(message[1]), lampes_rechargees=int(message[2]), groupe=message[0])
                 rapport.save()
                 return {'Ok': True}
@@ -103,11 +104,7 @@ def save_report(request):
 def piechart(request):
     responses_pie =  Raport.objects.values('montant', 'lampes_vendues', 'lampes_rechargees', 'groupe').annotate(Count("id"))
     # import ipdb; ipdb.set_trace()
-    res = []
-    for cat in responses_pie:
-        res.append([
-            cat["montant"],
-            cat["id__count"],
-            ])
-    # queryset = Raport.objects.all()
+    for i,k in enumerate(responses_pie):
+        responses_pie[i]['groupe'] = str(responses_pie[i]['groupe'])
+
     return render(request, 'pivotable.html', {'responses_pie_json': responses_pie})
