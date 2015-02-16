@@ -89,8 +89,8 @@ def save_report(request):
     if response_data['text']  :
         if response_data['text'] != "":
             message = response_data['text'].split("%2A")
-            if len(message) > 3:
-                rapport = Raport(montant=int(message[3]), lampes_vendues=int(message[1]), lampes_rechargees=int(message[2]))
+            if len(message) > 2:
+                rapport = Raport(montant=int(message[2]), lampes_vendues=int(message[0]), lampes_rechargees=int(message[1]))
                 rapport.save()
                 return {'Ok': True}
             else:
