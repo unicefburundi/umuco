@@ -17,6 +17,7 @@ class Raport( models.Model):
     lampes_rechargees = models.IntegerField(default=0)
     lampes_vendues = models.IntegerField(default=0)
     montant = models.IntegerField(default=0)
+    groupe = models.CharField( max_length = 60 , blank=True , default="Anonymous group" )
 
     def __unicode__(self):
         return u'%s %s %s %s' % (self.date , self.lampes_vendues, self.lampes_rechargees, self.montant)

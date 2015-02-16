@@ -19,4 +19,4 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class RaportSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Raport
-        fields = ('lampes_rechargees', 'lampes_vendues', 'montant')
+        fields = ('lampes_rechargees', 'lampes_vendues', 'montant','groupe')

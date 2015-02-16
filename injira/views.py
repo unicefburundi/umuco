@@ -89,8 +89,8 @@ def save_report(request):
     if response_data['text']  :
         if response_data['text'] != "":
             message = response_data['text'].split("%2A")
-            if len(message) > 2:
-                rapport = Raport(montant=int(message[2]), lampes_vendues=int(message[0]), lampes_rechargees=int(message[1]))
+            if len(message) > 3:
+                rapport = Raport(montant=int(message[3]), lampes_vendues=int(message[1]), lampes_rechargees=int(message[2]), groupe=message[0])
                 rapport.save()
                 return {'Ok': True}
             else:
@@ -101,7 +101,7 @@ def save_report(request):
         return {'Text incorect': True}
 
 def piechart(request):
-    responses_pie =  Raport.objects.values("montant").annotate(Count("id"))
+    responses_pie =  Raport.objects.values('montant', 'lampes_vendues', 'lampes_rechargees', 'groupe').annotate(Count("id"))
     # import ipdb; ipdb.set_trace()
     res = []
     for cat in responses_pie:
@@ -109,5 +109,5 @@ def piechart(request):
             cat["montant"],
             cat["id__count"],
             ])
-    queryset = Raport.objects.all()
-    return render(request, 'pivotable.html', {'responses_pie_json': queryset.values('montant', 'lampes_vendues', 'lampes_rechargees')})
+    # queryset = Raport.objects.all()
+    return render(request, 'pivotable.html', {'responses_pie_json': responses_pie})
