@@ -97,21 +97,6 @@ TEMPLATE_DIRS = (
 
 APPEND_SLASH=False
 
-# List of finder classes that know how to find static files in
-# various locations.
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
-    'djangobower.finders.BowerFinder',
-)
-
-BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, "static", "bower_components")
-BOWER_INSTALLED_APPS = (
-    'd3#3.3.6',
-    'nvd3#1.1.12-beta',
-)
-
 # Django extensions
 try:
     import django_extensions
