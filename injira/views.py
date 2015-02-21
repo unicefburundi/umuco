@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from injira.models import Contact, Raport
 from injira.serializers import ContactSerializer, UserSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
@@ -102,10 +102,29 @@ def save_report(request):
     else:
         return {'Text incorect': True}
 
-def piechart(request):
+def overview(request):
     responses_pie =  Raport.objects.values('montant', 'lampes_vendues', 'lampes_rechargees', 'groupe').annotate(Count("id"))
     # import ipdb; ipdb.set_trace()
     for i,k in enumerate(responses_pie):
         responses_pie[i]['groupe'] = str(responses_pie[i]['groupe'])
 
     return render(request, 'pivotable.html', {'responses_pie_json': responses_pie})
+
+def nvdchart(request):
+    xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi", "Lemon"]
+    ydata = [52, 48, 160, 94, 75, 71, 490, 82, 46, 17]
+    chartdata = {'x': xdata, 'y': ydata}
+    charttype = "pieChart"
+    chartcontainer = 'piechart_container'
+    data = {
+        'charttype': charttype,
+        'chartdata': chartdata,
+        'chartcontainer': chartcontainer,
+        'extra': {
+            'x_is_date': False,
+            'x_axis_format': '',
+            'tag_script_js': True,
+            'jquery_on_ready': False,
+        }
+    }
+    return render_to_response('pivotable.html', data )

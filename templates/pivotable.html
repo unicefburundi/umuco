@@ -1,3 +1,4 @@
+{% load nvd3_tags %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,6 +23,8 @@
         <style>
             * {font-family: Verdana;}
         </style>
+        {% include_chart_jscss %}
+        {% load_chart charttype chartdata chartcontainer extra %}
         <script src="{{ STATIC_URL }}todc-bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -70,6 +73,8 @@
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h1 class="page-header">Dashboard</h1>
                 <div id="output" style="margin: 10px;" lass="table-responsive"></div>
+                <h1>Fruits vs Calories</h1>
+                {% include_container chartcontainer 400 600 %}
             </div>
             </div>
         </div>
