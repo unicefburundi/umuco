@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from injira.models import Contact, Raport
-from injira.serializers import ContactSerializer, UserSerializer, RaportSerializer
+from injira.serializers import ContactSerializer, UserSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from django.contrib.auth.models import User
 from rest_framework import viewsets, serializers
 from django.http import HttpResponse
 from injira.forms import ContactForm
 import json
+import urllib
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from django.db.models import Count
