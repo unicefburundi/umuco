@@ -1,12 +1,17 @@
 -f file:///home/stock/.pip-wheelhouse
 Django==1.7
 Markdown==2.5.2
+MarkupSafe==0.23
+Unidecode==0.04.17
 argparse==1.2.1
+django-bower==5.0.2
 django-filter==0.9.2
 django-jsonview==0.4.3
 djangorestframework==3.0.5
 ipdb==0.8
 ipython==2.4.1
+python-slugify==0.0.9
 pytz==2014.10
 requests==2.5.1
+six==1.9.0
 wsgiref==0.1.2
