@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 from injira.models import Contact, Raport
 from injira.serializers import ContactSerializer, UserSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
@@ -7,10 +7,10 @@ from rest_framework import viewsets, serializers
 from django.http import HttpResponse
 from injira.forms import ContactForm
 import json
-import urllib
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from django.db.models import Count
+
 
 class ContactMixin(object):
     """
@@ -39,12 +39,6 @@ class ContactDetail(ContactMixin, RetrieveUpdateDestroyAPIView):
     Return a specific contact, update it, or delete it.
     """
     pass
-
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'is_staff')
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -110,21 +104,12 @@ def overview(request):
 
     return render(request, 'pivotable.html', {'responses_pie_json': responses_pie})
 
-def nvdchart(request):
-    xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi", "Lemon"]
-    ydata = [52, 48, 160, 94, 75, 71, 490, 82, 46, 17]
-    chartdata = {'x': xdata, 'y': ydata}
-    charttype = "pieChart"
-    chartcontainer = 'piechart_container'
-    data = {
-        'charttype': charttype,
-        'chartdata': chartdata,
-        'chartcontainer': chartcontainer,
-        'extra': {
-            'x_is_date': False,
-            'x_axis_format': '',
-            'tag_script_js': True,
-            'jquery_on_ready': False,
-        }
-    }
-    return render_to_response('pivotable.html', data )
+def montant_pertime(request):
+    data = Raport.objects.values('montant', 'date')
+    timess = []
+    for i in data:
+        timess.append(i['montant'])
+        timess.append(str(i['date']))
+        i['date'] = str(i['date'])
+    return render(request, 'turabe.html', {'data' : data, 'timess':timess})
+

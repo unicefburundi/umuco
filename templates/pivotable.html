@@ -1,16 +1,24 @@
-{% load nvd3_tags %}
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Basic Statistics</title>
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pivottable/1.3.0/pivot.min.css">
+        <title>Umuco - {% block page_title %}
+            Statistics
+        {% endblock page_title %} </title>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script type="text/javascript"  src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script type="text/javascript" src="http://code.jquery.com/ui/1.10.0/jquery-ui.min.js"></script>
+
+        {% block javascripts %}
+        <!-- Pivotable js -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/1.3.0/pivot.min.js"></script>
+        {% endblock javascripts %}
+        {% block stylesheets %}
+        <!-- Pivotable Css -->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pivottable/1.3.0/pivot.min.css">
+        {% endblock stylesheets %}
 
         <!-- Bootstrap core CSS -->
         <link href="{{ STATIC_URL }}todc-bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -23,8 +31,6 @@
         <style>
             * {font-family: Verdana;}
         </style>
-        {% include_chart_jscss %}
-        {% load_chart charttype chartdata chartcontainer extra %}
         <script src="{{ STATIC_URL }}todc-bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -61,8 +67,8 @@
             <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Reports</a></li>
+            <li ><a href="/overview/">Overview <span class="sr-only"></span></a></li>
+            <li><a href="/montant/">Reports</a></li>
             <li><a href="#">Analytics</a></li>
             <li><a href="#">Export</a></li>
           </ul>
@@ -70,12 +76,12 @@
             <li><a href="">More navigation</a></li>
           </ul>
         </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            {% block charts %}
+              <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h1 class="page-header">Dashboard</h1>
                 <div id="output" style="margin: 10px;" lass="table-responsive"></div>
-                <h1>Fruits vs Calories</h1>
-                {% include_container chartcontainer 400 600 %}
             </div>
+            {% endblock charts %}
             </div>
         </div>
         <script type="text/javascript">
