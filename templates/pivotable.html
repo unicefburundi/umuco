@@ -8,8 +8,8 @@
             Statistics
         {% endblock page_title %} </title>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script type="text/javascript"  src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.0/jquery-ui.min.js"></script>
+        <script type="text/javascript"  src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.10.0/jquery-ui.min.js"></script>
 
         {% block javascripts %}
         <!-- Pivotable js -->
@@ -86,7 +86,7 @@
         </div>
         <script type="text/javascript">
         $(function() {
-             data = {{responses_pie_json|safe}},
+            var data = {{responses_pie_json|safe}} ;
             $("#output").pivotUI(data)
         });
         </script>
