@@ -3,7 +3,7 @@ from injira.models import Contact, Raport
 from injira.serializers import ContactSerializer, UserSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from django.contrib.auth.models import User
-from rest_framework import viewsets, serializers
+from rest_framework import viewsets
 from django.http import HttpResponse
 from injira.forms import ContactForm
 import json
@@ -102,7 +102,7 @@ def overview(request):
     for i,k in enumerate(responses_pie):
         responses_pie[i]['groupe'] = str(responses_pie[i]['groupe'])
 
-    return render(request, 'pivotable.html', {'responses_pie_json': responses_pie})
+    return render(request, 'muco_layout.html', {'responses_pie_json': responses_pie})
 
 def montant_pertime(request):
     data = Raport.objects.values('montant', 'date')
