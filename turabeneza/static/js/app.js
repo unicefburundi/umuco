@@ -51,3 +51,7 @@ $(function () {
             }]
     });
 });
+$(function() {
+            var data = {{responses_pie_json|safe}} ;
+            $("#output").pivotUI(data)
+        });

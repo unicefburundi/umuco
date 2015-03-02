@@ -60,7 +60,6 @@ def save_contacts(request):
 
 
 @csrf_exempt
-@json_view
 def save_embed(request):
     response_data = {}
     if request.method == "POST":
@@ -72,7 +71,7 @@ def save_embed(request):
     else:
         response_data['siPost'] = 'oui'
 
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
+    return render(request, "muco_layout.html")
 
 @csrf_exempt
 @json_view
