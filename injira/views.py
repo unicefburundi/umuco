@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from django.db.models import Count
 from injira.utils import queryset_to_workbook
+from injira.utils import ExcelResponse
 
 
 class ContactMixin(object):
@@ -127,8 +128,6 @@ def download_reports(request):
         'lampes_rechargees',
         'lampes_vendues',
         'montant')
-    workbook = queryset_to_workbook(queryset, columns)
-    response = HttpResponse(mimetype='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="export.xls"'
-    workbook.save(response)
+
+    response = ExcelResponse(queryset, headers=columns)
     return response
