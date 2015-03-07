@@ -121,10 +121,11 @@ def getContacts(request):
 
 
 def download_reports(request):
+    # import ipdb; ipdb.set_trace()
     queryset = Raport.objects.all()
     columns = (
         'groupe',
-        'date_updated',
+        'date',
         'lampes_rechargees',
         'lampes_vendues',
         'montant')

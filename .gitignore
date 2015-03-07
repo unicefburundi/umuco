@@ -2,3 +2,5 @@
 *.py[co]
 localsettings.py
 *.sublime-*
+local_settings.py
+
