@@ -9,7 +9,6 @@ from injira.forms import ContactForm
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from django.db.models import Count
-from injira.utils import queryset_to_workbook
 from injira.utils import ExcelResponse
 
 
