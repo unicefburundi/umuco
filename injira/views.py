@@ -6,10 +6,10 @@ from django.contrib.auth.models import User
 from rest_framework import viewsets
 from django.http import HttpResponse
 from injira.forms import ContactForm
-import json
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from django.db.models import Count
+from injira.utils import queryset_to_workbook
 
 
 class ContactMixin(object):
@@ -112,3 +112,23 @@ def montant_pertime(request):
         i['date'] = str(i['date'])
     return render(request, 'turabe.html', {'data' : data, 'timess':timess})
 
+@csrf_exempt
+@json_view
+def getContacts(request):
+    data =  Raport.objects.values('montant')
+    return data
+
+
+def download_reports(request):
+    queryset = Raport.objects.all()
+    columns = (
+        'groupe',
+        'date_updated',
+        'lampes_rechargees',
+        'lampes_vendues',
+        'montant')
+    workbook = queryset_to_workbook(queryset, columns)
+    response = HttpResponse(mimetype='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="export.xls"'
+    workbook.save(response)
+    return response

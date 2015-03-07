@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from injira.views import ContactList, ContactDetail, save_embed, overview, montant_pertime
+from injira.views import ContactList, ContactDetail, save_embed, overview, montant_pertime, download_reports
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^injira/', include('injira.urls', namespace='injira_yo')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^export/$', download_reports, name='download_reports'),
     url(r'^$', save_embed),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

@@ -5,41 +5,41 @@ var myapp = angular.module('myapp', ["highcharts-ng"]);
 myapp.controller('myctrl', function ($scope) {
 
   $scope.chartTypes = [
-    {"id": "line", "title": "Line"},
-    {"id": "spline", "title": "Smooth line"},
-    {"id": "area", "title": "Area"},
-    {"id": "areaspline", "title": "Smooth area"},
-    {"id": "column", "title": "Column"},
-    {"id": "bar", "title": "Bar"},
-    {"id": "pie", "title": "Pie"},
-    {"id": "scatter", "title": "Scatter"}
+  {"id": "line", "title": "Line"},
+  {"id": "spline", "title": "Smooth line"},
+  {"id": "area", "title": "Area"},
+  {"id": "areaspline", "title": "Smooth area"},
+  {"id": "column", "title": "Column"},
+  {"id": "bar", "title": "Bar"},
+  {"id": "pie", "title": "Pie"},
+  {"id": "scatter", "title": "Scatter"}
   ];
 
   $scope.dashStyles = [
-    {"id": "Solid", "title": "Solid"},
-    {"id": "ShortDash", "title": "ShortDash"},
-    {"id": "ShortDot", "title": "ShortDot"},
-    {"id": "ShortDashDot", "title": "ShortDashDot"},
-    {"id": "ShortDashDotDot", "title": "ShortDashDotDot"},
-    {"id": "Dot", "title": "Dot"},
-    {"id": "Dash", "title": "Dash"},
-    {"id": "LongDash", "title": "LongDash"},
-    {"id": "DashDot", "title": "DashDot"},
-    {"id": "LongDashDot", "title": "LongDashDot"},
-    {"id": "LongDashDotDot", "title": "LongDashDotDot"}
+  {"id": "Solid", "title": "Solid"},
+  {"id": "ShortDash", "title": "ShortDash"},
+  {"id": "ShortDot", "title": "ShortDot"},
+  {"id": "ShortDashDot", "title": "ShortDashDot"},
+  {"id": "ShortDashDotDot", "title": "ShortDashDotDot"},
+  {"id": "Dot", "title": "Dot"},
+  {"id": "Dash", "title": "Dash"},
+  {"id": "LongDash", "title": "LongDash"},
+  {"id": "DashDot", "title": "DashDot"},
+  {"id": "LongDashDot", "title": "LongDashDot"},
+  {"id": "LongDashDotDot", "title": "LongDashDotDot"}
   ];
 
   $scope.chartSeries = [
-    {"name": "Some data 1", "data": [1, 2, 4, 7, 3]},
-    {"name": "Some data 3", "data": [3, 1, null, 5, 2], connectNulls: true},
-    {"name": "Some data 2", "data": [5, 2, 2, 3, 5], type: "column"},
-    {"name": "My Super Column", "data": [1, 1, 2, 3, 2], type: "column"}
+  {"name": "Some data 1", "data": [1, 2, 4, 7, 3]},
+  {"name": "Some data 3", "data": [3, 1, null, 5, 2], connectNulls: true},
+  {"name": "Some data 2", "data": [5, 2, 2, 3, 5], type: "column"}
+
   ];
 
   $scope.chartStack = [
-    {"id": '', "title": "No"},
-    {"id": "normal", "title": "Normal"},
-    {"id": "percent", "title": "Percent"}
+  {"id": '', "title": "No"},
+  {"id": "normal", "title": "Normal"},
+  {"id": "percent", "title": "Percent"}
   ];
 
   $scope.addPoints = function () {
@@ -75,14 +75,25 @@ myapp.controller('myctrl', function ($scope) {
 
   $scope.replaceAllSeries = function () {
     var data = [
-      { name: "first", data: [10] },
-      { name: "second", data: [3] },
-      { name: "third", data: [13] }
+    { name: "first", data: [10] },
+    { name: "second", data: [3] },
+    { name: "third", data: [13] }
     ];
     $scope.chartConfig.series = data;
   };
 
-  $scope.chartConfig = {
+function MikesAngularController($scope, $http) {
+  $scope.listOfCustomers = null;
+  $http.get('http://127.0.0.1:8000/injira/utore/')
+  .success(function (data) {
+   $scope.chartSeries  += data;
+ })
+  .error(function (data, status, headers, config) {
+             //  Do some error handling here
+           });
+};
+
+$scope.chartConfig = {
     options: {
       chart: {
         type: 'areaspline'
@@ -110,3 +121,4 @@ myapp.controller('myctrl', function ($scope) {
 
 
 });
+
