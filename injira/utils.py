@@ -76,7 +76,7 @@ def queryset_to_workbook(queryset, columns, header_style=None,
     return workbook
 
 class ExcelResponse(HttpResponse):
-    def __init__(self, data, output_name='excel_data', headers=None,
+    def __init__(self, data, output_name='Raport_Muco', headers=None,
                  force_csv=False, encoding='utf8', font=''):
 
         # Make sure we've got the right type of data to work with
@@ -148,5 +148,5 @@ class ExcelResponse(HttpResponse):
         output.seek(0)
         super(ExcelResponse, self).__init__(content=output.getvalue(),
                                             content_type=content_type)
-        self['Content-Disposition'] = 'attachment;filename="%s.%s"' % \
-            (output_name.replace('"', '\"'), file_ext)
+        self['Content-Disposition'] = 'attachment;filename="%s.%s.%s"' % \
+            (output_name.replace('"', '\"'), datetime.datetime.now().strftime("%d %b %Y  %p"), file_ext )

@@ -106,7 +106,7 @@ $scope.chartConfig = {
     },
     series: $scope.chartSeries,
     title: {
-      text: 'Hello'
+      text: 'Experimental data'
     },
     credits: {
       enabled: true
