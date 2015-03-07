@@ -5,6 +5,7 @@ from django.forms.forms import pretty_name
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.query import QuerySet, ValuesQuerySet
 from django.http import HttpResponse
+import csv
 
 HEADER_STYLE = xlwt.easyxf('font: bold on')
 DEFAULT_STYLE = xlwt.easyxf()
@@ -97,54 +98,18 @@ class ExcelResponse(HttpResponse):
 
         import StringIO
         output = StringIO.StringIO()
-        # Excel has a limit on number of rows; if we have more than that, make a csv
-        use_xls = False
-        if len(data) <= 65536 and force_csv is not True:
-            try:
-                import xlwt
-            except ImportError:
-                # xlwt doesn't exist; fall back to csv
-                pass
-            else:
-                use_xls = True
-        if use_xls:
-            book = xlwt.Workbook(encoding=encoding)
-            sheet = book.add_sheet('Sheet 1')
-            styles = {'datetime': xlwt.easyxf(num_format_str='yyyy-mm-dd hh:mm:ss'),
-                      'date': xlwt.easyxf(num_format_str='yyyy-mm-dd'),
-                      'time': xlwt.easyxf(num_format_str='hh:mm:ss'),
-                      'font': xlwt.easyxf('%s %s' % (u'font:', font)),
-                      'default': xlwt.Style.default_style}
-
-            for rowx, row in enumerate(data):
-                for colx, value in enumerate(row):
-                    if isinstance(value, datetime.datetime):
-                        value = value.utcnow()
-                        cell_style = styles['datetime']
-                    elif isinstance(value, datetime.date):
-                        cell_style = styles['date']
-                    elif isinstance(value, datetime.time):
-                        cell_style = styles['time']
-                    elif font:
-                        cell_style = styles['font']
-                    else:
-                        cell_style = styles['default']
-                    sheet.write(rowx, colx, value, style=cell_style)
-            book.save(output)
-            content_type = 'application/vnd.ms-excel'
-            file_ext = 'xls'
-        else:
-            for row in data:
-                out_row = []
-                for value in row:
-                    if not isinstance(value, basestring):
-                        value = unicode(value)
-                    value = value.encode(encoding)
-                    out_row.append(value.replace('"', '""'))
-                output.write('"%s"\n' %
-                             '","'.join(out_row))
-            content_type = 'text/csv'
-            file_ext = 'csv'
+        #  make a csv
+        # csvwriter = csv.DictWriter(output, fieldnames = data[0] ,  delimiter = ',')
+        # csvwriter.writeheader()
+        # for rowx, row in enumerate(data):
+        #     for colx, value in enumerate(row):
+        #         if isinstance(value, datetime.datetime) or isinstance(value, datetime.time) or isinstance(value, datetime.date) :
+        #             value = value.utcnow()
+        #     csvwriter.writerow([rowx, row])
+        writer = csv.writer(output)
+        writer.writerows(data)
+        content_type = 'text/csv'
+        file_ext = 'csv'
         output.seek(0)
         super(ExcelResponse, self).__init__(content=output.getvalue(),
                                             content_type=content_type)
