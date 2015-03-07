@@ -125,7 +125,7 @@ def download_reports(request):
     queryset = Raport.objects.all()
     columns = (
         'groupe',
-        'date',
+        'date_updated',
         'lampes_rechargees',
         'lampes_vendues',
         'montant')

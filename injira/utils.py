@@ -6,81 +6,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.query import QuerySet, ValuesQuerySet
 from django.http import HttpResponse
 import csv
-
-HEADER_STYLE = xlwt.easyxf('font: bold on')
-DEFAULT_STYLE = xlwt.easyxf()
-CELL_STYLE_MAP = (
-    (datetime.date, xlwt.easyxf(num_format_str='DD/MM/YYYY')),
-    (datetime.time, xlwt.easyxf(num_format_str='HH:MM')),
-    (datetime.datetime, xlwt.easyxf(num_format_str='DD/MM/YYYY HH:MM')),
-    (bool,          xlwt.easyxf(num_format_str='BOOLEAN')),
-)
-
-def multi_getattr(obj, attr, default=None):
-    attributes = attr.split(".")
-    for i in attributes:
-        try:
-            obj = getattr(obj, i)
-        except AttributeError:
-            if default:
-                return default
-            else:
-                raise
-    return obj
-
-def get_column_head(obj, name):
-    name = name.rsplit('.', 1)[-1]
-    return pretty_name(name)
-
-def get_column_cell(obj, name):
-    try:
-        attr = multi_getattr(obj, name)
-    except ObjectDoesNotExist:
-        return None
-    if hasattr(attr, '_meta'):
-        # A Django Model (related object)
-        return unicode(attr).strip()
-    elif hasattr(attr, 'all'):
-        # A Django queryset (ManyRelatedManager)
-        return ', '.join(unicode(x).strip() for x in attr.all())
-    return attr
-
-def queryset_to_workbook(queryset, columns, header_style=None,
-                         default_style=None, cell_style_map=None):
-    import ipdb; ipdb.set_trace()
-    workbook = xlwt.Workbook()
-    report_date = datetime.datetime.utcnow().replace(tzinfo=utc)
-    sheet_name = 'Export {0}'.format(report_date.strftime('%Y-%m-%d'))
-    sheet = workbook.add_sheet(sheet_name)
-
-    if not header_style:
-        header_style = HEADER_STYLE
-    if not default_style:
-        default_style = DEFAULT_STYLE
-    if not cell_style_map:
-        cell_style_map = CELL_STYLE_MAP
-
-    obj = queryset.first()
-    for y, column in enumerate(columns):
-        value = get_column_head(obj, column)
-        sheet.write(0, y, value, header_style)
-
-    for x, obj in enumerate(queryset, start=1):
-        for y, column in enumerate(columns):
-            value = get_column_cell(obj, column)
-            style = default_style
-            for value_type, cell_style in cell_style_map:
-                if isinstance(value, value_type):
-                    style = cell_style
-            sheet.write(x, y, value, style)
-
-    return workbook
+from pytz import timezone
+timezone('Africa/Bujumbura')
 
 class ExcelResponse(HttpResponse):
     def __init__(self, data, output_name='Raport_Muco', headers=None,
                  force_csv=False, encoding='utf8', font=''):
-
-        # Make sure we've got the right type of data to work with
         valid_data = False
         if isinstance(data, ValuesQuerySet):
             data = list(data)
@@ -98,14 +29,6 @@ class ExcelResponse(HttpResponse):
 
         import StringIO
         output = StringIO.StringIO()
-        #  make a csv
-        # csvwriter = csv.DictWriter(output, fieldnames = data[0] ,  delimiter = ',')
-        # csvwriter.writeheader()
-        # for rowx, row in enumerate(data):
-        #     for colx, value in enumerate(row):
-        #         if isinstance(value, datetime.datetime) or isinstance(value, datetime.time) or isinstance(value, datetime.date) :
-        #             value = value.utcnow()
-        #     csvwriter.writerow([rowx, row])
         writer = csv.writer(output)
         writer.writerows(data)
         content_type = 'text/csv'
