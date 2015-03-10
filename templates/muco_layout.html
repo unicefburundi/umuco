@@ -135,7 +135,8 @@
             <div class="row">
               <highchart id="chart1" config="chartConfig" ></highchart>
           </div>
-          <div class="well">
+          {% if user.is_superuser %}
+            <div class="well">
               <label for="prettyJSON"><input id="prettyJSON" type="checkbox" ng-model="prettyJSON"> Pretty JSON</label>
           </div>
           <div class="well">
@@ -148,6 +149,7 @@
                 {% endverbatim %}
             </pre>
         </div>
+          {% endif %}
     </div>
     <div class="col-md-3 col-sm-3 ">
         <div class="panel panel-default">
