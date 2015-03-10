@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from django.db.models import Count
 from injira.utils import ExcelResponse
-
+from django.http import JsonResponse
 
 class ContactMixin(object):
     """
@@ -112,11 +112,21 @@ def montant_pertime(request):
         i['date'] = str(i['date'])
     return render(request, 'turabe.html', {'data' : data, 'timess':timess})
 
-@csrf_exempt
+
 @json_view
-def getContacts(request):
-    data =  Raport.objects.values('montant')
-    return data
+def get_raports(request):
+    raports = Raport.objects.values('montant', 'lampes_vendues', 'lampes_rechargees')
+    mon = []
+    rech = []
+    vend = []
+    for k, v in enumerate(raports):
+        mon.append(int(v["montant"]))
+        rech.append(int(v["lampes_rechargees"]))
+        vend.append(int(v["lampes_vendues"]))
+    resp = [{"name":"Montant", "data": mon}, {"name":"Lampes rechargees", "data": rech}, {"name":"lampes vendues", "data":vend}]
+    return JsonResponse(resp, safe=False)
+
+
 
 
 def download_reports(request):
