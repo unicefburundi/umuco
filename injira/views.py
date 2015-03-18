@@ -123,7 +123,7 @@ def get_raports(request):
         mon.append(int(v["montant"]))
         rech.append(int(v["lampes_rechargees"]))
         vend.append(int(v["lampes_vendues"]))
-    resp = [{"name":"Montant", "data": mon}, {"name":"Lampes rechargees", "data": rech}, {"name":"lampes vendues", "data":vend}]
+    resp = [{"name":"Montant", "data": mon, }, {"name":"Lampes rechargees", "data": rech,"type": "column"}, {"name":"lampes vendues", "data":vend, "type": "column"}]
     return JsonResponse(resp, safe=False)
 
 

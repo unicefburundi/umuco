@@ -90,7 +90,8 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
   $scope.chartConfig = {
     options: {
       chart: {
-        type: 'areaspline'
+        type: 'areaspline',
+        zoomType: 'x'
       },
       plotOptions: {
         series: {
