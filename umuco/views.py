@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from umuco.utils import ExcelResponse
 from django.http import JsonResponse
-from umuco.models import Report
+from umuco.models import Report, NawenuzeGroup
 
 @csrf_exempt
 def home(request):
@@ -21,7 +21,9 @@ def save_report(request):
         if response_data['text'] != "":
             message = response_data['text'].split("%2A")
             if len(message) >= 3:
-                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=message[0])
+                nawenuze_group = NawenuzeGroup(name=message[0])
+                nawenuze_group.save()
+                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=nawenuze_group)
                 rapport.save()
                 return {'Ok': True}
             else:
