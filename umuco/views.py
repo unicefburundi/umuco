@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
-from injira.utils import ExcelResponse
+from umuco.utils import ExcelResponse
 from django.http import JsonResponse
-from injira.models import Raport
+from umuco.models import Raport
 
 @csrf_exempt
 def home(request):

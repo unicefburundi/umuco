@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from injira.models import Raport
+from umuco.models import Raport
 
 class RaportSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

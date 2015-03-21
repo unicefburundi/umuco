@@ -1,5 +1,5 @@
 from django import forms
-from injira.models import Raport
+from umuco.models import Raport
 
 
 class RaportForm(forms.ModelForm):

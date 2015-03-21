@@ -6,7 +6,7 @@ from pytz import timezone
 timezone('Africa/Bujumbura')
 
 class ExcelResponse(HttpResponse):
-    def __init__(self, data, output_name='Raport_Muco', headers=None,
+    def __init__(self, data, output_name='Report_Muco', headers=None,
                  force_csv=False, encoding='utf8', font=''):
         valid_data = False
         if isinstance(data, ValuesQuerySet):

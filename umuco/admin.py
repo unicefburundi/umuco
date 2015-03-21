@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from injira.models import Raport
+from umuco.models import Raport
 
 class RaportAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'

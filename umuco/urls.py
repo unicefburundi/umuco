@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from injira import views
+from umuco import views
 
 urlpatterns = patterns('',
     url(r'^$', views.home, name='report_home'),
