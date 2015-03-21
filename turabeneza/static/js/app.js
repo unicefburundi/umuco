@@ -30,7 +30,7 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
   ];
 
   $scope.chartSeries  = []
-  $http.get('/injira/utore/').success(function(data) {
+  $http.get('/report/overview/').success(function(data) {
       console.log(data);
       $scope.chartConfig.series.push(data[0],data[1],data[2]);
       console.log($scope.chartSeries);

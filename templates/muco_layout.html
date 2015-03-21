@@ -39,7 +39,7 @@
               <div class="col-md-12">
                 <div class="navbar-header">
 
-                  <a href="#" class="navbar-brand">Umuco</a>
+                  <a href="{% url 'home' %}" class="navbar-brand">Umuco</a>
                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
                     <i class="glyphicon glyphicon-search"></i>
                 </button>
@@ -55,19 +55,8 @@
             </div>
         </form>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="http://127.0.0.1:8000" target="_ext">Home+</a></li>
-            <li>
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-bell"></i></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#"><span class="badge pull-right">40</span>Link</a></li>
-                  <li><a href="#"><span class="badge pull-right">2</span>Link</a></li>
-                  <li><a href="#"><span class="badge pull-right">0</span>Link</a></li>
-                  <li><a href="#"><span class="label label-info pull-right">1</span>Link</a></li>
-                  <li><a href="#"><span class="badge pull-right">13</span>Link</a></li>
-              </ul>
-          </li>
-          <li><a href="#" id="btnToggle"><i class="glyphicon glyphicon-th-large"></i></a></li>
-          <li><a href="#"><i class="glyphicon glyphicon-user"></i> {% if user.is_authenticated %}
+            <li><a href="{% url 'home' %}"  target="_ext">Home+</a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-user"></i> {% if user.is_authenticated %}
             {{ user.username}}
           {% endif %} </a></li>
       </ul>
@@ -81,7 +70,7 @@
         <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Home <small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
         <ul class="nav dropdown-menu">
           <li><a href="#"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Groups</a></li>
-          <li><a href="export/"><i class="glyphicon glyphicon glyphicon-export" style="color:#0000aa;"></i> Exports</a></li>
+          <li><a href="{% url 'injira:download_reports' %}"><i class="glyphicon glyphicon glyphicon-export" style="color:#0000aa;"></i> Exports</a></li>
       </ul>
 
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse2">
