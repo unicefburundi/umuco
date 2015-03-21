@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from umuco.models import Report, NawenuzeGroup
+from umuco.models import Report, NawenuzeGroup, PhoneModel
 
 class ReportAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
@@ -11,3 +11,4 @@ class NawenuzeGroupAdmin(admin.ModelAdmin):
 
 admin.site.register(Report, ReportAdmin)
 admin.site.register(NawenuzeGroup, NawenuzeGroupAdmin)
+admin.site.register(PhoneModel)
