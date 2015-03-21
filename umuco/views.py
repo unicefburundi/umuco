@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from umuco.utils import ExcelResponse
 from django.http import JsonResponse
-from umuco.models import Raport
+from umuco.models import Report
 
 @csrf_exempt
 def home(request):
@@ -21,7 +21,7 @@ def save_report(request):
         if response_data['text'] != "":
             message = response_data['text'].split("%2A")
             if len(message) >= 3:
-                rapport = Raport(montant=int(message[3]), lampes_vendues=int(message[1]), lampes_rechargees=int(message[2]), groupe=message[0])
+                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=message[0])
                 rapport.save()
                 return {'Ok': True}
             else:
@@ -31,27 +31,17 @@ def save_report(request):
     else:
         return {'Text incorect': True}
 
-def montant_pertime(request):
-    data = Raport.objects.values('montant', 'date')
-    timess = []
-    for i in data:
-        timess.append(i['montant'])
-        timess.append(str(i['date']))
-        i['date'] = str(i['date'])
-    return render(request, 'turabe.html', {'data' : data, 'timess':timess})
-
-
 @json_view
 def get_reports(request):
-    raports = Raport.objects.values('montant', 'lampes_vendues', 'lampes_rechargees')
+    raports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps')
     mon = []
     rech = []
     vend = []
     for k, v in enumerate(raports):
-        mon.append(int(v["montant"]))
-        rech.append(int(v["lampes_rechargees"]))
-        vend.append(int(v["lampes_vendues"]))
-    resp = [{"name":"Montant", "data": mon, }, {"name":"Lampes rechargees", "data": rech,"type": "column"}, {"name":"lampes vendues", "data":vend, "type": "column"}]
+        mon.append(int(v["amount"]))
+        rech.append(int(v["recharged_lamps"]))
+        vend.append(int(v["sold_lamps"]))
+    resp = [{"name":"Amount", "data": mon, }, {"name":"Recharged Lamps", "data": rech,"type": "column"}, {"name":"Sold Lamps", "data":vend, "type": "column"}]
     return JsonResponse(resp, safe=False)
 
 
@@ -59,13 +49,13 @@ def get_reports(request):
 
 def download_reports(request):
     # import ipdb; ipdb.set_trace()
-    queryset = Raport.objects.all()
+    queryset = Report.objects.all()
     columns = (
-        'groupe',
+        'group',
         'date_updated',
-        'lampes_rechargees',
-        'lampes_vendues',
-        'montant')
+        'recharged_lamps',
+        'sold_lamps',
+        'amount')
 
     response = ExcelResponse(queryset, headers=columns)
     return response

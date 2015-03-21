@@ -1,9 +1,13 @@
 from django.contrib import admin
 
-from umuco.models import Raport
+from umuco.models import Report, NawenuzeGroup
 
-class RaportAdmin(admin.ModelAdmin):
+class ReportAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
-    list_display = ('date', 'groupe','lampes_vendues', 'lampes_rechargees', 'montant' )
+    list_display = ('date', 'group','recharged_lamps', 'sold_lamps', 'amount' )
 
-admin.site.register(Raport, RaportAdmin)
+class NawenuzeGroupAdmin(admin.ModelAdmin):
+    list_display = ('name', 'location')
+
+admin.site.register(Report, ReportAdmin)
+admin.site.register(NawenuzeGroup, NawenuzeGroupAdmin)

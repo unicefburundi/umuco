@@ -1,8 +1,8 @@
 from django import forms
-from umuco.models import Raport
+from umuco.models import Report
 
 
 class RaportForm(forms.ModelForm):
     class Meta:
-        model = Raport
-        fields = ('lampes_rechargees', 'lampes_vendues', 'montant')
+        model = Report
+        fields = ('recharged_lamps', 'sold_lamps', 'amount')

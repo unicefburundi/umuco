@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from umuco.models import Raport
+from umuco.models import Report
 
-class RaportSerializer(serializers.HyperlinkedModelSerializer):
+class ReportSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Raport
-        fields = ('lampes_rechargees', 'lampes_vendues', 'montant','groupe')
+        model = Report
+        fields = ('recharged_lamps', 'sold_lamps', 'amount','group')
