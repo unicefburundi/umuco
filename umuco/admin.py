@@ -4,7 +4,7 @@ from umuco.models import Report, NawenuzeGroup, PhoneModel
 
 class ReportAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
-    list_display = ('date', 'group','recharged_lamps', 'sold_lamps', 'amount' )
+    list_display = ('date', 'group','recharged_lamps', 'sold_lamps', 'amount' , 'telephone')
 
 class NawenuzeGroupAdmin(admin.ModelAdmin):
     list_display = ('name', 'location')

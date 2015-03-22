@@ -21,11 +21,9 @@ def save_report(request):
         if response_data['text'] != "":
             message = response_data['text'].split("%2A")
             if len(message) >= 3:
-                # import ipdb; ipdb.set_trace()
                 phone_mobile = PhoneModel.objects.get_or_create(phone_number=urllib.unquote_plus(response_data["phone"]))
-                nawenuze_group = NawenuzeGroup(name=message[0])
-                nawenuze_group.save()
-                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=nawenuze_group, telephone=phone_mobile[0])
+                nawenuze_group = NawenuzeGroup.objects.get_or_create(name=message[0])
+                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=nawenuze_group[0], telephone=phone_mobile[0])
                 rapport.save()
                 return {'Ok': True}
             else:
@@ -52,14 +50,14 @@ def get_reports(request):
 
 
 def download_reports(request):
-    # import ipdb; ipdb.set_trace()
     queryset = Report.objects.all()
     columns = (
-        'group',
+        'group_id',
         'date_updated',
         'recharged_lamps',
         'sold_lamps',
-        'amount')
+        'amount',
+        'telephone_id')
 
     response = ExcelResponse(queryset, headers=columns)
     return response
