@@ -3,7 +3,8 @@ from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from umuco.utils import ExcelResponse
 from django.http import JsonResponse
-from umuco.models import Report, NawenuzeGroup
+from umuco.models import Report, NawenuzeGroup, PhoneModel
+import urllib
 
 @csrf_exempt
 def home(request):
@@ -13,7 +14,6 @@ def home(request):
 @json_view
 def save_report(request):
     response_data = {}
-    # import ipdb; ipdb.set_trace()
     liste_data = request.body.split("&")
     for i in liste_data:
         response_data[i.split("=")[0]] = i.split("=")[1]
@@ -21,9 +21,11 @@ def save_report(request):
         if response_data['text'] != "":
             message = response_data['text'].split("%2A")
             if len(message) >= 3:
+                # import ipdb; ipdb.set_trace()
+                phone_mobile = PhoneModel.objects.get_or_create(phone_number=urllib.unquote_plus(response_data["phone"]))
                 nawenuze_group = NawenuzeGroup(name=message[0])
                 nawenuze_group.save()
-                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=nawenuze_group)
+                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=nawenuze_group, telephone=phone_mobile[0])
                 rapport.save()
                 return {'Ok': True}
             else:

@@ -18,7 +18,7 @@ class PhoneModel(models.Model):
 
 class NawenuzeGroup(models.Model):
     name = models.CharField(max_length=60, default="Anonymous group")
-    phone = models.ManyToManyField(PhoneModel, default=get_default_phone)
+    phone = models.ManyToManyField(PhoneModel, default=get_default_phone, through='Report')
     location = models.CharField(max_length=60, blank=True)
 
     def __unicode__(self):
@@ -35,6 +35,7 @@ class Report( models.Model):
     sold_lamps = models.IntegerField(default=0, verbose_name='Sold Lamps')
     amount = models.IntegerField(default=0, verbose_name='Amount')
     group = models.ForeignKey(NawenuzeGroup, default=get_default_group)
+    telephone = models.ForeignKey(PhoneModel, default=get_default_phone)
 
     def __unicode__(self):
         return u'%s %s %s %s' % (self.date , self.sold_lamps, self.recharged_lamps, self.amount)
