@@ -11,13 +11,13 @@ def get_default_phone():
 
 class PhoneModel(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-    phone_number = models.CharField(max_length=15, validators=[phone_regex], default= '+999999999')
+    phone_number = models.CharField(primary_key=True, max_length=15, validators=[phone_regex], default= '+999999999')
 
     def __unicode__(self):
         return u'%s' % self.phone_number
 
 class NawenuzeGroup(models.Model):
-    name = models.CharField(max_length=60, default="Anonymous group")
+    name = models.CharField(primary_key=True, max_length=60, default="Anonymous group")
     phone = models.ManyToManyField(PhoneModel, default=get_default_phone, through='Report')
     location = models.CharField(max_length=60, blank=True)
 
