@@ -40,16 +40,14 @@ def get_reports(request):
     rech = []
     vend = []
     sent_time = []
-    tt = []
     for k, v in enumerate(raports):
-        mon.append(int(v["amount"]))
-        rech.append(int(v["recharged_lamps"]))
-        vend.append(int(v["sold_lamps"]))
+        date = int(v["date"].strftime('%s'))*1000
+        mon.append([date, int(v["amount"])])
+        rech.append([date, int(v["recharged_lamps"])])
+        vend.append([date, int(v["sold_lamps"])])
         sent_time.append(v["date"].strftime('%s'))
-    for k, v in enumerate(raports):
-        tt.append([int(sent_time[k]), mon[k]])
 
-    resp = [{"name":"Amount", "data": tt}, {"name":"Recharged Lamps", "data": rech}, {"name":"Sold Lamps", "data":vend}]
+    resp = [{"name":"Amount", "data": mon}, {"name":"Recharged Lamps", "data": rech}, {"name":"Sold Lamps", "data":vend}]
     return JsonResponse(resp, safe=False)
 
 
