@@ -35,15 +35,19 @@ def save_report(request):
 
 @json_view
 def get_reports(request):
-    raports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps')
+    raports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps', 'date')
     mon = []
     rech = []
     vend = []
+    sent_time = []
     for k, v in enumerate(raports):
-        mon.append(int(v["amount"]))
-        rech.append(int(v["recharged_lamps"]))
-        vend.append(int(v["sold_lamps"]))
-    resp = [{"name":"Amount", "data": mon, }, {"name":"Recharged Lamps", "data": rech,"type": "column"}, {"name":"Sold Lamps", "data":vend, "type": "column"}]
+        date = int(v["date"].strftime('%s'))*1000
+        mon.append([date, int(v["amount"])])
+        rech.append([date, int(v["recharged_lamps"])])
+        vend.append([date, int(v["sold_lamps"])])
+        sent_time.append(v["date"].strftime('%s'))
+
+    resp = [{"name":"Amount", "data": mon}, {"name":"Recharged Lamps", "data": rech}, {"name":"Sold Lamps", "data":vend}]
     return JsonResponse(resp, safe=False)
 
 

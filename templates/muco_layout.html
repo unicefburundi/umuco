@@ -10,6 +10,8 @@
             <script type="text/javascript" src=" {{ STATIC_URL }}js/jquery/jquery-ui.min.js"></script>
             <script type="text/javascript" src=" {{ STATIC_URL }}js/angular/angular.js"></script>
             <script type="text/javascript" src=" {{ STATIC_URL }}js/angular/angular-ui.min.js"></script>
+            <script type="text/javascript" src=" {{ STATIC_URL }}js/moment/moment.js"></script>
+            <script type="text/javascript" src=" {{ STATIC_URL }}js/moment/moment-timezone.js"></script>
             <script type="text/javascript" src=" {{ STATIC_URL }}js/highchart/highcharts.js"></script>
             <script type="text/javascript" src=" {{ STATIC_URL }}js/highchart/exporting.js"></script>
             <script type="text/javascript" src=" {{ STATIC_URL }}js/bootstrap/bootstrap-select.js"></script>
@@ -72,6 +74,16 @@
           <li><a href="#"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Groups</a></li>
           <li><a href="{% url 'umuco:download_reports' %}"><i class="glyphicon glyphicon glyphicon-export" style="color:#0000aa;"></i> Exports</a></li>
       </ul>
+      {% if user.is_authenticated %}
+        <div  class="nav navbar-right" id="navbar-collapse3">
+    <ul class="nav navbar-nav navbar-right">
+     <li class="active"><a href="#">Groups</a></li>
+     <li><a href="#loginModal" role="button" data-toggle="modal">Benefices Cumulatives</a></li>
+     <li><a href="#aboutModal" role="button" data-toggle="modal">Sold</a></li>
+     <li><a href="#aboutModal" role="button" data-toggle="modal">Recharged</a></li>
+ </ul>
+</div>
+      {% endif %}
 
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse2">
           <span class="sr-only">Toggle navigation</span>
@@ -98,9 +110,151 @@
 <div class="row" ng-app="myapp">
     <div ng-controller="myctrl">
         <div class="row">
-          <div class="col-md-9 col-sm-9 ">
             <div class="row">
-              <highchart id="chart1" config="chartConfig" ></highchart>
+            <div class="col-md-9 col-sm-9 ">
+              <highchart id="chart1" config="chartConfig1" ></highchart>
+              </div>
+            <div class="col-md-3 col-sm-3 ">
+              <div class="panel panel-default">
+                      <div class="well">
+                        <div class="input-group">
+                          <span class="input-group-addon" id="basic-addon1">
+                            Title
+                        </span>
+                        <input class="form-control" ng-model="chartConfig1.title.text">
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1">
+                        Subtitle
+                    </span>
+                    <input  class="form-control" ng-model="chartConfig1.subtitle.text">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">
+                        Width
+                    </span>
+                    <input class="form-control" ng-model="chartConfig1.size.width">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">
+                        Height
+                    </span>
+                    <input  class="form-control" ng-model="chartConfig1.size.height">
+                </div>
+            </div>
+            <hr>
+            <div class="btn-group">
+                <div class="input-group-addon">
+                  Default Type
+                  <select class="form-control" ng-model="chartConfig1.options.chart.type" ng-options="t.id as t.title for t in chartTypes">
+                  </select>
+              </div>
+            </div>
+            <div class="input-group-addon" >
+                Stack
+                <select class="form-control " ng-model="chartConfig1.options.plotOptions.series.stacking" ng-options="t.id as t.title for t in chartStack">
+                </select>
+            </div>
+            </div>
+          </div>
+          </div>
+          <hr>
+          <div class="row">
+          <div class="col-md-9 col-sm-9 ">
+              <highchart id="chart2" config="chartConfig2" ></highchart>
+            </div>
+            <div class="col-md-3 col-sm-3 ">
+              <div class="panel panel-default">
+          <div class="well">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">
+                Title
+            </span>
+            <input class="form-control" ng-model="chartConfig2.title.text">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">
+            Subtitle
+        </span>
+        <input  class="form-control" ng-model="chartConfig2.subtitle.text">
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">
+            Width
+        </span>
+        <input class="form-control" ng-model="chartConfig2.size.width">
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">
+            Height
+        </span>
+        <input  class="form-control" ng-model="chartConfig2.size.height">
+    </div>
+</div>
+<hr>
+<div class="btn-group">
+    <div class="input-group-addon">
+      Default Type
+      <select class="form-control" ng-model="chartConfig2.options.chart.type" ng-options="t.id as t.title for t in chartTypes">
+      </select>
+  </div>
+</div>
+<div class="input-group-addon" >
+    Stack
+    <select class="form-control " ng-model="chartConfig2.options.plotOptions.series.stacking" ng-options="t.id as t.title for t in chartStack">
+    </select>
+</div>
+</div>
+          </div>
+          </div>
+          <hr>
+          <div class="row">
+          <div class="col-md-9 col-sm-9 ">
+              <highchart id="chart3" config="chartConfig3" ></highchart>
+          </div>
+          <div class="col-md-3 col-sm-3 ">
+            <div class="panel panel-default">
+          <div class="well">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">
+                Title
+            </span>
+            <input class="form-control" ng-model="chartConfig3.title.text">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">
+            Subtitle
+        </span>
+        <input  class="form-control" ng-model="chartConfig3.subtitle.text">
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">
+            Width
+        </span>
+        <input class="form-control" ng-model="chartConfig3.size.width">
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">
+            Height
+        </span>
+        <input  class="form-control" ng-model="chartConfig3.size.height">
+    </div>
+</div>
+<hr>
+<div class="btn-group">
+    <div class="input-group-addon">
+      Default Type
+      <select class="form-control" ng-model="chartConfig3.options.chart.type" ng-options="t.id as t.title for t in chartTypes">
+      </select>
+  </div>
+</div>
+<div class="input-group-addon" >
+    Stack
+    <select class="form-control " ng-model="chartConfig3.options.plotOptions.series.stacking" ng-options="t.id as t.title for t in chartStack">
+    </select>
+</div>
+</div>
+          </div>
           </div>
           {% if user.is_superuser %}
             <div class="well">
@@ -108,84 +262,17 @@
           </div>
           <div class="well">
               <pre ng-show="prettyJSON"> {% verbatim %}
-                {{ chartConfig | json }}
+                {{ chartConfig1 | json }}
                 {% endverbatim %}
             </pre>
-            <pre ng-show="!prett{% verbatim %}{{ chartConfig | json }}{% endverbatim %}yJSON"> {% verbatim %}
-                {{ chartConfig }}
+            <pre ng-show="!prett{% verbatim %}{{ chartConfig1 | json }}{% endverbatim %}yJSON"> {% verbatim %}
+                {{ chartConfig1 }}
                 {% endverbatim %}
             </pre>
         </div>
           {% endif %}
     </div>
-    <div class="col-md-3 col-sm-3 ">
-        <div class="panel panel-default">
-          <div class="well">
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">
-                Title
-            </span>
-            <input class="form-control" ng-model="chartConfig.title.text">
-        </div>
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">
-            Subtitle
-        </span>
-        <input  class="form-control" ng-model="chartConfig.subtitle.text">
     </div>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">
-            Width
-        </span>
-        <input class="form-control" ng-model="chartConfig.size.width">
-    </div>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">
-            Height
-        </span>
-        <input  class="form-control" ng-model="chartConfig.size.height">
-    </div>
-</div>
-<hr>
-<div class="well">
-    <button type="button" class="btn btn-primary btn-lg" ng-click="reflow()">
-      Reflow
-  </button>
-  -
-  <a href="{% url 'umuco:download_reports' %}">
-  <button type="button" class="btn btn-primary btn-lg" >
-      Export All
-  </button>
-  </a>
-</div>
-<hr>
-<div class="btn-group">
-    <div class="input-group-addon">
-      Default Type
-      <select class="form-control" ng-model="chartConfig.options.chart.type" ng-options="t.id as t.title for t in chartTypes">
-      </select>
-  </div>
-</div>
-<div class="input-group-addon" >
-    Stack
-    <select class="form-control " ng-model="chartConfig.options.plotOptions.series.stacking" ng-options="t.id as t.title for t in chartStack">
-    </select>
-</div>
-<div class="well">
-    <label>
-      <input type="checkbox" ng-model="chartConfig.loading">
-      is loading
-  </label>
-</div>
-<div class="well">
-    <label>
-      <input type="checkbox" ng-model="chartConfig.credits.enabled">
-      credits
-  </label>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div><!--row-->
 {% endblock charts %}
@@ -208,7 +295,7 @@
       <div class="panel panel-default">
            <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Upgrade to Bootstrap 3</h4></div>
         <div class="panel-body">
-              <img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70" class="img-circle pull-right"> <a href="#">Guidance and Tools</a>
+              {# <img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70" class="img-circle pull-right"> #} <a href="#">Guidance and Tools</a>
               <div class="clearfix"></div>
               <hr>
               <p>Migrating from Bootstrap 2.x to 3 is not a simple matter of swapping out the JS and CSS files.
@@ -251,12 +338,12 @@
               <div class="clearfix"></div>
               <hr>
               <div class="clearfix"></div>
-              <img src="http://placehold.it/120x90/3333CC/FFF" class="img-responsive img-thumbnail pull-right">
+              {# <img src="http://placehold.it/120x90/3333CC/FFF" class="img-responsive img-thumbnail pull-right"> #}
               <p>The more powerful (and 100% fluid) Bootstrap 3 grid now comes in 4 sizes (or "breakpoints"). Tiny (for smartphones), Small (for tablets), Medium (for laptops) and Large (for laptops/desktops).</p>
               <div class="clearfix"></div>
               <hr>
               <div class="clearfix"></div>
-              <img src="http://placehold.it/120x90/33CC33/FFF" class="img-responsive img-thumbnail pull-left" style="margin-right:5px;">
+              {# <img src="http://placehold.it/120x90/33CC33/FFF" class="img-responsive img-thumbnail pull-left" style="margin-right:5px;"> #}
               <p>Mobile first" is a responsive Web design practice that prioritizes consideration of smart phones and mobile devices when creating Web pages.</p>
 
 
@@ -276,7 +363,7 @@
               ×
           </button>
           <h2 class="text-center">
-              <img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle">
+              {# <img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> #}
               <br>
               Login
           </h2>
