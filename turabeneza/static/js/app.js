@@ -32,11 +32,16 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
   $scope.chartSeries1  = [];
   $scope.chartSeries2  = [];
   $scope.chartSeries3  = [];
+  var raba = [];
   $http.get('/report/overview/').success(function(data) {
       console.log(data);
       $scope.chartConfig1.series.push(data[0]);
       $scope.chartConfig2.series.push(data[1]);
       $scope.chartConfig3.series.push(data[2]);
+    for (var i = 0; i < data[0].date_added.length; i+=2) {
+        raba.push([parseInt(moment(data[0].date_added[i+1]).format("X")), data[0].data[i] ]);
+    };
+    console.log(raba)
   }).
   error(function(data, status, headers, config) {
     // called asynchronously if an error occurs
@@ -64,13 +69,24 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
         }
       }
     },
-    series: $scope.chartSeries1,
+    series: raba,
     title: {
       text: 'Amount'
     },
     credits: {
       enabled: true
     },
+    xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: { // don't display the dummy year
+                month: '%b \'%y',
+                day: '%e. %b',
+                // year: '%Y. %b'
+            },
+            title: {
+                text: 'Date'
+            }
+        },
      yAxis: {
             title: {
                 text: 'Fbu'
