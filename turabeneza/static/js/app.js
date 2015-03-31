@@ -29,11 +29,14 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
     {"id": "LongDashDotDot", "title": "LongDashDotDot"}
   ];
 
-  $scope.chartSeries  = []
+  $scope.chartSeries1  = [];
+  $scope.chartSeries2  = [];
+  $scope.chartSeries3  = [];
   $http.get('/report/overview/').success(function(data) {
       console.log(data);
-      $scope.chartConfig.series.push(data[0],data[1],data[2]);
-      console.log($scope.chartSeries);
+      $scope.chartConfig1.series.push(data[0]);
+      $scope.chartConfig2.series.push(data[1]);
+      $scope.chartConfig3.series.push(data[2]);
   }).
   error(function(data, status, headers, config) {
     // called asynchronously if an error occurs
@@ -48,46 +51,8 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
     {"id": "percent", "title": "Percent"}
   ];
 
-  $scope.addPoints = function () {
-    var seriesArray = $scope.chartConfig.series;
-    var rndIdx = Math.floor(Math.random() * seriesArray.length);
-    seriesArray[rndIdx].data = seriesArray[rndIdx].data.concat([1, 10, 20])
-  };
 
-  $scope.addSeries = function () {
-    var rnd = []
-    for (var i = 0; i < 10; i++) {
-      rnd.push(Math.floor(Math.random() * 20) + 1)
-    }
-    $scope.chartConfig.series.push({
-      data: rnd
-    })
-  }
-
-  $scope.removeRandomSeries = function () {
-    var seriesArray = $scope.chartConfig.series;
-    var rndIdx = Math.floor(Math.random() * seriesArray.length);
-    seriesArray.splice(rndIdx, 1)
-  }
-
-  $scope.removeSeries = function (id) {
-    var seriesArray = $scope.chartConfig.series;
-    seriesArray.splice(id, 1)
-  }
-
-  $scope.toggleHighCharts = function () {
-    this.chartConfig.useHighStocks = !this.chartConfig.useHighStocks
-  }
-
-  $scope.replaceAllSeries = function () {
-    var data = [
-      { name: "first", data: [10] },
-      { name: "second", data: [3] },
-      { name: "third", data: [13] }
-    ];
-    $scope.chartConfig.series = data;
-  };
-  $scope.chartConfig = {
+  $scope.chartConfig1 = {
     options: {
       chart: {
         type: 'areaspline',
@@ -99,19 +64,82 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
         }
       }
     },
-    series: $scope.chartSeries,
+    series: $scope.chartSeries1,
     title: {
-      text: 'Sample data'
+      text: 'Amount'
     },
     credits: {
       enabled: true
     },
+     yAxis: {
+            title: {
+                text: 'Fbu'
+            }
+        },
     loading: false,
     size: {}
-  }
+  };
 
   $scope.reflow = function () {
     $scope.$broadcast('highchartsng.reflow');
+  };
+
+  $scope.chartConfig2 = {
+    options: {
+      chart: {
+        type: 'areaspline',
+        zoomType: 'x'
+      },
+      plotOptions: {
+        series: {
+          stacking: '',
+           color: '#123456',
+        }
+      }
+    },
+    series: $scope.chartSeries2,
+    title: {
+      text: 'Recharged lamps'
+    },
+    credits: {
+      enabled: true
+    },
+     yAxis: {
+            title: {
+                text: 'Units'
+            }
+        },
+    loading: false,
+    size: {}
+  };
+
+  $scope.chartConfig3 = {
+    options: {
+      chart: {
+        type: 'areaspline',
+        zoomType: 'x'
+      },
+      plotOptions: {
+        series: {
+          stacking: '',
+          color: '#4466FF',
+        }
+      }
+    },
+    series: $scope.chartSeries3,
+    title: {
+      text: 'Sold lamps'
+    },
+    credits: {
+      enabled: true
+    },
+     yAxis: {
+            title: {
+                text: 'Units'
+            }
+        },
+    loading: false,
+    size: {}
   };
 
 

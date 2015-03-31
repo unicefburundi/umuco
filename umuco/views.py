@@ -43,7 +43,7 @@ def get_reports(request):
         mon.append(int(v["amount"]))
         rech.append(int(v["recharged_lamps"]))
         vend.append(int(v["sold_lamps"]))
-    resp = [{"name":"Amount", "data": mon, }, {"name":"Recharged Lamps", "data": rech,"type": "column"}, {"name":"Sold Lamps", "data":vend, "type": "column"}]
+    resp = [{"name":"Amount", "data": mon, }, {"name":"Recharged Lamps", "data": rech}, {"name":"Sold Lamps", "data":vend}]
     return JsonResponse(resp, safe=False)
 
 
