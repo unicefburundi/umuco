@@ -25,7 +25,7 @@ def save_report(request):
                 nawenuze_group = NawenuzeGroup.objects.get_or_create(name=message[0])
                 rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=nawenuze_group[0], telephone=phone_mobile[0])
                 rapport.save()
-                return {'Ok': True}
+                return {'Ok': "True"}
             else:
                 return {'Text incorect': True}
         else:
@@ -65,3 +65,6 @@ def download_reports(request):
 
     response = ExcelResponse(queryset, headers=columns)
     return response
+
+def by_group(request):
+    return render(request, "groups.html")
