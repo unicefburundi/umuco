@@ -71,13 +71,13 @@
 
         <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Home <small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
         <ul class="nav dropdown-menu">
-          <li><a href="{% url 'umuco:by_group' %}"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Groups</a></li>
+          <li><a href="{% url 'groups' %}"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Groups</a></li>
           <li><a href="{% url 'umuco:download_reports' %}"><i class="glyphicon glyphicon glyphicon-export" style="color:#0000aa;"></i> Exports</a></li>
       </ul>
       {% if user.is_authenticated %}
         <div  class="nav navbar-right" id="navbar-collapse3">
     <ul class="nav navbar-nav navbar-right">
-     <li class="active"><a href="{% url 'umuco:by_group' %}">Groups</a></li>
+     <li class="active"><a href="{% url 'groups' %}">Groups</a></li>
      <li><a href="#loginModal" role="button" data-toggle="modal">Benefices Cumulatives</a></li>
      <li><a href="#aboutModal" role="button" data-toggle="modal">Sold</a></li>
      <li><a href="#aboutModal" role="button" data-toggle="modal">Recharged</a></li>
