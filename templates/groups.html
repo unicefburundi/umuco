@@ -8,6 +8,24 @@
 <body ng-app="{% block ng_app %}myApp{% endblock %}">
 <div class="content" ng-controller="{% block ng_controller %}MyController{% endblock %}">
 {% block content %}
+<nav class="navbar navbar-fixed-top header">
+<div class="col-md-12">
+    <div class="navbar-header">
+        <a href="{% url 'home' %}" class="navbar-brand">Umuco</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
+                <i class="glyphicon glyphicon-search"></i>
+            </button>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse1">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'home' %}"  target="_ext">Home+</a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-user"></i> {% if user.is_authenticated %}
+            {{ user.username}}
+          {% endif %} </a></li>
+      </ul>
+  </div>
+    </div>
+</nav>
     <div class="row">
         <div class="search">
             <h1>Group Directory</h1>
@@ -36,9 +54,9 @@
         <ul class="grouplist">
         <li class="group cf" ng-repeat="group in groups | filter : query | orderBy: groupOrder:direction">
         {% verbatim firstblock%}
-        <a href="/report/group/{{group.name}}">
+        <a href="/report/group/details/{{group.name}}">
             <div class="info">
-                <h2>
+                <h2 id="id_{{group.name}}">
                  {{group.name}}
                 </h2>
             </div>
@@ -54,6 +72,7 @@
 </div>
 <script src="{% static "js/angular/angular.js" %}"></script>
 <script src="{% static "js/angular/angular-resource.min.js" %}"></script>
+<script type="text/javascript" src=" {{ STATIC_URL }}js/highchart/highcharts-ng.min.js"></script>
 <script src="{% static "js/script.js" %}"></script>
 </body>
 </html>

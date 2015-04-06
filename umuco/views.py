@@ -34,8 +34,12 @@ def save_report(request):
         return {'Text incorect': True}
 
 @json_view
-def get_reports(request):
-    raports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps', 'date')
+def get_reports(request, name=None):
+    raports = None
+    if name==None:
+        raports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps', 'date')
+    else :
+        raports = Report.objects.filter(group=name).values('amount', 'sold_lamps', 'recharged_lamps', 'date')
     mon = []
     rech = []
     vend = []
@@ -66,5 +70,9 @@ def download_reports(request):
     response = ExcelResponse(queryset, headers=columns)
     return response
 
-def by_group(request):
-    return render(request, "groups.html")
+def by_group(request, name=None):
+    response = get_reports(request=request, name=name)
+    return render(request, "umuco/group_details.html")
+
+def all_groups(request):
+    return render(request, "umuco/group_list.html")

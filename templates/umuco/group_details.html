@@ -1,18 +1,8 @@
 {% extends "muco_layout.html" %}
 {% block charts %}
-    <section class="artistinfo">
-    <div class="artist cf" ng-model="artists">
-    <a href="#/details/{{prevItem}}" class="btn btn-left">&lt;</a>
-    <a href="#/details/{{nextItem}}" class="btn btn-right">&gt;</a>
-    <h1>{{ artists[whichItem].name}}</h1>
-    <div class="info">
-        <h3>{{artists[whichItem].reknown}}</h3>
-        <img ng-src="images/{{artists[whichItem].shortname}}_tn.jpg" alt="Photo of {{artists[whichItem].name}}"></img>
-        <div class="bio">
-            {{artists[whichItem].bio}}
-        </div>
+    <section class="groupinfo">
+    <div class="group cf" >
+        <a href= {% url "groups" %}>&laquo; Back to search</a>
     </div>
-    </div>
-    <a href="index.html">&laquo; Back to search</a>
 </section>
 {% endblock charts %}
