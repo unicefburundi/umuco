@@ -4,9 +4,10 @@
 <head>
 <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap/bootstrap.css" %}">
 <link rel="stylesheet" type="text/css" href="{% static "css/umuco.css" %}">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/googleplus/styles.css">
 </head>
 <body ng-app="{% block ng_app %}myApp{% endblock %}">
-<div class="content" ng-controller="{% block ng_controller %}MyController{% endblock %}">
+<div class="content" ng-controller="{% block ng_controller %}ListController{% endblock %}">
 {% block content %}
 <nav class="navbar navbar-fixed-top header">
 <div class="col-md-12">
@@ -52,11 +53,11 @@
         <div class="col-md-3"></div>
     <div class="col-md-6">
         <ul class="grouplist">
-        <li class="group cf" ng-repeat="group in groups | filter : query | orderBy: groupOrder:direction">
+        <li class="list-group cf" ng-repeat="group in groups | filter : query | orderBy: groupOrder:direction">
         {% verbatim firstblock%}
         <a href="/report/group/details/{{group.name}}">
-            <div class="info">
-                <h2 id="id_{{group.name}}">
+            <div class="list-group-item info">
+                <h2 id="id_{{group.name}">
                  {{group.name}}
                 </h2>
             </div>
@@ -72,7 +73,7 @@
 </div>
 <script src="{% static "js/angular/angular.js" %}"></script>
 <script src="{% static "js/angular/angular-resource.min.js" %}"></script>
-<script type="text/javascript" src=" {{ STATIC_URL }}js/highchart/highcharts-ng.min.js"></script>
-<script src="{% static "js/script.js" %}"></script>
+<script type="text/javascript" src="{% static "js/highchart/highcharts-ng.min.js"  %}"></script>
+<script src="{% static "js/script.js"  %}"></script>
 </body>
 </html>
