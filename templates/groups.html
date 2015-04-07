@@ -1,16 +1,79 @@
-{% extends "muco_layout.html" %}
-{% block page_title %}
-Report by groups and location
-{% endblock page_title %}
+{% load staticfiles %}
 
-{% block javascripts %}
-    <script type="text/javascript" src=" {{ STATIC_URL }}js/moment/moment.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/highchart/highcharts.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/highchart/exporting.js"></script>
-{% endblock javascripts %}
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{% static "css/bootstrap/bootstrap.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "css/umuco.css" %}">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/googleplus/styles.css">
+</head>
+<body ng-app="{% block ng_app %}myApp{% endblock %}">
+<div class="content" ng-controller="{% block ng_controller %}ListController{% endblock %}">
+{% block content %}
+<nav class="navbar navbar-fixed-top header">
+<div class="col-md-12">
+    <div class="navbar-header">
+        <a href="{% url 'home' %}" class="navbar-brand">Umuco</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
+                <i class="glyphicon glyphicon-search"></i>
+            </button>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse1">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'home' %}"  target="_ext">Home+</a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-user"></i> {% if user.is_authenticated %}
+            {{ user.username}}
+          {% endif %} </a></li>
+      </ul>
+  </div>
+    </div>
+</nav>
+    <div class="row">
+        <div class="search">
+            <h1>Group Directory</h1>
+            <label >search: </label>
+            <input ng-model="query" placeholder="search for groups" autofocus>
+            <label class="formgroup">by:
+              <select ng-model="groupOrder">
+                <option value="name">Name</option>
+                <option value="location">Location</option>
+              </select>
+            </label>
 
-{% block charts %}
-<div id="container" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"></div>
-<script type="text/javascript" src=" {{ STATIC_URL }}js/app.js"></script>
+            <label class="formgroup">
+              <input type="radio" ng-model="direction" name="direction" checked>
+              ascending
+             </label>
+            <label class="formgroup">
+              <input type="radio" ng-model="direction" name="direction" value="reverse">
+              descending
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <ul class="grouplist">
+        <li class="list-group cf" ng-repeat="group in groups | filter : query | orderBy: groupOrder:direction">
+        {% verbatim firstblock%}
+        <a href="/report/group/details/{{group.name}}">
+            <div class="list-group-item info">
+                <h2 id="id_{{group.name}">
+                 {{group.name}}
+                </h2>
+            </div>
+        </a>
+        {% endverbatim firstblock%}
+        </li>
+        </ul>
+        </div>
+    <div class="col-md-3"></div>
+    </div>
 
-{% endblock charts %}
+{% endblock %}
+</div>
+<script src="{% static "js/angular/angular.js" %}"></script>
+<script src="{% static "js/angular/angular-resource.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/highchart/highcharts-ng.min.js"  %}"></script>
+<script src="{% static "js/script.js"  %}"></script>
+</body>
+</html>

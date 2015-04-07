@@ -1,0 +1,55 @@
+{% extends "muco_layout.html" %}
+{% load staticfiles   %}
+{% block charts %}
+    <section class="groupinfo">
+    <div class="group cf" >
+    {% if data %}
+        <div class="panel panel-default">
+            <div id="chart_panel" class="panel-body"
+            style="width:100%;height:314px">
+            </div>
+        </div>
+    {% endif %}
+        <a href= {% url "groups" %}>&laquo; Back to search</a>
+    </div>
+</section>
+<script type="text/javascript" src=" {{ STATIC_URL }}js/jquery/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+    var chartData = {{data|safe}};
+    // Group details charts
+     var groupDetailsOptions = {
+        chart: {
+            type: 'areaspline',
+            zoomType: 'x'
+      },
+        legend: {enabled: false},
+        title: {text: 'Group details charts'},
+        subtitle: {text: 'Last 14 Days'},
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: { // don't display the dummy year
+                month: '%b \'%y',
+                day: '%e. %b',
+                // year: '%Y. %b'
+            },
+            title: {
+                text: 'Date'
+            }
+        },
+     yAxis: {
+            title: {
+                text: 'Fbu'
+            }
+        },
+        series : [{}],
+    };
+
+    console.log(chartData[0].name)
+    console.log(chartData[0].data)
+    groupDetailsOptions.series[0].name = chartData[0].name;
+    groupDetailsOptions.series[0].data = chartData[0].data;
+    var chart = new Highcharts.Chart(groupDetailsOptions);
+    });
+</script>
+{% endblock charts %}
