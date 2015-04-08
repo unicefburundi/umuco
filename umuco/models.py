@@ -3,7 +3,7 @@ from django.core.validators import RegexValidator
 
 
 def get_default_group():
-    return NawenuzeGroup.objects.get_or_create(name="Anonymous Group")
+    return NawenuzeGroup.objects.get_or_create(name="Anonymous_Group")
 
 def get_default_phone():
     return PhoneModel.objects.get_or_create(phone_number="+25712345678")
