@@ -70,9 +70,9 @@ def download_reports(request):
     return response
 
 def by_group(request, name=None):
-    # import ipdb; ipdb.set_trace()
+
     response = get_reports(request=request, name=name)
-    return render(request, "umuco/group_details.html", {"data" : response.content})
+    return render(request, "umuco/group_details.html", {"data" : response.content, "nawenuze_group": name.title()})
 
 def all_groups(request):
     return render(request, "umuco/group_list.html")

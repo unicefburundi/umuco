@@ -1,3 +1,4 @@
+// for the application myApp using AngularJs
 'use strict';
 
 var myApp = angular.module('myApp', ["highcharts-ng"]);
@@ -9,4 +10,3 @@ $http.get('/report/group/?format=json').success(function(data) {
 });
 
 }]);
-

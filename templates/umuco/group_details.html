@@ -3,10 +3,16 @@
 {% block javascripts %}
     <script type="text/javascript" src=" {{ STATIC_URL }}js/jquery/jquery.min.js"></script>
 {% endblock javascripts %}
+{% block page_title %}
+    {{nawenuze_group }}
+{% endblock page_title %}
 {% block charts %}
 <section class="groupinfo">
     <div class="group cf" >
     {% if data %}
+        <div class="container">
+            <h3>Group: {{nawenuze_group}}</h3>
+        </div>
         <div class="panel panel-default">
             <div id="chart_panel" class="panel-body"
             style="width:100%;height:214px">
@@ -18,6 +24,7 @@
 </section>
 <script>
     $(document).ready(function() {
+    var group = '{{nawenuze_group|safe}}';
     var chartData = {{data|safe}};
     // Group details charts
      var groupDetailsOptions = {
@@ -27,8 +34,8 @@
             zoomType: 'x'
       },
         legend: {enabled: false},
-        title: {text: 'Group details charts'},
-        subtitle: {text: 'Last 14 Days'},
+        title: {text: 'Amount set aside for children '},
+        subtitle: {text: 'Nawe Nuze Group of ' + group},
         xAxis: {
             type: 'datetime',
             dateTimeLabelFormats: { // don't display the dummy year
@@ -47,13 +54,8 @@
         },
         series : [{}],
     };
-
-    console.log(chartData[0].name);
-    console.log(chartData[0].data);
     groupDetailsOptions.series[0].name = chartData[0].name;
-    console.log(groupDetailsOptions.series[0].name);
     groupDetailsOptions.series[0].data = chartData[0].data;
-    console.log(groupDetailsOptions.series[0].data);
     var chart = new Highcharts.Chart(groupDetailsOptions);
     });
 </script>
