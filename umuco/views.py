@@ -17,13 +17,13 @@ def save_report(request):
     # import ipdb; ipdb.set_trace()
     liste_data = request.body.split("&")
     for i in liste_data:
-        response_data[i.split("=")[0]] = i.split("=")[1]
+        response_data[i.split("=")[0]] = urllib.unquote_plus(i.split("=")[1])
     if response_data['text']  :
         if response_data['text'] != "":
-            message = response_data['text'].split("%2A")
+            message = response_data['text'].split("*")
             if len(message) >= 3:
-                phone_mobile = PhoneModel.objects.get_or_create(phone_number=urllib.unquote_plus(response_data["phone"]))
-                nawenuze_group = NawenuzeGroup.objects.get_or_create(name=message[0].title())
+                phone_mobile = PhoneModel.objects.get_or_create(phone_number=response_data["phone"])
+                nawenuze_group = NawenuzeGroup.objects.get_or_create(name=message[0].title().replace(" ", "_"))
                 rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=nawenuze_group[0], telephone=phone_mobile[0])
                 rapport.save()
                 return {'Ok': "True"}

@@ -1,25 +1,28 @@
 {% extends "muco_layout.html" %}
 {% load staticfiles   %}
+{% block javascripts %}
+    <script type="text/javascript" src=" {{ STATIC_URL }}js/jquery/jquery.min.js"></script>
+{% endblock javascripts %}
 {% block charts %}
-    <section class="groupinfo">
+<section class="groupinfo">
     <div class="group cf" >
     {% if data %}
         <div class="panel panel-default">
             <div id="chart_panel" class="panel-body"
-            style="width:100%;height:314px">
+            style="width:100%;height:214px">
             </div>
         </div>
     {% endif %}
         <a href= {% url "groups" %}>&laquo; Back to search</a>
     </div>
 </section>
-<script type="text/javascript" src=" {{ STATIC_URL }}js/jquery/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
     var chartData = {{data|safe}};
     // Group details charts
      var groupDetailsOptions = {
         chart: {
+            renderTo: 'chart_panel',
             type: 'areaspline',
             zoomType: 'x'
       },
@@ -45,10 +48,12 @@
         series : [{}],
     };
 
-    console.log(chartData[0].name)
-    console.log(chartData[0].data)
+    console.log(chartData[0].name);
+    console.log(chartData[0].data);
     groupDetailsOptions.series[0].name = chartData[0].name;
+    console.log(groupDetailsOptions.series[0].name);
     groupDetailsOptions.series[0].data = chartData[0].data;
+    console.log(groupDetailsOptions.series[0].data);
     var chart = new Highcharts.Chart(groupDetailsOptions);
     });
 </script>
