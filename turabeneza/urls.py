@@ -9,9 +9,13 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = patterns('',
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)),
+    url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^report/', include('umuco.urls', namespace='report', app_name='umuco')),
     url(r'^groups/$', all_groups, name="groups"),
-    url(r'^$', home, name="home")
+    url(r'^home/$', home, name="home"),
+    url(r'^logout/$', 'django_social_app.views.logout'),
+    url(r'^$', 'django_social_app.views.login'),
+
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 #In development, static files should be served from app static directories
