@@ -1,10 +1,14 @@
 {% extends "home.html" %}
-{% block contents %}
-{% if user and not user.is_anonymous %}
-  <a>Hello, {{ user.get_full_name }}!</a>
-  <br>
-  <a href="/logout">Logout</a>
+{% block contentright %}
+{% if user.is_authenticated %}
+    {% if user and not user.is_anonymous %}
+      <li><a>Hello, {{ user.get_full_name }}!</a></li>
+      <li><a href="/logout">Logout</a></li>
+    {% endif %}
 {% else %}
-  <hr>
+
+  <li><a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with : Twitter</a></li>
+<li><a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Facebook</a></li>
+<li><a href="{% url 'social:begin' 'google' %}?next={{ request.path }}">Google</a></li>
 {% endif %}
-{% endblock contents %}
+{% endblock contentright %}
