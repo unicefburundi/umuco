@@ -58,12 +58,12 @@
                         <a href="#">Welcome, {{ user.username }}</a>
                       </li>
                     {% else %}
-                        <li>Login with
+                        <div class="nav navbar-nav navbar-right">
+                          Login with
                           <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}"> Twitter</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Facebook</a>
-                        </li>
+                        <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Facebook</a>
+                        <a href="{% url 'social:begin' 'google' %}?next={{ request.path }}">Google</a>
+                        </div>
                     {% endif %}
                 </ul>
             </div>

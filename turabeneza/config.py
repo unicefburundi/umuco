@@ -20,3 +20,12 @@ SOCIAL_AUTH_FACEBOOK_KEY = ''
 SOCIAL_AUTH_FACEBOOK_SECRET = ''
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'en_US'}
+
+"""Recently Google launched OAuth2 support following the definition at OAuth2 draft. It works in a similar way to plain OAuth mechanism, but developers must register an application and apply for a set of keys. Check Google OAuth2 document for details.
+
+When creating the application in the Google Console be sure to fill the PRODUCT NAME at API & auth -> Consent screen form.
+
+"""
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['']
