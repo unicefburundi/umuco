@@ -1,0 +1,10 @@
+{% extends "home.html" %}
+{% block contents %}
+{% if user and not user.is_anonymous %}
+  <a>Hello, {{ user.get_full_name }}!</a>
+  <br>
+  <a href="/logout">Logout</a>
+{% else %}
+  <hr>
+{% endif %}
+{% endblock contents %}
