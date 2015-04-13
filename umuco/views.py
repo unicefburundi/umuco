@@ -39,28 +39,27 @@ def get_reports(request, name=None):
     raports = None
     if name==None:
         raports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps', 'date')
+        mon = []
+        rech = []
+        vend = []
+        for k, v in enumerate(raports):
+            date = int(v["date"].strftime('%s'))*1000
+            mon.append([date, int(v["amount"])])
+            rech.append([date, int(v["recharged_lamps"])])
+            vend.append([date, int(v["sold_lamps"])])
+
+        resp = [{"name":"Amount", "data": mon}, {"name":"Recharged Lamps", "data": rech}, {"name":"Sold Lamps", "data":vend}]
+        return JsonResponse(resp, safe=False)
     else :
-        raports = Report.objects.filter(group=name).values('amount', 'sold_lamps', 'recharged_lamps', 'date')
-    mon = []
-    rech = []
-    vend = []
-    for k, v in enumerate(raports):
-        date = int(v["date"].strftime('%s'))*1000
-        mon.append([date, int(v["amount"])])
-        rech.append([date, int(v["recharged_lamps"])])
-        vend.append([date, int(v["sold_lamps"])])
-
-    resp = [{"name":"Amount", "data": mon}, {"name":"Recharged Lamps", "data": rech}, {"name":"Sold Lamps", "data":vend}]
-    return JsonResponse(resp, safe=False)
-
-
+        jsonResponse= get_cumulative(request=request, name=name)
+        return jsonResponse
 
 
 def download_reports(request):
     queryset = Report.objects.all()
     columns = (
         'group_id',
-        'date_updated',
+        'date',
         'recharged_lamps',
         'sold_lamps',
         'amount',
@@ -71,8 +70,24 @@ def download_reports(request):
 
 def by_group(request, name=None):
 
-    response = get_reports(request=request, name=name)
+    response = get_cumulative(request=request, name=name)
     return render(request, "umuco/group_details.html", {"data" : response.content, "nawenuze_group": name.title()})
 
 def all_groups(request):
     return render(request, "umuco/group_list.html")
+
+# @json_view
+def get_cumulative(request, name=None):
+    reports = Report.objects.filter(group=name).values('amount', 'sold_lamps', 'recharged_lamps', 'date').order_by('date')
+    first_date = int(reports[0]["date"].strftime('%s'))*1000
+    cumulative_amount =[[first_date, int(reports[0]['amount'])]]
+    cumulative_recharged = [[first_date, int(reports[0]['recharged_lamps'])]]
+    cumulative_sold = [[first_date, int(reports[0]['sold_lamps'])]]
+
+    for k in range(len(reports))[1:]:
+        date = int(reports[k]["date"].strftime('%s'))*1000
+        cumulative_amount.append([date, int(reports[k]['amount'] + cumulative_amount[k-1][1])])
+        cumulative_recharged.append([date, int(reports[k]['recharged_lamps'] + cumulative_recharged[k-1][1])])
+        cumulative_sold.append([date, int(reports[k]['sold_lamps'] + cumulative_sold[k-1][1])])
+
+    return JsonResponse([{"name":"Amount", "data": cumulative_amount}, {"name":"Recharged Lamps", "data": cumulative_recharged}, {"name":"Sold Lamps", "data": cumulative_sold}], safe=False)

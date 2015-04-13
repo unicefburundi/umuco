@@ -5,3 +5,4 @@ localsettings.py
 local_settings.py
 *1.js
 static/
+*ipynb*
