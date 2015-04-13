@@ -51,13 +51,8 @@ def get_reports(request, name=None):
         resp = [{"name":"Amount", "data": mon}, {"name":"Recharged Lamps", "data": rech}, {"name":"Sold Lamps", "data":vend}]
         return JsonResponse(resp, safe=False)
     else :
-        cumulatives =  get_cumulative(group=name)
-
-        return JsonResponse([{"name":"Amount", "data": cumulatives['Amount']}, {"name":"Recharged Lamps", "data": cumulatives['Recharged']}, {"name":"Sold Lamps", "data": cumulatives['Sold']}], safe=False)
-
-
-
-
+        jsonResponse= get_cumulative(request=request, name=name)
+        return jsonResponse
 
 
 def download_reports(request):

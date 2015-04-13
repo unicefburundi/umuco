@@ -44,11 +44,15 @@
         chart: {
             renderTo: 'chart_panel1',
             type: 'areaspline',
-            zoomType: 'x'
+            zoomType: 'x',
+            borderWidth: 1,
+            plotBackgroundColor: 'rgba(215, 255, 255, .9)',
+            // plotShadow: true,
+            // plotBorderWidth: 1
       },
         legend: {enabled: false},
         title: {text: 'Amount set aside for children '},
-        subtitle: {text: 'Nawe Nuze Group of ' + group},
+        subtitle: {text: 'Group of ' + group},
         xAxis: {
             type: 'datetime',
             dateTimeLabelFormats: { // don't display the dummy year
@@ -62,7 +66,8 @@
         },
      yAxis: {
             title: {
-                text: 'Fbu'
+                text: 'Money in treasury \
+                (Fbu)'
             }
         },
         series : [{}],
@@ -72,11 +77,12 @@
         chart: {
             renderTo: 'chart_panel2',
             type: 'areaspline',
-            zoomType: 'x'
+            zoomType: 'x',
+            plotBackgroundColor: 'rgba(215, 240, 105, .9)',
       },
         legend: {enabled: false},
         title: {text: 'Recharged Lamps'},
-        subtitle: {text: 'Nawe Nuze Group of ' + group},
+        subtitle: {text: 'Group of ' + group},
         xAxis: {
             type: 'datetime',
             dateTimeLabelFormats: { // don't display the dummy year
@@ -90,7 +96,7 @@
         },
      yAxis: {
             title: {
-                text: 'Units'
+                text: 'Unit(s) recharged by now'
             }
         },
         series : [{}],
@@ -116,7 +122,7 @@
       },
         legend: {enabled: false},
         title: {text: 'Sold Lamps '},
-        subtitle: {text: 'Nawe Nuze Group of ' + group},
+        subtitle: {text: 'Group of ' + group},
         xAxis: {
             type: 'datetime',
             dateTimeLabelFormats: { // don't display the dummy year
@@ -130,7 +136,7 @@
         },
      yAxis: {
             title: {
-                text: 'Units'
+                text: 'Unit(s) sold by now'
             }
         },
 
