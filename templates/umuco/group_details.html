@@ -14,6 +14,13 @@
             <div class="row">
                 <h4>Group: {{nawenuze_group}}</h4>
                 <a href= {% url "groups" %} class="pull-right" >&laquo; Back to search</a>
+                <div class="container">
+                    <p>
+                        Displayed below are the cumulative performances of the NaweNuze Group {{nawenuze_group}}.
+                    </p>
+                </div>
+                <div></div>
+
             </div>
         <div class="col-md-4 col-sm-4 panel panel-default">
             <div id="chart_panel1" class="panel-body"
@@ -143,7 +150,6 @@
         series : [{}],
     };
 
-    console.log(chartData);
     groupDetailsOptions1.series[0].name = chartData[0].name;
     groupDetailsOptions1.series[0].data = chartData[0].data;
     groupDetailsOptions2.series[0].name = chartData[1].name;

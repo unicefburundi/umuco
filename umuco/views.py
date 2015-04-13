@@ -83,11 +83,12 @@ def get_cumulative(request, name=None):
     cumulative_amount =[[first_date, int(reports[0]['amount'])]]
     cumulative_recharged = [[first_date, int(reports[0]['recharged_lamps'])]]
     cumulative_sold = [[first_date, int(reports[0]['sold_lamps'])]]
-
-    for k in range(len(reports))[1:]:
+    max_length= len(reports)
+    for k in range(max_length)[1:]:
         date = int(reports[k]["date"].strftime('%s'))*1000
         cumulative_amount.append([date, int(reports[k]['amount'] + cumulative_amount[k-1][1])])
         cumulative_recharged.append([date, int(reports[k]['recharged_lamps'] + cumulative_recharged[k-1][1])])
         cumulative_sold.append([date, int(reports[k]['sold_lamps'] + cumulative_sold[k-1][1])])
 
-    return JsonResponse([{"name":"Amount", "data": cumulative_amount}, {"name":"Recharged Lamps", "data": cumulative_recharged}, {"name":"Sold Lamps", "data": cumulative_sold}], safe=False)
+    return JsonResponse([{"name":"Amount", "data": cumulative_amount}, {"name":"Recharged Lamps", "data": cumulative_recharged}, {"name":"Sold Lamps", "data": cumulative_sold}, {"Disposable" : cumulative_amount[max_length-1], "Charged": cumulative_recharged[max_length
+        -1], "Selling": cumulative_sold[max_length-1]}], safe=False)
