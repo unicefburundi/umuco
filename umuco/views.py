@@ -14,13 +14,12 @@ def home(request):
 @json_view
 def save_report(request):
     response_data = {}
-    # import ipdb; ipdb.set_trace()
     liste_data = request.body.split("&")
     for i in liste_data:
         response_data[i.split("=")[0]] = urllib.unquote_plus(i.split("=")[1])
     if response_data['text']  :
         if response_data['text'] != "":
-            message = response_data['text'].split("*")
+            message = response_data['text'].split("#")
             if len(message) >= 3:
                 phone_mobile = PhoneModel.objects.get_or_create(phone_number=response_data["phone"])
                 nawenuze_group = NawenuzeGroup.objects.get_or_create(name=message[0].title().replace(" ", "_"))
@@ -36,23 +35,9 @@ def save_report(request):
 
 @json_view
 def get_reports(request, name=None):
-    raports = None
-    if name==None:
-        raports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps', 'date')
-        mon = []
-        rech = []
-        vend = []
-        for k, v in enumerate(raports):
-            date = int(v["date"].strftime('%s'))*1000
-            mon.append([date, int(v["amount"])])
-            rech.append([date, int(v["recharged_lamps"])])
-            vend.append([date, int(v["sold_lamps"])])
+    jsonresponses= get_cumulative(request=request, name=name)
+    return jsonresponses
 
-        resp = [{"name":"Amount", "data": mon}, {"name":"Recharged Lamps", "data": rech}, {"name":"Sold Lamps", "data":vend}]
-        return JsonResponse(resp, safe=False)
-    else :
-        jsonResponse= get_cumulative(request=request, name=name)
-        return jsonResponse
 
 
 def download_reports(request):
@@ -78,7 +63,11 @@ def all_groups(request):
 
 # @json_view
 def get_cumulative(request, name=None):
-    reports = Report.objects.filter(group=name).values('amount', 'sold_lamps', 'recharged_lamps', 'date').order_by('date')
+    reports = None
+    if name==None:
+        reports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps', 'date').order_by('date')
+    else:
+        reports = Report.objects.filter(group=name).values('amount', 'sold_lamps', 'recharged_lamps', 'date').order_by('date')
     first_date = int(reports[0]["date"].strftime('%s'))*1000
     cumulative_amount =[[first_date, int(reports[0]['amount'])]]
     cumulative_recharged = [[first_date, int(reports[0]['recharged_lamps'])]]

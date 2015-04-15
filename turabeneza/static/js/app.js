@@ -34,6 +34,7 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
   $scope.chartSeries3  = [];
 
   $http.get('/report/overview/').success(function(data) {
+      console.log(data)
       $scope.chartConfig1.series.push(data[0]);
       $scope.chartConfig2.series.push(data[1]);
       $scope.chartConfig3.series.push(data[2]);
@@ -83,8 +84,9 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
     },
     series: $scope.chartSeries1,
     title: {
-      text: 'Amount'
+      text: 'Amount set aside in the OEV fund',
     },
+    subtitle: {text: 'Cumulative for all groups'},
     credits: {
       enabled: true
     },
@@ -141,6 +143,7 @@ $scope.chartConfig2 = {
     title: {
       text: 'Recharged lamps'
     },
+    subtitle: {text: 'Cumulative for all groups'},
     credits: {
       enabled: true
     },
@@ -197,6 +200,7 @@ $scope.chartConfig2 = {
     title: {
       text: 'Sold lamps'
     },
+    subtitle: {text: 'Cumulative for all groups'},
     credits: {
       enabled: true
     },
