@@ -15,21 +15,22 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='NawenuzeGroup',
             fields=[
-                ('name', models.CharField(default=b'Anonymous group', max_length=60, serialize=False, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(default=b'Anonymous_group', unique=True, max_length=60)),
+                ('person', models.CharField(max_length=60, blank=True)),
+                ('phone', models.CharField(max_length=15, blank=True)),
                 ('location', models.CharField(max_length=60, blank=True)),
+                ('day_of_gathering', umuco.models.DayOfTheWeekField(default=b'1', max_length=1, null=True, blank=True, choices=[(b'1', 'Monday'), (b'2', 'Tuesday'), (b'3', 'Wednesday'), (b'4', 'Thursday'), (b'5', 'Friday'), (b'6', 'Saturday'), (b'7', 'Sunday')])),
+                ('province', models.CharField(max_length=60, unique=True, null=True, blank=True)),
+                ('commune', models.CharField(max_length=60, blank=True)),
+                ('colline', models.CharField(max_length=60, blank=True)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='PhoneModel',
             fields=[
-                ('phone_number', models.CharField(default=b'+999999999', max_length=15, serialize=False, primary_key=True, validators=[django.core.validators.RegexValidator(regex=b'^\\+?1?\\d{9,15}$', message=b"Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")])),
+                ('phone_number', models.CharField(primary_key=True, default=b'+123456789', serialize=False, max_length=15, validators=[django.core.validators.RegexValidator(regex=b'^\\+?1?\\d{7,21}$', message=b"Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")], unique=True)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Report',
@@ -43,14 +44,5 @@ class Migration(migrations.Migration):
                 ('group', models.ForeignKey(default=umuco.models.get_default_group, to='umuco.NawenuzeGroup')),
                 ('telephone', models.ForeignKey(default=umuco.models.get_default_phone, to='umuco.PhoneModel')),
             ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.AddField(
-            model_name='nawenuzegroup',
-            name='phone',
-            field=models.ManyToManyField(default=umuco.models.get_default_phone, to='umuco.PhoneModel', through='umuco.Report'),
-            preserve_default=True,
         ),
     ]
