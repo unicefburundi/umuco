@@ -9,13 +9,13 @@ def get_default_phone():
     return PhoneModel.objects.get_or_create(phone_number="+25712345678")
 
 DAY_OF_THE_WEEK = {
-    '1' : _(u'Monday'),
-    '2' : _(u'Tuesday'),
-    '3' : _(u'Wednesday'),
-    '4' : _(u'Thursday'),
-    '5' : _(u'Friday'),
-    '6' : _(u'Saturday'),
-    '7' : _(u'Sunday'),
+    '0' : _(u'Monday'),
+    '1' : _(u'Tuesday'),
+    '2' : _(u'Wednesday'),
+    '3' : _(u'Thursday'),
+    '4' : _(u'Friday'),
+    '5' : _(u'Saturday'),
+    '6' : _(u'Sunday'),
 }
 
 class DayOfTheWeekField(models.CharField):
