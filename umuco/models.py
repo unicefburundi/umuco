@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
 
-
 def get_default_group():
     return NawenuzeGroup.objects.get_or_create(name="Anonymous_Group")
 
@@ -39,4 +38,3 @@ class Report( models.Model):
 
     def __unicode__(self):
         return u'%s %s %s %s' % (self.date , self.sold_lamps, self.recharged_lamps, self.amount)
-
