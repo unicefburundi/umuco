@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, url, include
 from umuco import views
+from umuco import backend
 from umuco.api import NawenuzeGroupList, NawenuzeGroupDetail, NawenuzeGroupReportList
 
 group_urls = patterns('',
@@ -9,6 +10,7 @@ group_urls = patterns('',
 urlpatterns = patterns('',
     url(r'^$', views.home, name='report_home'),
     url(r'^add/$', views.save_report, name='add_report'),
+	url(r'^new_reporter/$', backend.handel_rapidpro_request, name='new_reporter'),
     url(r'^overview/$', views.get_reports, name='get_reports'),
     url(r'^overview/(?P<name>[0-9a-zA-Z_-]+)$', views.get_reports, name='get_groups_reports'),
     url(r'^export/$', views.download_reports, name='download_reports'),

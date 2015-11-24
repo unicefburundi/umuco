@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'yz@q%2pw2s%#v48)9#5r=za$zv!ho3v^wt0u--wws)3o*+*+n)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -101,6 +101,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+KNOWN_PREFIXES = {
+    'RG':'PHONE_REGISTRATION',
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
