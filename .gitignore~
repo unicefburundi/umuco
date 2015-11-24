@@ -1,9 +1,0 @@
-*.sqlite3
-*.py[co]
-localsettings.py
-*.sublime-*
-local_settings.py
-*1.js
-static/
-*ipynb*
-.py~
