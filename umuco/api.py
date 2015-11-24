@@ -15,7 +15,7 @@ class NawenuzeGroupDetail(generics.RetrieveAPIView):
     model = NawenuzeGroup
     queryset = NawenuzeGroup.objects.all()
     serializer_class = NawenuzeGroupSerializer
-    lookup_field = 'name'
+    lookup_field = 'colline'
 
 
 class ReportList(generics.ListCreateAPIView):

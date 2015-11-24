@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from umuco.utils import ExcelResponse
 from django.http import JsonResponse
-from umuco.models import Report, NawenuzeGroup, PhoneModel
+from umuco.models import *
 import urllib
 
 @csrf_exempt
@@ -21,11 +21,11 @@ def save_report(request):
         if response_data['text'] != "":
             message = response_data['text'].split("#")
             if len(message) >= 3:
-                phone_mobile = PhoneModel.objects.get_or_create(phone_number=response_data["phone"])
                 nawenuze_group = NawenuzeGroup.objects.get_or_create(name=message[0].title().replace(" ", "_"))
-                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=nawenuze_group[0], telephone=phone_mobile[0])
+                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=nawenuze_group)
                 rapport.save()
-                return {'Ok': True}
+
+                return JsonResponse({'Ok': "True", 'sold_lamps': int(message[1]), 'recharged_lamps':int(message[2]), 'amount' : int(message[3])}, safe=False)
             else:
                 return {'Ok': "Ntibikwiye."}
         else:
@@ -53,21 +53,20 @@ def download_reports(request):
     response = ExcelResponse(queryset, headers=columns)
     return response
 
-def by_group(request, name=None):
+def by_group(request, colline=None):
 
-    response = get_cumulative(request=request, name=name)
-    return render(request, "umuco/group_details.html", {"data" : response.content, "nawenuze_group": name.title()})
+    response = get_cumulative(request=request, colline=colline)
+    return render(request, "umuco/group_details.html", {"data" : response.content, "nawenuze_group": colline.title()})
 
 def all_groups(request):
     return render(request, "umuco/group_list.html")
 
-# @json_view
-def get_cumulative(request, name=None):
+def get_cumulative(request, colline=None):
     reports = None
-    if name==None:
+    if not colline:
         reports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps', 'date').order_by('date')
     else:
-        reports = Report.objects.filter(group=name).values('amount', 'sold_lamps', 'recharged_lamps', 'date').order_by('date')
+        reports = Report.objects.filter(group__colline=colline).values('amount', 'sold_lamps', 'recharged_lamps', 'date').order_by('date')
     first_date = int(reports[0]["date"].strftime('%s'))*1000
     cumulative_amount =[[first_date, int(reports[0]['amount'])]]
     cumulative_recharged = [[first_date, int(reports[0]['recharged_lamps'])]]

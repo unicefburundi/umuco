@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'yz@q%2pw2s%#v48)9#5r=za$zv!ho3v^wt0u--wws)3o*+*+n)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -70,9 +70,9 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-ROOT_URLCONF = 'turabeneza.urls'
+ROOT_URLCONF = 'umuco_main.urls'
 
-WSGI_APPLICATION = 'turabeneza.wsgi.application'
+WSGI_APPLICATION = 'umuco_main.wsgi.application'
 
 
 # Database
@@ -101,6 +101,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+KNOWN_PREFIXES = {
+    'RG':'PHONE_REGISTRATION',
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -108,7 +111,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-     os.path.join(BASE_DIR, "turabeneza", "static"),
+    os.path.join(BASE_DIR, 'staticfiles'),
 )
 
 STATIC_ROOT =  os.path.join(BASE_DIR, "static")
@@ -126,6 +129,7 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
+PASSWORD = '12ab'
 
 # Django extensions
 try:

@@ -9,4 +9,4 @@ class ReportSerializer(serializers.ModelSerializer):
 class NawenuzeGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = NawenuzeGroup
-        fields = ('name', 'phone', 'location')
+        fields = ('colline', 'commune', 'day_of_meeting')
