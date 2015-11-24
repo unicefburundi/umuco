@@ -2,16 +2,16 @@ from django.db import models
 from models import *
 
 def get_default_group():
-    return NawenuzeGroup.objects.get_or_create(name="Anonymous_Group")
+    return NawenuzeGroup.objects.get_or_create(colline="Anonymous_Group")
 
 def get_default_phone():
-    return PhoneModel.objects.get_or_create(phone_number="+25712345678")
+    return PhoneModel.objects.get_or_create(number="+25712345678")
 
 class NawenuzeGroup(models.Model):
     province = models.CharField(max_length=150, blank=True)
     commune = models.CharField(max_length=150, blank=True)
     colline = models.CharField(max_length=150)
-    day_of_meeting = models.IntegerField(verbose_name='Number. Eg : For Monday put 1, Tuesday put 2, ...', null=True)
+    day_of_meeting = models.IntegerField(help_text='Number. Eg : For Monday put 1, Tuesday put 2, ...', null=True)
 
     def __unicode__(self):
         return u'%s' % self.colline
@@ -36,4 +36,4 @@ class Report( models.Model):
     group = models.ForeignKey(NawenuzeGroup, default=get_default_group)
 
     def __unicode__(self):
-        return u'%s %s %s %s' % (self.date , self.sold_lamps, self.recharged_lamps, self.amount)
+        return u'%s %s %s %s' % (self.date_updated , self.sold_lamps, self.recharged_lamps, self.amount)

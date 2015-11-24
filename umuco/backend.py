@@ -10,9 +10,9 @@ def identify_message(args):
     incoming_prefix = args['text'].split('#')[0].upper()
     if args['text'].split('#')[0].upper() in getattr(settings,'KNOWN_PREFIXES',''):
     	#Prefixes and related meanings are stored in the dictionary "KNOWN_PREFIXES"
-    	args['message_type'] = getattr(settings,'KNOWN_PREFIXES','')[incoming_prefix]
+        args['message_type'] = getattr(settings,'KNOWN_PREFIXES','')[incoming_prefix]
     else:
-    	args['message_type'] = "UNKNOWN_MESSAGE"
+        args['message_type'] = "UNKNOWN_MESSAGE"
 
 def eliminate_unnecessary_spaces(args):
     '''This function eliminate unnecessary spaces in an incoming message'''
@@ -43,7 +43,7 @@ def handel_rapidpro_request(request):
 
     #Let's put all the incoming data in the dictionary 'incoming_data'
     for couple in list_of_data:
-    	incoming_data[couple.split("=")[0]] = couple.split("=")[1]
+        incoming_data[couple.split("=")[0]] = couple.split("=")[1]
 
     #Let's assume that the incoming data is valide
     incoming_data['valide'] = True
@@ -65,17 +65,17 @@ def handel_rapidpro_request(request):
     print("incoming_data['message_type']")
     print(incoming_data['message_type'])
     if(incoming_data['message_type']=='PHONE_REGISTRATION'):
-    	print("1111111111111111111111111111111111111111111111111")
-    	#This message is sent to register a reporter
-    	record_reporter(incoming_data)
-    	print("2222222222222222222222222222222222222222222222222")
+        print("1111111111111111111111111111111111111111111111111")
+        #This message is sent to register a reporter
+        record_reporter(incoming_data)
+        print("2222222222222222222222222222222222222222222222222")
 
     if incoming_data['valide'] :
-    	#The message have been recorded
-    	response['ok'] = True
+        #The message have been recorded
+        response['ok'] = True
     else:
     	#The message haven't been recorded
-    	response['ok'] = False
+        response['ok'] = False
 
     response['info_to_contact'] = incoming_data['info_to_contact']
 

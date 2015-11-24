@@ -53,20 +53,20 @@ def download_reports(request):
     response = ExcelResponse(queryset, headers=columns)
     return response
 
-def by_group(request, name=None):
+def by_group(request, colline=None):
 
-    response = get_cumulative(request=request, name=name)
-    return render(request, "umuco/group_details.html", {"data" : response.content, "nawenuze_group": name.title()})
+    response = get_cumulative(request=request, colline=colline)
+    return render(request, "umuco/group_details.html", {"data" : response.content, "nawenuze_group": colline.title()})
 
 def all_groups(request):
     return render(request, "umuco/group_list.html")
 
-def get_cumulative(request, name=None):
+def get_cumulative(request, colline=None):
     reports = None
-    if name==None:
+    if not colline:
         reports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps', 'date').order_by('date')
     else:
-        reports = Report.objects.filter(group=name).values('amount', 'sold_lamps', 'recharged_lamps', 'date').order_by('date')
+        reports = Report.objects.filter(group__colline=colline).values('amount', 'sold_lamps', 'recharged_lamps', 'date').order_by('date')
     first_date = int(reports[0]["date"].strftime('%s'))*1000
     cumulative_amount =[[first_date, int(reports[0]['amount'])]]
     cumulative_recharged = [[first_date, int(reports[0]['recharged_lamps'])]]

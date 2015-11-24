@@ -59,10 +59,10 @@ All Nawe Nuze Groups
         <ul class="grouplist">
         <li class="list-group cf" ng-repeat="group in groups | filter : query | orderBy: groupOrder:direction">
         {% verbatim firstblock%}
-        <a href="/report/group/details/{{group.name}}">
+        <a href="/report/group/details/{{group.colline}}">
             <div class="list-group-item info">
-                <h2 id="id_{{group.name}">
-                 {{group.name}}
+                <h2 id="id_{{group.colline}">
+                 {{group.colline}}
                 </h2>
             </div>
         </a>
