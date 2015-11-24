@@ -4,17 +4,17 @@ from models import *
 
 def check_number_of_values(args):
     #This function checks if the message sent is composed by an expected number of values
-    print("==len(args['text'].split(' '))==")
-    print(len(args['text'].split(' ')))
-    print(args['text'].split(' '))
+    print("==len(args['text'].split('#'))==")
+    print(len(args['text'].split('#')))
+    print(args['text'].split('#'))
     if(args['message_type']=='PHONE_REGISTRATION'):
-        if len(args['text'].split(' ')) < 6:
+        if len(args['text'].split('#')) < 6:
             args['valide'] = False
             args['info_to_contact'] = "Erreur. Vous avez envoye peu de valeurs. Veuillez reenvoyer le message corrige."
-        if len(args['text'].split(' ')) > 6:
+        if len(args['text'].split('#')) > 6:
             args['valide'] = False
             args['info_to_contact'] = "Erreur. Vous avez envoye beaucoup de valeurs. Veuillez reenvoyer le message corrige."
-        if len(args['text'].split(' ')) == 6:
+        if len(args['text'].split('#')) == 6:
             args['valide'] = True
             args['info_to_contact'] = "Le nombre de valeurs envoye est correct."
 
@@ -23,7 +23,7 @@ def check_password(args):
     The password to use is saved in localsettings'''
 
     the_expected_password = getattr(settings,'PASSWORD','')
-    the_sent_password = args['text'].split(' ')[1]
+    the_sent_password = args['text'].split('#')[1]
 
     #Let'check if the sent password equals to the expected one
     if the_sent_password == the_expected_password:
@@ -39,7 +39,7 @@ def check_commune(args):
 
     expression = r'[.~!@#$%^&*()=\|/0-9]'
 
-    the_sent_commune_name = args['text'].split(' ')[2]
+    the_sent_commune_name = args['text'].split('#')[2]
 
     if re.search(expression, the_sent_commune_name):
         args['valide'] = False
@@ -55,7 +55,7 @@ def check_colline(args):
 
     expression = r'[.~!@#$%^&*()=\|/0-9]'
 
-    the_sent_colline_name = args['text'].split(' ')[3]
+    the_sent_colline_name = args['text'].split('#')[3]
 
     if re.search(expression, the_sent_colline_name):
         args['valide'] = False
@@ -67,7 +67,7 @@ def check_colline(args):
 
 def check_phone(args):
     ''' This function cheks if the phone number is well written '''
-    contact_phone_number = args['text'].split(' ')[4]
+    contact_phone_number = args['text'].split('#')[4]
     contact_phone_number_no_space = contact_phone_number.replace(" ", "")
     expression = r'^(\+?(257)?)((62)|(79)|(71)|(76)|(75)|(72))([0-9]{6})$'
     # import ipdb; ipdb.set_trace()
@@ -85,7 +85,7 @@ def check_report_day(args):
     expression = r'^[1-7]{1}$'
 
     #Reporting_day is the day on which the group whose contact is in process of being registered reports
-    reporting_day =	args['text'].split(' ')[5]
+    reporting_day =	args['text'].split('#')[5]
 
     if re.search(expression, reporting_day) is None:
         args['valide'] = False
@@ -125,10 +125,10 @@ def record_reporter(args):
     if not args['valide']:
         return
 
-    the_commune = args['text'].split(' ')[2].upper()
-    the_colline = args['text'].split(' ')[3].upper()
-    the_phone_number = args['text'].split(' ')[4]
-    the_meetting_day = args['text'].split(' ')[5]
+    the_commune = args['text'].split('#')[2].upper()
+    the_colline = args['text'].split('#')[3].upper()
+    the_phone_number = args['text'].split('#')[4]
+    the_meetting_day = args['text'].split('#')[5]
 
     the_phone_number = the_phone_number.replace(" ", "")
     if len(the_phone_number) == 8:
