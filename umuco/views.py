@@ -34,8 +34,8 @@ def save_report(request):
         return {'Ok': "No Text"}
 
 @json_view
-def get_reports(request, name=None):
-    jsonresponses= get_cumulative(request=request, name=name)
+def get_reports(request, colline=None):
+    jsonresponses= get_cumulative(request=request, colline=colline)
     return jsonresponses
 
 
