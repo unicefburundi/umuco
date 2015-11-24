@@ -7,9 +7,10 @@ import urllib
 
 def identify_message(args):
     ''' This function identifies which kind of message this message is. '''
-    incoming_prefix = args['text'].split('#')[0].upper()
-    if args['text'].split('#')[0].upper() in getattr(settings,'KNOWN_PREFIXES',''):
-    	#Prefixes and related meanings are stored in the dictionary "KNOWN_PREFIXES"
+    # import ipdb; ipdb.set_trace()
+    incoming_prefix = args['text'].split(' ')[0].upper()
+    if args['text'].split(' ')[0].upper() in getattr(settings,'KNOWN_PREFIXES',''):
+        #Prefixes and related meanings are stored in the dictionary "KNOWN_PREFIXES"
         args['message_type'] = getattr(settings,'KNOWN_PREFIXES','')[incoming_prefix]
     else:
         args['message_type'] = "UNKNOWN_MESSAGE"
