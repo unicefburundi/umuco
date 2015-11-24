@@ -70,9 +70,9 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-ROOT_URLCONF = 'turabeneza.urls'
+ROOT_URLCONF = 'umuco_main.urls'
 
-WSGI_APPLICATION = 'turabeneza.wsgi.application'
+WSGI_APPLICATION = 'umuco_main.wsgi.application'
 
 
 # Database
@@ -111,7 +111,7 @@ KNOWN_PREFIXES = {
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-     os.path.join(BASE_DIR, "turabeneza", "static"),
+    os.path.join(BASE_DIR, 'staticfiles'),
 )
 
 STATIC_ROOT =  os.path.join(BASE_DIR, "static")
@@ -122,7 +122,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
 )
 
-# APPEND_SLASH=False
+PASSWORD = '12ab'
 
 # Django extensions
 try:

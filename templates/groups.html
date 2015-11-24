@@ -5,10 +5,10 @@
 <title> {% block title %}
 All Nawe Nuze Groups
 {% endblock title %}</title>
- <link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}favicon.ico">
+ <link rel="shortcut icon" type="image/x-icon" href="{% static "favicon.ico" %}">
 <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap/bootstrap.css" %}">
 <link rel="stylesheet" type="text/css" href="{% static "css/umuco.css" %}">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/googleplus/styles.css">
+<link rel="stylesheet" href="{% static "css/googleplus/styles.css" %}">
 </head>
 <body ng-app="{% block ng_app %}myApp{% endblock %}">
 <div class="content" ng-controller="{% block ng_controller %}ListController{% endblock %}">

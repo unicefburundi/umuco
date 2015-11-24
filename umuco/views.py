@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from umuco.utils import ExcelResponse
 from django.http import JsonResponse
-from umuco.models import Report, NawenuzeGroup, PhoneModel
+from umuco.models import *
 import urllib
 
 @csrf_exempt
@@ -17,13 +17,13 @@ def save_report(request):
     liste_data = request.body.split("&")
     for i in liste_data:
         response_data[i.split("=")[0]] = urllib.unquote_plus(i.split("=")[1])
+    import ipdb; ipdb.set_trace()
     if response_data['text']  :
         if response_data['text'] != "":
             message = response_data['text'].split("#")
             if len(message) >= 3:
-                phone_mobile = PhoneModel.objects.get_or_create(phone_number=response_data["phone"])
                 nawenuze_group = NawenuzeGroup.objects.get_or_create(name=message[0].title().replace(" ", "_"))
-                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=nawenuze_group[0], telephone=phone_mobile[0])
+                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=nawenuze_group)
                 rapport.save()
                 return JsonResponse({'Ok': "True", 'sold_lamps': int(message[1]), 'recharged_lamps':int(message[2]), 'amount' : int(message[3])}, safe=False)
             else:
@@ -61,7 +61,6 @@ def by_group(request, name=None):
 def all_groups(request):
     return render(request, "umuco/group_list.html")
 
-# @json_view
 def get_cumulative(request, name=None):
     reports = None
     if name==None:

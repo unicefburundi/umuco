@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.validators import RegexValidator
 from models import *
 
 def get_default_group():
@@ -9,18 +8,20 @@ def get_default_phone():
     return PhoneModel.objects.get_or_create(phone_number="+25712345678")
 
 class NawenuzeGroup(models.Model):
-	commune = models.CharField(max_length=150, blank=True)
-	colline = models.CharField(max_length=150)
-	day_of_meeting = models.IntegerField(verbose_name='Number. Eg : For Monday put 1, Tuesday put 2, ...', null=True)
-	
-	def __unicode__(self):
-		return u'%s' % self.colline
+    province = models.CharField(max_length=150, blank=True)
+    commune = models.CharField(max_length=150, blank=True)
+    colline = models.CharField(max_length=150)
+    day_of_meeting = models.IntegerField(verbose_name='Number. Eg : For Monday put 1, Tuesday put 2, ...', null=True)
+
+    def __unicode__(self):
+        return u'%s' % self.colline
 
 class PhoneModel(models.Model):
-	number = models.CharField(primary_key=True, max_length=15, unique=True)
-	group = models.ForeignKey(NawenuzeGroup)
-	def __unicode__(self):
-		return u'%s' % self.number
+    number = models.CharField(primary_key=True, max_length=15, unique=True)
+    group = models.ForeignKey(NawenuzeGroup)
+
+    def __unicode__(self):
+        return u'%s' % self.number
 
 
 class Report( models.Model):
