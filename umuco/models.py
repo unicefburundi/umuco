@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext as _
+from django.utils.timezone import now
 
 def get_default_group():
     return NawenuzeGroup.objects.get_or_create(colline="Anonymous_Group")
@@ -44,7 +45,7 @@ class Report( models.Model):
     a model for a NaweNuze report
     """
     date = models.DateTimeField(auto_now_add=True, verbose_name='Date submited')
-    date_updated = models.DateField(auto_now=True, verbose_name='Date updated')
+    date_updated = models.DateField(verbose_name='Date refering to', default=now())
     recharged_lamps = models.IntegerField(default=0,verbose_name='Recharged lamps')
     sold_lamps = models.IntegerField(default=0, verbose_name='Sold Lamps')
     amount = models.IntegerField(default=0, verbose_name='Amount')
