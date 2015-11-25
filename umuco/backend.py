@@ -6,29 +6,34 @@ from recorders import *
 import urllib
 
 def identify_message(args):
-    ''' This function identifies which kind of message this message is. '''
-    # import ipdb; ipdb.set_trace()
-    incoming_prefix = args['text'].split('#')[0].upper()
-    if args['text'].split('#')[0].upper() in getattr(settings,'KNOWN_PREFIXES',''):
-        #Prefixes and related meanings are stored in the dictionary "KNOWN_PREFIXES"
-        args['message_type'] = getattr(settings,'KNOWN_PREFIXES','')[incoming_prefix]
-    else:
-        args['message_type'] = "UNKNOWN_MESSAGE"
+	''' This function identifies which kind of message this message is. '''
+	# import ipdb; ipdb.set_trace()
+	incoming_prefix = args['text'].split('#')[0].upper()
+	print("incoming_prefix")
+	print(incoming_prefix)
+	print("-----------------------------------")
+	print(getattr(settings,'KNOWN_PREFIXES',''))
+	print(getattr(settings,'KNOWN_PREFIXES','')['RG'])
+	if args['text'].split('#')[0].upper() in getattr(settings,'KNOWN_PREFIXES',''):
+		#Prefixes and related meanings are stored in the dictionary "KNOWN_PREFIXES"
+		args['message_type'] = getattr(settings,'KNOWN_PREFIXES','')[incoming_prefix]
+	else:
+		args['message_type'] = "UNKNOWN_MESSAGE"
 
 def eliminate_unnecessary_spaces(args):
-    '''This function eliminate unnecessary spaces in an incoming message'''
-    the_incoming_message = args['text']
-    print("The text before sub             "+the_incoming_message)
-    #Messages from RapidPro comes with spaces replaced by '+'
-    #Let's replace those '+' (one or more) by one space
-    # import ipdb; ipdb.set_trace()
-    the_new_message = re.sub('[\#]+',' ',the_incoming_message)
-    # Find any comma
-    the_new_message = urllib.unquote_plus(the_new_message)
-    #Let's eliminate spaces at the begining and the end of the message
-    print("The text after sub              "+the_new_message)
-    args['text'] = the_new_message
-    print("The text after sub args['text'] "+args['text'])
+	'''This function eliminate unnecessary spaces in an incoming message'''
+	the_incoming_message = args['text']
+	print("The text before sub             "+the_incoming_message)
+	#Messages from RapidPro comes with spaces replaced by '+'
+	#Let's replace those '+' (one or more) by one space
+	# import ipdb; ipdb.set_trace()
+	the_new_message = urllib.unquote_plus(the_incoming_message)
+	the_new_message = re.sub('[\#]+','#',the_new_message)
+	# Find any comma
+	#Let's eliminate spaces at the begining and the end of the message
+	print("The text after sub              "+the_new_message)
+	args['text'] = the_new_message
+	print("The text after sub args['text'] "+args['text'])
 
 @csrf_exempt
 @json_view
