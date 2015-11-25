@@ -17,12 +17,15 @@ def save_report(request):
     liste_data = request.body.split("&")
     for i in liste_data:
         response_data[i.split("=")[0]] = urllib.unquote_plus(i.split("=")[1])
+    if PhoneModel.objects.filter(number=response_data['phone']).count() == 0:
+        return {'Ok': "Ntiwanditswe."}
     if response_data['text']  :
         if response_data['text'] != "":
             message = response_data['text'].split("#")
             if len(message) >= 3:
-                nawenuze_group = NawenuzeGroup.objects.get_or_create(name=message[0].title().replace(" ", "_"))
-                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=nawenuze_group)
+                group = PhoneModel.objects.get(number=response_data['phone']).group
+                # date_updated = '20{0}-{1}-{2}'.format(message[0][-2:], message[0][2:4], message[0][:2])
+                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=group )
                 rapport.save()
 
                 return JsonResponse({'Ok': "True", 'sold_lamps': int(message[1]), 'recharged_lamps':int(message[2]), 'amount' : int(message[3])}, safe=False)
