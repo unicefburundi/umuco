@@ -11,9 +11,7 @@ def identify_message(args):
 	incoming_prefix = args['text'].split('#')[0].upper()
 	print("incoming_prefix")
 	print(incoming_prefix)
-	print("-----------------------------------")
 	print(getattr(settings,'KNOWN_PREFIXES',''))
-	print(getattr(settings,'KNOWN_PREFIXES','')['RG'])
 	if args['text'].split('#')[0].upper() in getattr(settings,'KNOWN_PREFIXES',''):
 		#Prefixes and related meanings are stored in the dictionary "KNOWN_PREFIXES"
 		args['message_type'] = getattr(settings,'KNOWN_PREFIXES','')[incoming_prefix]
@@ -67,14 +65,11 @@ def handel_rapidpro_request(request):
 
     #Let's check which kind of message this message is.
     identify_message(incoming_data)
-    print("0000000000000000000000000000000000000000000000")
     print("incoming_data['message_type']")
     print(incoming_data['message_type'])
     if(incoming_data['message_type']=='PHONE_REGISTRATION'):
-        print("1111111111111111111111111111111111111111111111111")
         #This message is sent to register a reporter
         record_reporter(incoming_data)
-        print("2222222222222222222222222222222222222222222222222")
 
     if incoming_data['valide'] :
         #The message have been recorded
