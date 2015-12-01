@@ -36,9 +36,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'django_social_app',
-    'social.apps.django_app.default',
+    'import_export',
     'umuco',
+    'authtools',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -59,15 +59,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
-)
-
-AUTHENTICATION_BACKENDS = (
-    'social.backends.facebook.FacebookOAuth2',
-    'social.backends.google.GoogleOAuth2',
-    'social.backends.twitter.TwitterOAuth',
-    'django.contrib.auth.backends.ModelBackend',
 )
 
 ROOT_URLCONF = 'umuco_main.urls'
@@ -85,9 +76,6 @@ DATABASES = {
     }
 }
 
-MIDDLEWARE_CLASSES += (
-    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
-)
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -122,6 +110,9 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
 )
 
+# Django-authtools
+AUTH_USER_MODEL = 'authtools.User'
+
 # CELERY STUFF
 BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
@@ -131,6 +122,23 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 PASSWORD = '12ab'
 
+INTERNAL_IPS = '127.0.0.1'
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_HOST_USER = 'youremail@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'abcdefghijklmnopqr'
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
+SITE_ID = 1
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
 # Django extensions
 try:
     import django_extensions
@@ -139,11 +147,6 @@ except ImportError:
 else:
     INSTALLED_APPS = INSTALLED_APPS + ('django_extensions',)
 
-#################
-# SOCIAL AUTH SETTINGS #
-#################
-
-from config import *
 
 ##################
 # LOCAL SETTINGS #
