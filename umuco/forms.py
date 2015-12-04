@@ -28,3 +28,6 @@ class UserCreationForm(UserCreationForm):
         if bool(password1) ^ bool(password2):
             raise forms.ValidationError("Fill out both fields")
         return password2
+
+    # def save(self, *args, **kwargs):
+    #     super(UserCreationForm, self).save(*args, **kwargs)

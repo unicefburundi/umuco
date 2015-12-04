@@ -1,0 +1,47 @@
+{% extends "muco_layout.html" %}
+{% load staticfiles  %}
+{% load render_table from django_tables2 %}
+    <script type="text/javascript" src="{% static 'js/libs/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/libs/jquery-ui.min.js' %}"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap-table.min.css' %}">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="{% static 'js/bootstrap-table/bootstrap-table.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-table/extensions/export/tableExport.js' %}"></script>
+    <script src="{% static 'js/bootstrap-table/extensions/export/jquery.base64.js' %}"></script>
+    <script src="{% static 'js/bootstrap-table/extensions/export/bootstrap-table-export.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+{% block javascripts %}
+    <script type="text/javascript" src="{% static 'js/jquery/jquery-ui.min.js' %}"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap-table.min.css' %}">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="{% static 'js/bootstrap-table/bootstrap-table.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-table/extensions/export/tableExport.js' %}"></script>
+    <script src="{% static 'js/bootstrap-table/extensions/export/jquery.base64.js' %}"></script>
+    <script src="{% static 'js/bootstrap-table/extensions/export/bootstrap-table-export.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+{% endblock javascripts %}
+{% block charts %}
+<div class="container" style='background-color:#FFFFFF'>
+    {% render_table statistics %}
+</div>
+
+<script>
+function totalTextFormatter(data) {
+        console.log(data);
+          return '<strong class="text-primary" >Total</strong>';
+      };
+
+function sumFormatter(data) {
+          var total = 0;
+          field = this.field;
+          $.each(data, function (i, row) {
+                total += +(row[field]);
+            });
+          return '<strong>'+ total + '</strong>';
+      };
+</script>
+{% endblock charts %}

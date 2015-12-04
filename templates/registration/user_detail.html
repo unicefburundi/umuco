@@ -1,0 +1,33 @@
+{% extends "muco_layout.html" %}
+{% load i18n staticfiles %}
+
+{% block charts %}
+<h2>{{ object.user.username|  capfirst }} ' s Profile</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <dl  class="dl-horizontal">
+            <dt>Username : </dt>
+                <p>{{ object.name }}</p>
+            {% if object.first_name%}
+            <dt>First name :</dt>
+                <p>{{ object.first_name }}</p>
+            {% endif %}
+            {% if object.last_name%}
+            <dt>Last name :</dt>
+                <p>{{ object.last_name }}</p>
+            {% endif %}
+            {% if object.email%}
+            <dt>E-mail :</dt>
+                <p>{{ object.email }}</p>
+            {% endif %}
+        </dl>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+{% if object.user.username == user.username %}
+<p><a href=''>Edit my profile</a></p>
+{% endif %}
+{% endblock %}

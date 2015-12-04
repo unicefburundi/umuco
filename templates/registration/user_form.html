@@ -1,0 +1,41 @@
+{% extends "muco_layout.html" %}
+{% load i18n staticfiles %}
+{% block charts  %}
+<h2>{% trans 'New User ? ' %}</h2>
+{% if form.errors %}
+<p>{% trans 'Invalid data. Please try again.' %}</p>
+<p>{{form.errors}}</p>
+{% endif %}
+<form method="post" action="" >
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-md-3">
+        <label for="name">{{form.name.label_tag}}</label>
+        <p>{{form.name.errors}}</p>
+        <p>{{form.name}}</p>
+        <p>{{form.name.help_text}}</p>
+    </div>
+     <div class="col-md-3">
+        <label for="email">{{form.email.label_tag}}</label>
+        <p>{{form.email.errors}}</p>
+        <p>{{form.email}}</p>
+    </div>
+     <div class="col-md-3">
+        <label for="password">{{form.password1.label_tag}}</label>
+        <p>{{form.password1.errors}}</p>
+        <p>{{form.password1}}</p>
+    </div>
+    <div class="col-md-3">
+        <label for="password2">{{form.password2.label_tag}}</label>
+        <p>{{form.password2.errors}}</p>
+        <p>{{form.password2}}</p>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-3">
+        <input type="submit" value="Save" />
+    </div>
+    </div>
+</form>
+{% endblock %}

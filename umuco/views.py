@@ -1,15 +1,30 @@
 from django.shortcuts import render
+from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from umuco.utils import ExcelResponse
 from django.http import JsonResponse
+from django.contrib.auth.forms import AuthenticationForm
 from umuco.models import *
 import urllib
+from umuco.forms import *
 import datetime
+from django.views.generic import CreateView, DetailView
+from django.contrib.auth import get_user_model
+from django_tables2 import  RequestConfig
+from umuco.tables import ReportTable
+User = get_user_model()
 
 @csrf_exempt
 def home(request):
-    return render(request, "muco_layout.html")
+    form = AuthenticationForm()
+    return render(request, "muco_layout.html", {'form':form})
+
+def analytics(request):
+    data = Report.objects.values('group__colline', 'group__commune', 'recharged_lamps', 'sold_lamps', 'amount', 'date_updated')
+    statistics = ReportTable(data)
+    RequestConfig(request).configure(statistics)
+    return render(request, 'umuco/analytics.html', {'statistics': statistics})
 
 @csrf_exempt
 @json_view
@@ -83,3 +98,14 @@ def get_cumulative(request, colline=None):
 
     return JsonResponse([{"name":"Amount", "data": cumulative_amount}, {"name":"Recharged Lamps", "data": cumulative_recharged}, {"name":"Sold Lamps", "data": cumulative_sold}, {"Disposable" : cumulative_amount[max_length-1], "Charged": cumulative_recharged[max_length
         -1], "Selling": cumulative_sold[max_length-1]}], safe=False)
+
+class UserCreate(CreateView):
+    model = User
+    form_class = UserCreationForm
+
+    def get_success_url(self):
+        return reverse('detail_user', kwargs={'pk': self.object.id})
+
+
+class UserDetail(DetailView):
+    model = User
