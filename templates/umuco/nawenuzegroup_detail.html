@@ -1,0 +1,55 @@
+{% extends "generic_tables.html" %}
+{% load render_table from django_tables2 %}
+
+{% block page_title %}
+{{ object.colline|  capfirst }} Group
+{% endblock page_title %}
+
+{% block charts %}
+{% if object %}
+      <div class="col-md-3 panel panel-default" >
+        <h5><i class="glyphicon glyphicon-list-alt"> </i> {{ object.colline|  capfirst }} Group</h5>
+        <ul class="list-group">
+        {% if object.province %}
+        <li class="list-group-item">
+            <span class="badge">{{object.province}}</span>
+            Colline :
+          </li>
+        {% endif %}
+          <li class="list-group-item">
+            <span class="badge">{{object.commune}}</span>
+            Commune :
+          </li>
+          <li class="list-group-item">
+            <span class="badge">{{object.colline}}</span>
+            Colline :
+          </li>
+          <li class="list-group-item">
+            <span class="badge">{{object.day_of_meeting}}</span>
+            Day of meeting :
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-9 panel panel-default" >
+      <h5><i class="glyphicon glyphicon-list-alt"> </i> {{ object.colline|  capfirst }} Reports</h5>
+        <div  >
+            {% render_table reports %}
+        </div>
+      </div>
+{% endif %}
+<script>
+function totalTextFormatter(data) {
+        console.log(data);
+          return '<strong class="text-primary" >Total</strong>';
+      };
+
+function sumFormatter(data) {
+          var total = 0;
+          field = this.field;
+          $.each(data, function (i, row) {
+                total += +(row[field]);
+            });
+          return '<strong>'+ total + '</strong>';
+      };
+</script>
+{% endblock charts %}

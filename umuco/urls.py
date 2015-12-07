@@ -13,9 +13,13 @@ urlpatterns = patterns('',
     url(r'^overview/(?P<colline>[0-9a-zA-Z_-]+)$', views.get_reports, name='get_groups_reports'),
     url(r'^export/$', views.download_reports, name='download_reports'),
     url(r'^group/$', include(group_urls ) ),
+    # for the api
     url(r'^group/(?P<colline>[0-9a-zA-Z_-]+)/reports$', NawenuzeGroupReportList.as_view(), name='groupreport-list'),
     url(r'^group/(?P<colline>[0-9a-zA-Z_-]+)$', NawenuzeGroupDetail.as_view(), name='group-detail'),
     url(r'^group/details/(?P<colline>[0-9a-zA-Z_-]+)$', views.by_group, name='group_detail'),
+    # for the simple class based view
+    url(r'^reports/(?P<pk>[0-9]+)$', views.NaweNuzeDetail.as_view(), name='reports_by_groups'),
+
     url(r'^user/add/$', views.UserCreate.as_view(), name='create_user'),
     url(r'^user/detail/(?P<pk>\d+)$', views.UserDetail.as_view(), name='detail_user'),
 )

@@ -13,7 +13,11 @@ from django.views.generic import CreateView, DetailView
 from django.contrib.auth import get_user_model
 from django_tables2 import  RequestConfig
 from umuco.tables import ReportTable
+from django.db.models import Sum
+
+
 User = get_user_model()
+
 
 @csrf_exempt
 def home(request):
@@ -21,8 +25,17 @@ def home(request):
     return render(request, "muco_layout.html", {'form':form})
 
 def analytics(request):
-    data = Report.objects.values('group__colline', 'group__commune', 'recharged_lamps', 'sold_lamps', 'amount', 'date_updated')
-    statistics = ReportTable(data)
+    groups = Report.objects.values('group__colline', 'group__commune').distinct()
+    statistics = []
+    for i in groups:
+        reports = Report.objects.filter(group__colline=i['group__colline'], group__commune=i['group__commune'])
+        group = i
+        group.update(reports.aggregate(sold_lamps=Sum('sold_lamps')))
+        group.update(reports.aggregate(recharged_lamps=Sum('recharged_lamps')))
+        group.update(reports.aggregate(amount=Sum('amount')))
+        statistics.append(group)
+    statistics = ReportTable(statistics)
+    statistics.exclude = ('date_updated', )
     RequestConfig(request).configure(statistics)
     return render(request, 'umuco/analytics.html', {'statistics': statistics})
 
@@ -109,3 +122,15 @@ class UserCreate(CreateView):
 
 class UserDetail(DetailView):
     model = User
+
+class NaweNuzeDetail(DetailView):
+    model = NawenuzeGroup
+
+    def get_context_data(self, **kwargs):
+        context = super(NaweNuzeDetail, self).get_context_data(**kwargs)
+        nawenuzegroup = context['object']
+        reports = Report.objects.filter(group__colline=nawenuzegroup).values('group__colline', 'group__commune', 'sold_lamps', 'recharged_lamps', 'amount', 'date_updated')
+        reports = ReportTable(reports)
+        RequestConfig(self.request).configure(reports)
+        context['reports'] = reports
+        return context
