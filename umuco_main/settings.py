@@ -149,6 +149,7 @@ LOGOUT_URL = reverse_lazy("logout")
 LOGIN_REDIRECT_URL = reverse_lazy("home")
 LOGOUT_REDIRECT_URL = reverse_lazy("home")
 
+TOKEN = 'rapidprotoken'
 
 # Django extensions
 try:

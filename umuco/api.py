@@ -2,6 +2,7 @@ from rest_framework import generics, permissions
 from umuco.serializers import NawenuzeGroupSerializer, ReportSerializer
 from umuco.models import Report, NawenuzeGroup
 
+
 class NawenuzeGroupList(generics.ListCreateAPIView):
     model = NawenuzeGroup
     queryset = NawenuzeGroup.objects.all()
@@ -44,4 +45,3 @@ class NawenuzeGroupReportList(generics.ListAPIView):
     def get_queryset(self):
         queryset = super(NawenuzeGroupReportList, self).get_queryset()
         return queryset.filter(group__name=self.kwargs.get('name'))
-

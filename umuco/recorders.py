@@ -1,6 +1,11 @@
 from django.conf import settings
 import re
 from models import *
+import requests
+import json
+
+
+days = {1:'Lundi',2:'Mardi', 3:'Mercredi', 4:'Jeudi', 5:'Vendredi', 6:'Samedi', 7:'Dimanche'}
 
 def check_number_of_values(args):
     #This function checks if the message sent is composed by an expected number of values
@@ -145,4 +150,9 @@ def record_reporter(args):
 
     args['valide'] = True
     args['info_to_contact'] = "Bien fait."
+    url = "https://app.rapidpro.io/api/v1/broadcasts.json"
+    the_message_to_send = "Tu as ete enregistres comme rapporteur du groupe {0} dans la commune {1}. Nous attendons les rapports tous les {2} ".format(the_colline, the_commune, days[int(the_meetting_day)])
+    data = {"urns": ['tel:' + the_phone_number],"text": the_message_to_send}
+    requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
+    args['envoye'] = the_message_to_send
 

@@ -79,5 +79,6 @@ def handel_rapidpro_request(request):
         response['ok'] = False
 
     response['info_to_contact'] = incoming_data['info_to_contact']
+    response['envoye'] = incoming_data['envoye']
 
     return response
