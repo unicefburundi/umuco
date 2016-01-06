@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'django_tables2',
+    'djcelery',
     'import_export',
     'umuco',
     'authtools',
@@ -124,6 +125,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 PASSWORD = '12ab'
+CELERY_RESULT_BACKEND='djcelery.backends.cache:CacheBackend'
 
 INTERNAL_IPS = '127.0.0.1'
 

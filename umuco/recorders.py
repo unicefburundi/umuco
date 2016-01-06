@@ -42,7 +42,7 @@ def check_commune(args):
     ''' This function checks if the commune is well written
     Names of communes can not made by any caracter not a letter and _ or -'''
 
-    expression = r'[.~!@#$%^&*()=\|/0-9]'
+    expression = r'[.~!@#$%^&*()=\|]'
 
     the_sent_commune_name = args['text'].split('#')[2]
 
@@ -58,7 +58,7 @@ def check_colline(args):
     ''' This function checks if the colline is well written
     Names of colline can not made by any caracter not a letter and _ or -'''
 
-    expression = r'[.~!@#$%^&*()=\|/0-9]'
+    expression = r'[.~!@#$%^&*()=\|]'
 
     the_sent_colline_name = args['text'].split('#')[3]
 
@@ -147,12 +147,11 @@ def record_reporter(args):
     the_concerned_group.save()
 
     the_phone_object, created = PhoneModel.objects.get_or_create(number = the_phone_number, group = the_concerned_group)
-
     args['valide'] = True
     args['info_to_contact'] = "Bien fait."
     url = "https://app.rapidpro.io/api/v1/broadcasts.json"
     the_message_to_send = "Tu as ete enregistres comme rapporteur du groupe {0} dans la commune {1}. Nous attendons les rapports tous les {2} ".format(the_colline, the_commune, days[int(the_meetting_day)])
     data = {"urns": ['tel:' + the_phone_number],"text": the_message_to_send}
-    requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
+    # requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
     args['envoye'] = the_message_to_send
 
