@@ -152,6 +152,6 @@ def record_reporter(args):
     url = "https://app.rapidpro.io/api/v1/broadcasts.json"
     the_message_to_send = "Tu as ete enregistres comme rapporteur du groupe {0} dans la commune {1}. Nous attendons les rapports tous les {2} ".format(the_colline, the_commune, days[int(the_meetting_day)])
     data = {"urns": ['tel:' + the_phone_number],"text": the_message_to_send}
-    # requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
+    requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
     args['envoye'] = the_message_to_send
 
