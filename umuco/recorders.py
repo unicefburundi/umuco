@@ -148,9 +148,9 @@ def record_reporter(args):
 
     the_phone_object, created = PhoneModel.objects.get_or_create(number = the_phone_number, group = the_concerned_group)
     args['valide'] = True
-    args['info_to_contact'] = "Tu as  enregistres le groupe {0} dans la commune {1}. Nous attendons ses rapports tous les {2}. Merci".format(the_colline, the_commune, days[int(the_meetting_day)])
+    args['info_to_contact'] = "Tu as enregistres le groupe {0} dans la commune {1}. Nous attendons ses rapports tous les {2}. Merci".format(the_colline, the_commune, days[int(the_meetting_day)])
     url = "https://app.rapidpro.io/api/v1/broadcasts.json"
-    the_message_to_send = "Tu as ete enregistres comme rapporteur du groupe {0} dans la commune {1}. Nous attendons les rapports tous les {2} ".format(the_colline, the_commune, days[int(the_meetting_day)])
+    the_message_to_send = "Tu as ete enregistres comme rapporteur du groupe {0} dans la commune {1}. Nous attendons les rapports tous les {2}".format(the_colline, the_commune, days[int(the_meetting_day)])
     data = {"urns": ['tel:' + the_phone_number],"text": the_message_to_send}
     requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
     args['envoye'] = the_message_to_send

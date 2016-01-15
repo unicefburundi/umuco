@@ -55,11 +55,43 @@ def save_report(request):
             message = response_data['text'].split("#")
             if len(message) >= 3:
                 group = PhoneModel.objects.get(number=response_data['phone']).group
-                date_updated = '20{0}-{1}-{2}'.format(message[0][-2:], message[0][2:4], message[0][:2])
-                rapport = Report(amount=int(message[3]), sold_lamps=int(message[1]), recharged_lamps=int(message[2]), group=group, date_updated=datetime.datetime.strptime(date_updated, '%Y-%m-%d'))
+                if int(message[0][-2:]) not in [15, 16]:
+                     return {'Ok': "False", 'info_to_contact' : 'not valid year in date', 'raba': message[0][-2:] }
+                if int( message[0][2:4]) not in range(1,13):
+                     return {'Ok': "False", 'info_to_contact' : 'not valid month in date', 'raba': message[0][2:4] }
+                if int(message[0][:2]) not in range(1,32):
+                     return {'Ok': "False", 'info_to_contact' : 'not valid day in date', 'raba': message[0][:2]}
+                date_updated = datetime.datetime.strptime(('20{0}-{1}-{2}'.format(message[0][-2:], message[0][2:4], message[0][:2])), '%Y-%m-%d')
+                if date_updated.date() > datetime.datetime.today().date():
+                    return {'Ok': "False", 'info_to_contact' : 'not valid  date', 'raba': date_updated}
+                try:
+                    # import ipdb; ipdb.set_trace()
+                    message_3 = int(message[3])
+                except Exception, e:
+                    return {'Ok': "False", 'info_to_contact' : 'not valid amount set asside ', 'error': message[3]}
+                else:
+                    if not isinstance(message_3, (int)) and message_3 < 0 :
+                        return {'Ok': "False", 'info_to_contact' : 'not valid  amount set asside ', 'error': message_3}
+                try:
+                    # import ipdb; ipdb.set_trace()
+                    message_2= int(message[2])
+                except Exception, e:
+                    return {'Ok': "False", 'info_to_contact' : 'not valid recharged lamps ', 'error': message[2]}
+                else:
+                    if not isinstance(message_2, (int)) and message_2< 0 :
+                        return {'Ok': "False", 'info_to_contact' : 'not valid  recharged lamps', 'error': message_2}
+                try:
+                    # import ipdb; ipdb.set_trace()
+                    message_1 = int(message[1])
+                except Exception, e:
+                    return {'Ok': "False", 'info_to_contact' : 'not valid sold lamps ', 'error': message[1]}
+                else:
+                    if not isinstance(message_1, (int)) and message_1 < 0 :
+                        return {'Ok': "False", 'info_to_contact' : 'not valid  sold lamps ', 'error': message_1}
+                rapport = Report(amount=message_3, sold_lamps=message_1, recharged_lamps=message_2, group=group, date_updated=date_updated)
                 rapport.save()
 
-                return JsonResponse({'Ok': "True", 'sold_lamps': int(message[1]), 'recharged_lamps': int(message[2]), 'amount': int(message[3]), 'date': date_updated}, safe=False)
+                return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'amount': message_3, 'date': date_updated}, safe=False)
             else:
                 return {'Ok': "Ntibikwiye."}
         else:
