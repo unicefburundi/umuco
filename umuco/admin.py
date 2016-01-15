@@ -86,6 +86,23 @@ class PhoneModelAdmin(ExportMixin, admin.ModelAdmin):
     def commune(self, obj):
         return obj.group.commune
 
+class ReceptionAdminResource(resources.ModelResource):
+    class Meta:
+        model =Reception
+        fields = ('lamps_received',  'group__colline', 'group__commune', 'date_received')
+
+class ReceptionAdmin(ExportMixin, admin.ModelAdmin):
+    resource_class =ReceptionAdminResource
+    list_display = ('group', 'date_received', 'colline','commune')
+    search_fields = ( 'group__colline', 'group__commune', )
+
+    def colline(self, obj):
+        return obj.group.colline
+
+    def commune(self, obj):
+        return obj.group.commune
+
 admin.site.register(Report, ReportAdmin)
 admin.site.register(NawenuzeGroup, NawenuzeGroupAdmin)
 admin.site.register(PhoneModel, PhoneModelAdmin)
+admin.site.register(Reception, ReceptionAdmin)

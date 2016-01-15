@@ -36,3 +36,14 @@ class Report( models.Model):
 
     def __unicode__(self):
         return u'%s %s %s %s' % (self.date_updated , self.sold_lamps, self.recharged_lamps, self.amount)
+
+class Reception(models.Model):
+    """
+    reception of lamps
+    """
+    group = models.ForeignKey(NawenuzeGroup, verbose_name=_('group'), default=get_default_group)
+    lamps_received = models.IntegerField(default=0, verbose_name=_('Received lamps'))
+    date_received = models.DateField(verbose_name=_('Date refering to'), default=timezone.now)
+
+    def __unicode__(self):
+        return u'%s %s %s' % (self.group , self.lamps_received, self.date_received)
