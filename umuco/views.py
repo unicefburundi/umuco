@@ -77,7 +77,7 @@ def save_report(request):
                 except Exception, e:
                     return {'Ok': "False", 'info_to_contact' : 'L argent epargnee n est pas valide ', 'error': message[3]}
                 else:
-                    if not isinstance(message_3, (int)) and message_3 < 0 :
+                    if not isinstance(message_3, (int)) or  message_3 < 0 :
                         return {'Ok': "False", 'info_to_contact' : 'L argent epargnee n est pas valide', 'error': message_3}
                 try:
                     # import ipdb; ipdb.set_trace()
@@ -85,15 +85,15 @@ def save_report(request):
                 except Exception, e:
                     return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. ', 'error': message[2]}
                 else:
-                    if not isinstance(message_2, (int)) and message_2 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. s', 'error': message_2}
+                    if not isinstance(message_2, (int)) or  message_2 < 0 :
+                        return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. ', 'error': message_2}
                 try:
                     # import ipdb; ipdb.set_trace()
                     message_1 = int(message[1])
                 except Exception, e:
                     return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. ', 'error': message[1]}
                 else:
-                    if not isinstance(message_1, (int)) and message_1 < 0 :
+                    if not isinstance(message_1, (int)) or  message_1 < 0 :
                         return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. ', 'error': message_1}
                 rapport = Report(amount=message_3, sold_lamps=message_1, recharged_lamps=message_2, group=group, date_updated=date_updated)
                 rapport.save()
