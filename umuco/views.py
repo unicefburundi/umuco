@@ -88,7 +88,6 @@ def save_report(request):
                     if not isinstance(message_2, (int)) or  message_2 < 0 :
                         return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. ', 'error': message_2}
                 try:
-                    # import ipdb; ipdb.set_trace()
                     message_1 = int(message[1])
                 except Exception, e:
                     return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. ', 'error': message[1]}
