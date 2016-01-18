@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     url(r'^groups/$', all_groups, name="groups"),
     url(r'^analytics/$', analytics, name="analytics"),
     url(r'^home/$', home, name="home"),
-    url(r'^$', home, name="landing"),
+    url(r'^$', analytics, name="analytics"),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 #In development, static files should be served from app static directories

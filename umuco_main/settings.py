@@ -148,7 +148,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 #-----------------------------------------------------------------------------------
 LOGIN_URL = reverse_lazy("login")
 LOGOUT_URL = reverse_lazy("logout")
-LOGIN_REDIRECT_URL = reverse_lazy("home")
+LOGIN_REDIRECT_URL = reverse_lazy("analytics")
 LOGOUT_REDIRECT_URL = reverse_lazy("home")
 
 TOKEN = 'rapidprotoken'
