@@ -126,8 +126,9 @@ def download_reports(request):
 
 
 def by_group(request, colline=None):
-
+    # import ipdb; ipdb.set_trace()
     response = get_cumulative(request=request, colline=colline)
+    print response
     return render(request, "umuco/group_details.html", {"data": response.content, "nawenuze_group": colline.title()})
 
 
@@ -141,6 +142,9 @@ def get_cumulative(request, colline=None):
         reports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
     else:
         reports = Report.objects.filter(group__colline=colline).values('amount','sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
+    if not reports:
+        return JsonResponse(None, safe=False)
+
     first_date = int(reports[0]["date_updated"].strftime('%s'))*1000
     cumulative_amount = [[first_date, int(reports[0]['amount'])]]
     cumulative_recharged = [[first_date, int(reports[0]['recharged_lamps'])]]

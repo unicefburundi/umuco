@@ -9,9 +9,10 @@
 {% block charts %}
 <section class="groupinfo">
     <div class="group cf" >
-    {% if data %}
-
-            <div class="row">
+    {% if data == 'null' %}
+    <p>No data for this group!</p>
+    {% else %}
+         <div class="row">
                 <h4>Group: {{nawenuze_group}}</h4>
                 <a href= {% url "groups" %} class="pull-right" >&laquo; Back to search</a>
                 <div class="container">
