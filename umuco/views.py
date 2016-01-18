@@ -49,61 +49,54 @@ def save_report(request):
     for i in liste_data:
         response_data[i.split("=")[0]] = urllib.unquote_plus(i.split("=")[1])
     if PhoneModel.objects.filter(number=response_data['phone']).count() == 0:
-        return {'Ok': "Ntiwanditswe."}
+        return {'Ok': "Pas", 'info_to_contact': "Vous n etes pas inscrit. Veuillez vous inscrire "}
     if response_data['text']:
         if response_data['text'] != "":
             message = response_data['text'].split("#")
             if len(message)  < 4:
-                return {'Ok': "False", 'info_to_contact' : 'Vous avez donne peu de valeurs.', 'raba': message }
+                return {'Ok': "False", 'info_to_contact' : 'Vous avez donne peu de valeurs. Renvoyer le message corrige', 'raba': message }
             if len(message)  > 4 :
-                return {'Ok': "False", 'info_to_contact' : 'Vous avez donne beaucoup de valeurs.', 'raba': message }
+                return {'Ok': "False", 'info_to_contact' : 'Vous avez donne beaucoup de valeurs. Renvoyer le message corrige', 'raba': message }
 
             if len(message) >= 3:
                 group = PhoneModel.objects.get(number=response_data['phone']).group
                 if not len(message[0]) == 6 :
-                    return {'Ok': "False", 'info_to_contact' : 'date pas bien ecrite', 'raba': message[0] }
+                    return {'Ok': "False", 'info_to_contact' : 'La sate pas bien ecrite. Renvoyer le message corrige', 'raba': message[0] }
                 if int(message[0][-2:]) not in [15, 16]:
-                     return {'Ok': "False", 'info_to_contact' : 'L annee de votre date n est pas valide', 'raba': message[0][-2:] }
+                     return {'Ok': "False", 'info_to_contact' : 'L annee de votre date n est pas valide. Renvoyer le message corrige', 'raba': message[0][-2:] }
                 if int( message[0][2:4]) not in range(1,13):
-                     return {'Ok': "False", 'info_to_contact' : 'Le mois de votre date n est pas valide', 'raba': message[0][2:4] }
+                     return {'Ok': "False", 'info_to_contact' : 'Le mois de votre date n est pas valide. Renvoyer le message corrige', 'raba': message[0][2:4] }
                 if int(message[0][:2]) not in range(1,32):
-                     return {'Ok': "False", 'info_to_contact' : 'Le jour de votre date n est pas valide', 'raba': message[0][:2]}
+                     return {'Ok': "False", 'info_to_contact' : 'Le jour de votre date n est pas valide. Renvoyer le message corrige', 'raba': message[0][:2]}
                 date_updated = datetime.datetime.strptime(('20{0}-{1}-{2}'.format(message[0][-2:], message[0][2:4], message[0][:2])), '%Y-%m-%d')
                 if date_updated.date() > datetime.datetime.today().date():
-                    return {'Ok': "False", 'info_to_contact' : 'La date ne peut etre dans le futur', 'raba': date_updated}
+                    return {'Ok': "False", 'info_to_contact' : 'La date ne peut etre dans le futur. Renvoyer le message corrige', 'raba': date_updated}
                 try:
                     # import ipdb; ipdb.set_trace()
                     message_3 = int(message[3])
-                except Exception, e:
-                    return {'Ok': "False", 'info_to_contact' : 'L argent epargnee n est pas valide ', 'error': message[3]}
+                except Exception:
+                    return {'Ok': "False", 'info_to_contact' : 'L argent epargnee n est pas valide. Renvoyer le message corrige ', 'error': message[3]}
                 else:
                     if not isinstance(message_3, (int)) or  message_3 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'L argent epargnee n est pas valide', 'error': message_3}
+                        return {'Ok': "False", 'info_to_contact' : 'L argent epargnee n est pas valide. Renvoyer le message corrige', 'error': message_3}
                 try:
                     # import ipdb; ipdb.set_trace()
                     message_2= int(message[2])
-                except Exception, e:
-                    return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. ', 'error': message[2]}
+                except Exception:
+                    return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. Renvoyer le message corrige.', 'error': message[2]}
                 else:
                     if not isinstance(message_2, (int)) or  message_2 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. ', 'error': message_2}
+                        return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. Renvoyer le message corrige.', 'error': message_2}
                 try:
                     message_1 = int(message[1])
-                except Exception, e:
-                    return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. ', 'error': message[1]}
+                except Exception:
+                    return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige.', 'error': message[1]}
                 else:
                     if not isinstance(message_1, (int)) or  message_1 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. ', 'error': message_1}
+                        return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige.', 'error': message_1}
                 rapport = Report(amount=message_3, sold_lamps=message_1, recharged_lamps=message_2, group=group, date_updated=date_updated)
                 rapport.save()
-
                 return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'amount': message_3, 'date': date_updated}, safe=False)
-            else:
-                return {'Ok': "Ntibikwiye."}
-        else:
-            return {'Ok': "Mesage irera."}
-    else:
-        return {'Ok': "No Text"}
 
 
 @json_view
