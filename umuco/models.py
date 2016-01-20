@@ -11,6 +11,7 @@ class NawenuzeGroup(models.Model):
     commune = models.CharField(max_length=150, blank=True)
     colline = models.CharField(max_length=150)
     day_of_meeting = models.IntegerField(verbose_name=_("Day of meeting"), help_text=_('Number. Eg : For Monday put 1, Tuesday put 2, ...'), null=True)
+    lamps_in_stock = models.IntegerField(default=0 , null=True, blank=True)
 
     def __unicode__(self):
         return u'%s' % self.colline

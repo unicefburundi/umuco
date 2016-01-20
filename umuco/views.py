@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
-from umuco.utils import ExcelResponse
+from umuco.utils import ExcelResponse, validate_date
 from django.http import JsonResponse
 from django.contrib.auth.forms import AuthenticationForm
 from umuco.models import *
@@ -60,19 +60,11 @@ def save_report(request):
 
             if len(message) >= 3:
                 group = PhoneModel.objects.get(number=response_data['phone']).group
-                if not len(message[0]) == 6 :
-                    return {'Ok': "False", 'info_to_contact' : 'La sate pas bien ecrite. Renvoyer le message corrige', 'raba': message[0] }
-                if int(message[0][-2:]) not in [15, 16]:
-                     return {'Ok': "False", 'info_to_contact' : 'L annee de votre date n est pas valide. Renvoyer le message corrige', 'raba': message[0][-2:] }
-                if int( message[0][2:4]) not in range(1,13):
-                     return {'Ok': "False", 'info_to_contact' : 'Le mois de votre date n est pas valide. Renvoyer le message corrige', 'raba': message[0][2:4] }
-                if int(message[0][:2]) not in range(1,32):
-                     return {'Ok': "False", 'info_to_contact' : 'Le jour de votre date n est pas valide. Renvoyer le message corrige', 'raba': message[0][:2]}
-                date_updated = datetime.datetime.strptime(('20{0}-{1}-{2}'.format(message[0][-2:], message[0][2:4], message[0][:2])), '%Y-%m-%d')
+
+                date_updated = validate_date(message[0])
                 if date_updated.date() > datetime.datetime.today().date():
                     return {'Ok': "False", 'info_to_contact' : 'La date ne peut etre dans le futur. Renvoyer le message corrige', 'raba': date_updated}
                 try:
-                    # import ipdb; ipdb.set_trace()
                     message_3 = int(message[3])
                 except Exception:
                     return {'Ok': "False", 'info_to_contact' : 'L argent epargnee n est pas valide. Renvoyer le message corrige ', 'error': message[3]}
@@ -80,7 +72,7 @@ def save_report(request):
                     if not isinstance(message_3, (int)) or  message_3 < 0 :
                         return {'Ok': "False", 'info_to_contact' : 'L argent epargnee n est pas valide. Renvoyer le message corrige', 'error': message_3}
                 try:
-                    # import ipdb; ipdb.set_trace()
+                    import ipdb; ipdb.set_trace()
                     message_2= int(message[2])
                 except Exception:
                     return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. Renvoyer le message corrige.', 'error': message[2]}

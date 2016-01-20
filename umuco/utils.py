@@ -34,3 +34,11 @@ class ExcelResponse(HttpResponse):
                                             content_type=content_type)
         self['Content-Disposition'] = 'attachment;filename="%s.%s.%s"' % \
             (output_name.replace('"', '\"'), datetime.datetime.now().strftime("%d %b %Y  %p"), file_ext )
+
+def validate_date(date_text):
+    try:
+        date = datetime.datetime.strptime(date_text, '%d%m%y')
+    except ValueError:
+        raise ValueError("Date est incorecte. Le format est jjmmaa.")
+    else:
+        return date
