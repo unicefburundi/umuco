@@ -82,7 +82,6 @@ def save_report(request):
                 else:
                     if not isinstance(message_1, (int)) or  message_1 < 0 :
                         return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige.', 'error': message_1}
-                import ipdb; ipdb.set_trace()
                 repport,  created = Report.objects.get_or_create(group=group, date_updated=date_updated)
                 if created:
                     repport.amount = message_3
@@ -90,7 +89,12 @@ def save_report(request):
                     repport.recharged_lamps = message_2
                     repport.save()
                 elif (datetime.datetime.today() - date_updated).days > 6 :
-                    return {'Ok': "False", 'info_to_contact' : 'Vous ne pouvez plus mettre a jours le rapport. Contacter le partenaire.', 'error': (datetime.datetime.today() - date_updated).days }
+                    return {'Ok': "Pas", 'info_to_contact' : 'Vous ne pouvez plus mettre a jours le rapport. Contacter le partenaire.', 'error': (datetime.datetime.today() - date_updated).days }
+                else:
+                    repport.amount = message_3
+                    repport.sold_lamps = message_1
+                    repport.recharged_lamps = message_2
+                    repport.save()
 
                 return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'amount': message_3, 'date': date_updated}, safe=False)
 
