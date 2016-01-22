@@ -187,7 +187,7 @@ def add_lamps(request):
 
         response_data['message'] =  message
         if message[1] not in settings.PASSWORD:
-            return {'Ok': "False", 'info_to_contact' : 'Le message est faux. Contacter le partenaire. ',  'error' : message[1]}
+            return {'Ok': "Pas", 'info_to_contact' : 'Le message est faux. Contacter le partenaire. ',  'error' : message[1]}
         if NawenuzeGroup.objects.filter(colline=message[2].upper()).count() == 0:
             return {'Ok': "False", 'info_to_contact' : "Le groupe n'existe pas. Contacter le partenaire." ,  'error' : message[2]}
         try:
