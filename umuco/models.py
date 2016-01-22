@@ -44,7 +44,7 @@ class Reception(models.Model):
     """
     group = models.ForeignKey(NawenuzeGroup, verbose_name=_('group'), default=get_default_group)
     lamps_received = models.IntegerField(default=0, verbose_name=_('Received lamps'))
-    date_received = models.DateField(verbose_name=_('Date refering to'), default=timezone.now)
+    date_received = models.DateField(verbose_name=_('Date received'), default=timezone.now)
 
     def __unicode__(self):
         return u'%s %s %s' % (self.group , self.lamps_received, self.date_received)

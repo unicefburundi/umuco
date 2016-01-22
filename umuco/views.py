@@ -95,8 +95,9 @@ def save_report(request):
                     repport.sold_lamps = message_1
                     repport.recharged_lamps = message_2
                     repport.save()
-
-                return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'amount': message_3, 'date': date_updated}, safe=False)
+                group.lamps_in_stock -= message_1
+                group.save()
+            return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'amount': message_3, 'date': date_updated}, safe=False)
 
 
 @json_view
@@ -170,7 +171,7 @@ class NaweNuzeDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(NaweNuzeDetail, self).get_context_data(**kwargs)
         nawenuzegroup = context['object']
-        reports = Report.objects.filter(group__colline=nawenuzegroup).values('group__colline', 'group__commune', 'sold_lamps', 'recharged_lamps', 'amount', 'date_updated')
+        reports = Report.objects.filter(group__colline=nawenuzegroup).values('group__colline', 'group__commune', 'sold_lamps', 'recharged_lamps', 'amount', 'date_updated', 'group__lamps_in_stock')
         reports = ReportTable(reports)
         RequestConfig(self.request).configure(reports)
         context['reports'] = reports
@@ -182,18 +183,27 @@ class NaweNuzeDetail(DetailView):
 def add_lamps(request):
     response_data = split_message(request)
     if response_data['text'] != "":
-            message = response_data['text'].split("#")
+        message = response_data['text'].split("#")
 
-            response_data['message'] =  message
-            if message[0] not in settings.PASSWORD:
-                return {'Ok': "False", 'info_to_contact' : 'Le message est faux. Contacter le partenaire. ',  'error' : message[0]}
-            if NawenuzeGroup.objects.filter(colline=message[1].upper()).count() == 0:
-                return {'Ok': "False", 'info_to_contact' : "Le groupe n'existe pas. Contacter le partenaire." ,  'error' : message[1]}
-            try:
-                lampes= int(message[2])
-            except Exception:
-                return {'Ok': "False", 'info_to_contact' : 'Les lampes recues ne sont pas valides. Renvoyer le message corrige.', 'error': message[2]}
-            else:
-                if not isinstance(lampes, (int)) or  lampes < 0 :
-                    return {'Ok': "False", 'info_to_contact' : 'Les lampes recues ne sont pas valides. Renvoyer le message corrige.', 'error': lampes}
+        response_data['message'] =  message
+        if message[0] not in settings.PASSWORD:
+            return {'Ok': "False", 'info_to_contact' : 'Le message est faux. Contacter le partenaire. ',  'error' : message[0]}
+        if NawenuzeGroup.objects.filter(colline=message[1].upper()).count() == 0:
+            return {'Ok': "False", 'info_to_contact' : "Le groupe n'existe pas. Contacter le partenaire." ,  'error' : message[1]}
+        try:
+            lamps= int(message[2])
+        except Exception:
+            return {'Ok': "False", 'info_to_contact' : 'Les lampes recues ne sont pas valides. Renvoyer le message corrige.', 'error': message[2]}
+        else:
+            if not isinstance(lamps, (int)) or  lamps < 0 :
+                return {'Ok': "False", 'info_to_contact' : 'Les lampes recues ne sont pas valides. Renvoyer le message corrige.', 'error': lamps}
+        date_received = validate_date(message[3])
+        if date_received.date() > datetime.datetime.today().date():
+            return {'Ok': "False", 'info_to_contact' : 'La date ne peut etre dans le futur. Renvoyer le message corrige.', 'raba': date_received}
+        # import ipdb; ipdb.set_trace()
+        group = NawenuzeGroup.objects.get(colline=message[1].upper())
+        reception , created = Reception.objects.get_or_create(group=group, lamps_received=lamps, date_received=date_received)
+        if created:
+            group.lamps_in_stock += lamps
+            group.save()
     return response_data

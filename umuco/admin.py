@@ -65,8 +65,14 @@ class ReportAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ('date_updated', 'group','recharged_lamps', 'sold_lamps', 'amount')
     search_fields = ('group__colline', 'group__commune', )
 
-class NawenuzeGroupAdmin(admin.ModelAdmin):
-    list_display = ('colline', 'commune', 'day_of_meeting', 'province')
+class NawenuzeGroupAdminResource(resources.ModelResource):
+    class Meta:
+        model =NawenuzeGroup
+        fields = ('colline', 'commune', 'province', 'day_of_meeting', 'lamps_in_stock')
+
+class NawenuzeGroupAdmin(ExportMixin, admin.ModelAdmin):
+    resource_class = NawenuzeGroupAdminResource
+    list_display = ('colline', 'commune', 'day_of_meeting', 'lamps_in_stock', 'province')
     search_fields = ('colline', 'commune',  'province')
     list_filter = ( 'day_of_meeting',)
 
@@ -93,7 +99,7 @@ class ReceptionAdminResource(resources.ModelResource):
 
 class ReceptionAdmin(ExportMixin, admin.ModelAdmin):
     resource_class =ReceptionAdminResource
-    list_display = ('group', 'date_received', 'colline','commune')
+    list_display = ('group', 'lamps_received', 'date_received', 'colline','commune')
     search_fields = ( 'group__colline', 'group__commune', )
 
     def colline(self, obj):

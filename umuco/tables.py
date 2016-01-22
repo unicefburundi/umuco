@@ -6,9 +6,9 @@ class ReportTable(tables.Table):
     group__colline = tables.Column(verbose_name='Colline', attrs={'th':{'data-footer-formatter':"totalTextFormatter"}})
     sold_lamps = tables.Column(verbose_name='Sold lamps', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     recharged_lamps = tables.Column(verbose_name='Recharged lamps', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    amount = tables.Column(verbose_name='Amount', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
+    amount = tables.Column(verbose_name='Set aside ', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     group__commune = tables.Column(verbose_name='Commune')
-    date_updated = tables.Column(verbose_name='Date')
+    date_updated = tables.Column(verbose_name='Date ')
 
     class Meta:
         attrs = {"class": "table ", "data-toggle":"table", "data-search":"true" ,"data-show-columns":"true" ,  "data-show-export":"true", 'data-export-types': "['csv','excel']", "data-show-footer":"true"}
