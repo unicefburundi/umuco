@@ -108,7 +108,18 @@ class ReceptionAdmin(ExportMixin, admin.ModelAdmin):
     def commune(self, obj):
         return obj.group.commune
 
+class OrganizationAdminResource(resources.ModelResource):
+    class Meta:
+        model =Organization
+        fields = ('name',  'number')
+
+class OrganizationAdmin(ExportMixin, admin.ModelAdmin):
+    resource_class =OrganizationAdminResource
+    list_display = ('name', 'number')
+    search_fields = ( 'name', 'number' )
+
 admin.site.register(Report, ReportAdmin)
 admin.site.register(NawenuzeGroup, NawenuzeGroupAdmin)
 admin.site.register(PhoneModel, PhoneModelAdmin)
 admin.site.register(Reception, ReceptionAdmin)
+admin.site.register(Organization, OrganizationAdmin)

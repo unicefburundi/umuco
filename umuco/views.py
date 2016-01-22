@@ -14,6 +14,7 @@ from django.contrib.auth import get_user_model
 from django_tables2 import RequestConfig
 from umuco.tables import ReportTable
 from django.db.models import Sum
+from django.core.mail import send_mail
 
 
 User = get_user_model()
@@ -95,10 +96,12 @@ def save_report(request):
                     repport.sold_lamps = message_1
                     repport.recharged_lamps = message_2
                     repport.save()
-                group.lamps_in_stock -= message_1
-                if group.lamps_in_stock < 0:
-                    flag_report(PhoneModel.objects.filter(group=group)[0].number, '{0} a raporte le {1} avoir vendu plus de lampes ({2}) qu il n en restait en stock {3}'.format(group, date_updated, message_1, group.lamps_in_stock  ))
-                group.save()
+                solds = Report.objects.filter(group=group).aggregate(Sum('sold_lamps'))
+                if group.lamps_in_stock < solds['sold_lamps__sum']:
+                    flag_report(PhoneModel.objects.filter(group=group)[0].number, 'le groupe {0} (de la commune {3}) a raporte le {1} avoir vendu plus de lampes ({2}) qu il n en restait en stock'.format(group, date_updated.strftime("%d-%m-%Y"), message_1, group.commune))
+                cost_expected = (message_1 * group.cost_lamp + message_2*group.cost_recharge)
+                if message_3 > cost_expected:
+                    pass
 
             return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'amount': message_3, 'date': date_updated}, safe=False)
 

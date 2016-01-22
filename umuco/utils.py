@@ -59,4 +59,5 @@ def split_message(request):
 def flag_report(receiver, message):
     url = "https://app.rapidpro.io/api/v1/broadcasts.json"
     data = {"urns": ['tel:' + receiver],"text": message}
-    requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
+    sending = requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
+    print sending.content

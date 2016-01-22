@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.utils import timezone
+from django.contrib.auth.models import Group
+from django.conf import settings
 
 def get_default_group():
     return NawenuzeGroup.objects.get_or_create(colline=_("Anonymous_Group"))
@@ -50,3 +52,10 @@ class Reception(models.Model):
 
     def __unicode__(self):
         return u'%s %s %s' % (self.group , self.lamps_received, self.date_received)
+
+class Organization(Group):
+    pass_word = models.CharField(max_length=12, default=settings.PASSWORD, editable=False)
+    number = models.CharField(primary_key=True, max_length=15, verbose_name=_('phone number'), unique=True)
+
+    def __unicode__(self):
+        return u'%s %s' % (self.name , self.number)
