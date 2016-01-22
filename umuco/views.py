@@ -186,24 +186,23 @@ def add_lamps(request):
         message = response_data['text'].split("#")
 
         response_data['message'] =  message
-        if message[0] not in settings.PASSWORD:
-            return {'Ok': "False", 'info_to_contact' : 'Le message est faux. Contacter le partenaire. ',  'error' : message[0]}
-        if NawenuzeGroup.objects.filter(colline=message[1].upper()).count() == 0:
-            return {'Ok': "False", 'info_to_contact' : "Le groupe n'existe pas. Contacter le partenaire." ,  'error' : message[1]}
+        if message[1] not in settings.PASSWORD:
+            return {'Ok': "False", 'info_to_contact' : 'Le message est faux. Contacter le partenaire. ',  'error' : message[1]}
+        if NawenuzeGroup.objects.filter(colline=message[2].upper()).count() == 0:
+            return {'Ok': "False", 'info_to_contact' : "Le groupe n'existe pas. Contacter le partenaire." ,  'error' : message[2]}
         try:
-            lamps= int(message[2])
+            lamps= int(message[3])
         except Exception:
-            return {'Ok': "False", 'info_to_contact' : 'Les lampes recues ne sont pas valides. Renvoyer le message corrige.', 'error': message[2]}
+            return {'Ok': "False", 'info_to_contact' : 'Les lampes recues ne sont pas valides. Renvoyer le message corrige.', 'error': message[3]}
         else:
             if not isinstance(lamps, (int)) or  lamps < 0 :
                 return {'Ok': "False", 'info_to_contact' : 'Les lampes recues ne sont pas valides. Renvoyer le message corrige.', 'error': lamps}
-        date_received = validate_date(message[3])
+        date_received = validate_date(message[4])
         if date_received.date() > datetime.datetime.today().date():
             return {'Ok': "False", 'info_to_contact' : 'La date ne peut etre dans le futur. Renvoyer le message corrige.', 'raba': date_received}
-        # import ipdb; ipdb.set_trace()
-        group = NawenuzeGroup.objects.get(colline=message[1].upper())
+        group = NawenuzeGroup.objects.get(colline=message[2].upper())
         reception , created = Reception.objects.get_or_create(group=group, lamps_received=lamps, date_received=date_received)
         if created:
             group.lamps_in_stock += lamps
             group.save()
-    return response_data
+    return {'Ok': "True", 'info_to_contact' : 'Le groupe de la colline {0}( commune {3}) a recu {1} lampes le {2}. Merci a bientot.'.format(group, lamps, date_received.strftime("%d-%m-%Y"), group.commune) , 'raba': date_received.strftime("%d-%m-%Y")}
