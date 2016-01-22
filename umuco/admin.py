@@ -68,11 +68,11 @@ class ReportAdmin(ExportMixin, admin.ModelAdmin):
 class NawenuzeGroupAdminResource(resources.ModelResource):
     class Meta:
         model =NawenuzeGroup
-        fields = ('colline', 'commune', 'province', 'day_of_meeting', 'lamps_in_stock')
+        fields = ('colline', 'commune', 'province', 'day_of_meeting', 'lamps_in_stock', 'cost_lamp', 'cost_recharge')
 
 class NawenuzeGroupAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = NawenuzeGroupAdminResource
-    list_display = ('colline', 'commune', 'day_of_meeting', 'lamps_in_stock', 'province')
+    list_display = ('colline', 'commune', 'day_of_meeting', 'lamps_in_stock', 'province', 'cost_lamp', 'cost_recharge')
     search_fields = ('colline', 'commune',  'province')
     list_filter = ( 'day_of_meeting',)
 
