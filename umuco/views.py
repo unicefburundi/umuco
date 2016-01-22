@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
-from umuco.utils import ExcelResponse, validate_date, split_message
+from umuco.utils import ExcelResponse, validate_date, split_message, flag_report
 from django.http import JsonResponse
 from django.contrib.auth.forms import AuthenticationForm
 from umuco.models import *
@@ -96,7 +96,10 @@ def save_report(request):
                     repport.recharged_lamps = message_2
                     repport.save()
                 group.lamps_in_stock -= message_1
+                if group.lamps_in_stock < 0:
+                    flag_report(PhoneModel.objects.filter(group=group)[0].number, '{0} a raporte le {1} avoir vendu plus de lampes ({2}) qu il n en restait en stock {3}'.format(group, date_updated, message_1, group.lamps_in_stock  ))
                 group.save()
+
             return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'amount': message_3, 'date': date_updated}, safe=False)
 
 

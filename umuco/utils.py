@@ -4,6 +4,9 @@ from django.http import HttpResponse
 import csv
 from pytz import timezone
 import urllib
+import requests
+import json
+from django.conf import settings
 
 timezone('Africa/Bujumbura')
 
@@ -52,3 +55,8 @@ def split_message(request):
         response_data[i.split("=")[0]] = urllib.unquote_plus(i.split("=")[1])
 
     return response_data
+
+def flag_report(receiver, message):
+    url = "https://app.rapidpro.io/api/v1/broadcasts.json"
+    data = {"urns": ['tel:' + receiver],"text": message}
+    requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
