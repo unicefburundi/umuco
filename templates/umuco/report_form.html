@@ -1,0 +1,12 @@
+{% extends "home.html" %}
+
+{% block contents %}
+    <div class="container">
+        <form method="post">{% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+                <input type="submit" value="Submit" />
+            </div>
+        </form>
+    </div>
+{% endblock contents %}

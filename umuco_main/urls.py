@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from umuco.views import home, all_groups, analytics
+from umuco.views import home, all_groups, analytics, NaweNuzeDetail
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from umuco import backend
 
@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^analytics/$', analytics, name="analytics"),
     url(r'^home/$', home, name="home"),
     url(r'^$', analytics, name="analytics"),
+    url(r'^reports/(?P<pk>\d+)$', NaweNuzeDetail.as_view(), name='reports_by_groups2'),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 #In development, static files should be served from app static directories

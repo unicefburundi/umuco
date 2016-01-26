@@ -12,9 +12,8 @@ import datetime
 from django.views.generic import CreateView, DetailView
 from django.contrib.auth import get_user_model
 from django_tables2 import RequestConfig
-from umuco.tables import ReportTable
+from umuco.tables import ReportTable, ReportTable2
 from django.db.models import Sum
-from django.core.mail import send_mail
 from django.views.generic.edit import UpdateView, DeleteView
 from django.views.generic import ListView
 
@@ -38,7 +37,7 @@ def analytics(request):
         group.update(reports.aggregate(recharged_lamps=Sum('recharged_lamps')))
         group.update(reports.aggregate(amount=Sum('amount')))
         statistics.append(group)
-    statistics = ReportTable(statistics)
+    statistics = ReportTable2(statistics)
     statistics.exclude = ('date_updated', )
     RequestConfig(request).configure(statistics)
     return render(request, 'umuco/analytics.html', {'statistics': statistics})
@@ -225,8 +224,10 @@ class ReportList(ListView):
 
 class ReportUpdate(UpdateView):
     model = Report
-    success_url = reverse_lazy('report_list')
     fields = ['recharged_lamps','sold_lamps','amount','group']
+
+    def get_success_url(self, **kwargs):
+        return reverse('reports_by_groups2', kwargs={'pk': self.object.group.id})
 
 class ReportDelete(DeleteView):
     model = Report

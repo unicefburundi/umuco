@@ -1,0 +1,18 @@
+{% extends "home.html" %}
+
+{% block contents %}
+    <div class="container">
+        <h1>Reports</h1>
+        {% for report in object_list %}
+        <ul class="list-group">
+            <li class="list-group-item">{{report.group.colline}}</li>
+        </ul>
+        <div class="list-group">
+            <li class="list-group-item">
+                <a href="#" class="list-group-item list-group-item-success">{{report.group.commune}}</a>
+            </li>
+        </div>
+        {% endfor %}
+        <a href="/">New</a>
+    </div>
+{% endblock contents %}

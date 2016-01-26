@@ -18,6 +18,9 @@ class ReportTable(tables.Table):
         return SafeString('''<a href="/report/reports/%s">%s</a>''' % (ID, value))
 
     def render_date_updated(self, value, record):
-        # import ipdb; ipdb.set_trace()
         report = Report.objects.get(group__colline=record['group__colline'], date_updated=record['date_updated']).id
         return SafeString('''<a href="/report/edit/%s">%s</a>''' % (report, value))
+
+class ReportTable2(ReportTable):
+    class Meta:
+        attrs = {"class": "table ", "data-toggle":"table", "data-search":"true" ,"data-show-columns":"true" ,  "data-show-export":"true", 'data-export-types': "['csv','excel']", "data-show-footer":"true"}

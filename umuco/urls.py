@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^group/(?P<colline>[0-9a-zA-Z_-]+)$', NawenuzeGroupDetail.as_view(), name='group-detail'),
     url(r'^group/details/(?P<colline>[0-9a-zA-Z_-]+)$', views.by_group, name='group_detail'),
     # for the simple class based view
-    url(r'^reports/(?P<pk>[0-9]+)$', views.NaweNuzeDetail.as_view(), name='reports_by_groups'),
+    url(r'^reports/(?P<pk>\d+)$', views.NaweNuzeDetail.as_view(), name='reports_by_groups'),
 
     url(r'^user/add/$', views.UserCreate.as_view(), name='create_user'),
     url(r'^user/detail/(?P<pk>\d+)$', views.UserDetail.as_view(), name='detail_user'),
