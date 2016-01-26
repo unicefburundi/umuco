@@ -56,6 +56,7 @@ class Reception(models.Model):
 class Organization(Group):
     pass_word = models.CharField(max_length=12, default=settings.PASSWORD, editable=False)
     number = models.CharField(primary_key=True, max_length=15, verbose_name=_('phone number'), unique=True)
+    email = models.EmailField(max_length=100,blank=True)
 
     def __unicode__(self):
         return u'%s %s' % (self.name , self.number)

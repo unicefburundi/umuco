@@ -96,12 +96,16 @@ def save_report(request):
                     repport.sold_lamps = message_1
                     repport.recharged_lamps = message_2
                     repport.save()
-                solds = Report.objects.filter(group=group).aggregate(Sum('sold_lamps'))
-                if group.lamps_in_stock < solds['sold_lamps__sum']:
-                    flag_report(PhoneModel.objects.filter(group=group)[0].number, 'le groupe {0} (de la commune {3}) a raporte le {1} avoir vendu plus de lampes ({2}) qu il n en restait en stock'.format(group, date_updated.strftime("%d-%m-%Y"), message_1, group.commune))
+
+                # cost
                 cost_expected = (message_1 * group.cost_lamp + message_2*group.cost_recharge)
                 if message_3 > cost_expected:
-                    pass
+                    flag_report(Organization.objects.get(name='CPS').number, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir avoir epargne {3} fbu alors que cela valait juste {4}'.format(group, group.commune, date_updated.strftime("%d-%m-%Y"), message_3, cost_expected))
+                # sold
+                solds = Report.objects.filter(group=group).aggregate(Sum('sold_lamps'))
+                if group.lamps_in_stock < solds['sold_lamps__sum']:
+                    flag_report(Organization.objects.get(name='CPS').number, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir vendu plus de lampes ({3}) qu il n en restait en stock({4})'.format(group, group.commune, date_updated.strftime("%d-%m-%Y"), message_1, (group.lamps_in_stock - solds['sold_lamps__sum'])))
+
 
             return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'amount': message_3, 'date': date_updated}, safe=False)
 
