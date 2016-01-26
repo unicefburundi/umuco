@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from umuco.utils import ExcelResponse, validate_date, split_message, flag_report
@@ -15,6 +15,8 @@ from django_tables2 import RequestConfig
 from umuco.tables import ReportTable
 from django.db.models import Sum
 from django.core.mail import send_mail
+from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic import ListView
 
 
 User = get_user_model()
@@ -216,3 +218,16 @@ def add_lamps(request):
             group.lamps_in_stock += lamps
             group.save()
     return {'Ok': "True", 'info_to_contact' : 'Le groupe de la colline {0}( commune {3}) a recu {1} lampes le {2}. Merci a bientot.'.format(group, lamps, date_received.strftime("%d-%m-%Y"), group.commune) , 'raba': date_received.strftime("%d-%m-%Y")}
+
+
+class ReportList(ListView):
+    model = Report
+
+class ReportUpdate(UpdateView):
+    model = Report
+    success_url = reverse_lazy('report_list')
+    fields = ['recharged_lamps','sold_lamps','amount','group']
+
+class ReportDelete(DeleteView):
+    model = Report
+    success_url = reverse_lazy('report_list')

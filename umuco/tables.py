@@ -1,6 +1,6 @@
 import django_tables2 as tables
 from django.utils.safestring import SafeString
-from umuco.models import  NawenuzeGroup
+from umuco.models import  NawenuzeGroup, Report
 
 class ReportTable(tables.Table):
     group__colline = tables.Column(verbose_name='Colline', attrs={'th':{'data-footer-formatter':"totalTextFormatter"}})
@@ -16,3 +16,8 @@ class ReportTable(tables.Table):
     def render_group__colline(self, value):
         ID = NawenuzeGroup.objects.get(colline=value).id
         return SafeString('''<a href="/report/reports/%s">%s</a>''' % (ID, value))
+
+    def render_date_updated(self, value, record):
+        # import ipdb; ipdb.set_trace()
+        report = Report.objects.get(group__colline=record['group__colline'], date_updated=record['date_updated']).id
+        return SafeString('''<a href="/report/edit/%s">%s</a>''' % (report, value))
