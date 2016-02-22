@@ -232,3 +232,8 @@ class ReportUpdate(UpdateView):
 class ReportDelete(DeleteView):
     model = Report
     success_url = reverse_lazy('report_list')
+
+class NaweNuzeCreate(CreateView):
+    model = NawenuzeGroup
+    fields = '__all__'
+    success_url = reverse_lazy('groups')

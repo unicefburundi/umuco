@@ -12,7 +12,6 @@ urlpatterns = patterns('',
     url(r'^overview/$', views.get_reports, name='get_reports'),
     url(r'^overview/(?P<colline>[0-9a-zA-Z_-]+)$', views.get_reports, name='get_groups_reports'),
     url(r'^export/$', views.download_reports, name='download_reports'),
-    url(r'^group/$', include(group_urls ) ),
     # for the api
     url(r'^group/(?P<colline>[0-9a-zA-Z_-]+)/reports$', NawenuzeGroupReportList.as_view(), name='groupreport-list'),
     url(r'^group/(?P<colline>[0-9a-zA-Z_-]+)$', NawenuzeGroupDetail.as_view(), name='group-detail'),
@@ -25,7 +24,7 @@ urlpatterns = patterns('',
     # for reception
     url(r'^add/reception/$', views.add_lamps, name='add_reception'),
     #report
-        url(r'^list/$', views.ReportList.as_view(), name='report_list'),
-        url(r'^edit/(?P<pk>\d+)$', views.ReportUpdate.as_view(), name='report_edit'),
-        url(r'^delete/(?P<pk>\d+)$', views.ReportDelete.as_view(), name='report_delete')
+    url(r'^list/$', views.ReportList.as_view(), name='report_list'),
+    url(r'^edit/(?P<pk>\d+)$', views.ReportUpdate.as_view(), name='report_edit'),
+    url(r'^delete/(?P<pk>\d+)$', views.ReportDelete.as_view(), name='report_delete'),
 )
