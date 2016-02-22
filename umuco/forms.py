@@ -7,6 +7,7 @@ class RaportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = ('recharged_lamps', 'sold_lamps', 'amount')
+        exclude = ('group',)
 
 class UserCreationForm(UserCreationForm):
     """
