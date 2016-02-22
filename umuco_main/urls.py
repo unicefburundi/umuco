@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^home/$', home, name="home"),
     url(r'^$', analytics, name="analytics"),
     url(r'^create/group/$', NaweNuzeCreate.as_view(), name='add_nawenuze'),
+    url(r'^create/number/$', NaweNuzeCreate.as_view(), name='add_nawenuze'),
     url(r'^reports/(?P<pk>\d+)$', NaweNuzeDetail.as_view(), name='reports_by_groups2'),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

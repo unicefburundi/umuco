@@ -237,3 +237,8 @@ class NaweNuzeCreate(CreateView):
     model = NawenuzeGroup
     fields = '__all__'
     success_url = reverse_lazy('groups')
+
+class PhoneModelCreate(CreateView):
+    model = PhoneModel
+    fields = '__all__'
+    success_url = reverse_lazy('groups')
