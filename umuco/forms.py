@@ -31,12 +31,11 @@ class UserCreationForm(UserCreationForm):
             raise forms.ValidationError("Fill out both fields")
         return password2
 
+MAX_PHONENUMBER = 2
 class NaweNuzeForm(forms.ModelForm):
     class Meta:
         model = NawenuzeGroup
         fields = ('province', 'commune', 'colline', 'day_of_meeting')
 
-class PhonemodelForm(forms.ModelForm):
-    class Meta:
-        model = PhoneModel
-        fields = ('number')
+GroupFormset  = inlineformset_factory(NawenuzeGroup, PhoneModel, fields = ('number',), extra=MAX_PHONENUMBER)
+

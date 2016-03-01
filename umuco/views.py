@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
 from umuco.utils import ExcelResponse, validate_date, split_message, flag_report
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from umuco.models import *
 from django.conf import settings
@@ -233,13 +233,32 @@ class ReportDelete(DeleteView):
     model = Report
     success_url = reverse_lazy('report_list')
 
+
+class PhoneModelCreate(CreateView):
+    model = PhoneModel
+    fields = '__all__'
+    success_url = reverse_lazy('groups')
+
 class NaweNuzeCreate(CreateView):
     model = NawenuzeGroup
     fields = ('province', 'commune', 'colline')
     exclude = ('lamps_in_stock','cost_lamp','cost_recharge')
     success_url = reverse_lazy('groups')
 
-class PhoneModelCreate(CreateView):
-    model = PhoneModel
-    fields = '__all__'
-    success_url = reverse_lazy('groups')
+def submit_group(request):
+    if request.POST:
+        form = NaweNuzeForm(request.POST)
+        if form.is_valid():
+            group = form.save(commit=False)
+            phonemodel_formset = GroupFormset(request.POST, instance=group)
+            if phonemodel_formset.is_valid():
+                group.save()
+                phonemodel_formset.save()
+                return HttpResponseRedirect(reverse('groups'))
+    else:
+        form = NaweNuzeForm()
+        phonemodel_formset = GroupFormset(instance=NawenuzeGroup())
+    return render(request, "umuco/group_submit.html", {
+        "form": form,
+        "phonemodel_formset": phonemodel_formset,
+    })
