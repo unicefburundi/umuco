@@ -235,7 +235,8 @@ class ReportDelete(DeleteView):
 
 class NaweNuzeCreate(CreateView):
     model = NawenuzeGroup
-    fields = '__all__'
+    fields = ('province', 'commune', 'colline')
+    exclude = ('lamps_in_stock','cost_lamp','cost_recharge')
     success_url = reverse_lazy('groups')
 
 class PhoneModelCreate(CreateView):

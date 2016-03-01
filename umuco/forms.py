@@ -1,6 +1,7 @@
 from django import forms
-from umuco.models import Report
+from umuco.models import Report, NawenuzeGroup, PhoneModel
 from authtools.forms import UserCreationForm
+from django.forms import inlineformset_factory
 
 
 class RaportForm(forms.ModelForm):
@@ -30,5 +31,12 @@ class UserCreationForm(UserCreationForm):
             raise forms.ValidationError("Fill out both fields")
         return password2
 
-    # def save(self, *args, **kwargs):
-    #     super(UserCreationForm, self).save(*args, **kwargs)
+class NaweNuzeForm(forms.ModelForm):
+    class Meta:
+        model = NawenuzeGroup
+        fields = ('province', 'commune', 'colline', 'day_of_meeting')
+
+class PhonemodelForm(forms.ModelForm):
+    class Meta:
+        model = PhoneModel
+        fields = ('number')
