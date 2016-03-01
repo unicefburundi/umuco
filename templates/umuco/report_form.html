@@ -4,7 +4,7 @@
     <div class="container">
         <h2>Edit Report</h2>
         <form method="post">{% csrf_token %}
-            <div class="col-md-3">
+        <div class="col-md-3">
             <label for="group">{{form.group.label_tag}}</label>
             <p>{{form.group.errors}}</p>
             <p>{{form.group}}</p>
