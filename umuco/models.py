@@ -10,8 +10,8 @@ def get_default_group():
 
 class NawenuzeGroup(models.Model):
     province = models.CharField(max_length=150, blank=True)
-    commune = models.CharField(max_length=150, blank=True)
-    colline = models.CharField(max_length=150)
+    commune = models.CharField(max_length=150, blank=True, help_text=_('Required'))
+    colline = models.CharField(max_length=150, help_text=_('Required'), unique=True)
     day_of_meeting = models.IntegerField(verbose_name=_("Day of meeting"), help_text=_('Number. Eg : For Monday put 1, Tuesday put 2, ...'), null=True)
     lamps_in_stock = models.IntegerField(default=0 , null=True, blank=True)
     cost_lamp = models.IntegerField(default=8000 , null=True, blank=True)

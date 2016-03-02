@@ -4,32 +4,40 @@
     <div class="container">
         <form action="." method="post" class="recipe_form">
             {% csrf_token %}
-            <div class="col-md-3">
-                <label for="province">{{form.province.label_tag}}</label>
-                <p>{{form.province.errors}}</p>
-                <p>{{form.province}}</p>
+            <h3>Group</h3>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="province">{{form.province.label_tag}}</label>
+                    <p>{{form.province.errors}}</p>
+                    <p>{{form.province}}</p>
+                </div>
+                <div class="col-md-3">
+                    <label for="commune">{{form.commune.label_tag}}</label>
+                    <p>{{form.commune.errors}}</p>
+                    <p>{{form.commune}}</p>
+                </div>
+                <div class="col-md-3">
+                    <label for="colline">{{form.colline.label_tag}}</label>
+                    <p>{{form.colline.errors}}</p>
+                    <p>{{form.colline}}</p>
+                </div>
+                <div class="col-md-3">
+                    <label for="day_of_meeting">{{form.day_of_meeting.label_tag}}</label>
+                    <p>{{form.day_of_meeting.errors}}</p>
+                    <p>{{form.day_of_meeting}}</p>
+                </div>
             </div>
-            <div class="col-md-3">
-                <label for="commune">{{form.commune.label_tag}}</label>
-                <p>{{form.commune.errors}}</p>
-                <p>{{form.commune}}</p>
+            <h3>Telephone(s)</h3>
+            <div class="row">
+            {% for form  in phonemodel_formset.forms %}
+                <div class="col-md-3">
+                    <label for="number">{{form.number.label_tag}}</label>
+                    <p>{{form.number.errors}}</p>
+                    <p>{{form.number}}</p>
+                </div>
+            {% endfor %}
+            <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
             </div>
-            <div class="col-md-3">
-                <label for="colline">{{form.colline.label_tag}}</label>
-                <p>{{form.colline.errors}}</p>
-                <p>{{form.colline}}</p>
-            </div>
-            <div class="col-md-3">
-                <label for="day_of_meeting">{{form.day_of_meeting.label_tag}}</label>
-                <p>{{form.day_of_meeting.errors}}</p>
-                <p>{{form.day_of_meeting}}</p>
-            </div>
-              {{ phonemodel_formset}}
-              <tr>
-                <th></th>
-                <td><input type="submit" name="submit" value="Submit" class="button"></td>
-              </tr>
-            </table>
         </form>
         <a href="{% url 'groups' %}" class="btn default">Back to Groups</a>
     </div>
