@@ -7,6 +7,7 @@ import urllib
 import requests
 import json
 from django.conf import settings
+from django.core.mail import EmailMessage
 
 timezone('Africa/Bujumbura')
 
@@ -61,3 +62,12 @@ def flag_report(receiver, message):
     data = {"urns": ['tel:' + receiver],"text": message}
     sending = requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
     print sending.content
+
+def email_report_flagged(receiver, message):
+    try:
+        email = EmailMessage('Report innacurate', message, to=[receiver])
+        email.send()
+    except Exception, e:
+        raise e
+    else:
+        return 'Sent'

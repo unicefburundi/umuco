@@ -111,12 +111,12 @@ class ReceptionAdmin(ExportMixin, admin.ModelAdmin):
 class OrganizationAdminResource(resources.ModelResource):
     class Meta:
         model =Organization
-        fields = ('name',  'number')
+        fields = ('name',   'user')
 
 class OrganizationAdmin(ExportMixin, admin.ModelAdmin):
     resource_class =OrganizationAdminResource
-    list_display = ('name', 'number')
-    search_fields = ( 'name', 'number' )
+    list_display = ('name',  'user')
+    search_fields = ( 'name',  'user')
 
 admin.site.register(Report, ReportAdmin)
 admin.site.register(NawenuzeGroup, NawenuzeGroupAdmin)
