@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
-from umuco.utils import ExcelResponse, validate_date, split_message, flag_report
+from umuco.utils import ExcelResponse, validate_date, split_message, flag_report, email_report_flagged
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from umuco.models import *
@@ -100,12 +100,14 @@ def save_report(request):
 
                 # cost
                 cost_expected = (message_1 * group.cost_lamp + message_2*group.cost_recharge)
-                if message_3 > cost_expected:
-                    flag_report(Organization.objects.get(name='CPS').number, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir avoir epargne {3} fbu alors que cela valait juste {4}'.format(group, group.commune, date_updated.strftime("%d-%m-%Y"), message_3, cost_expected))
+                if message_3 != 0 and message_3 != cost_expected :
+                    sent = email_report_flagged(Organization.objects.get(name='CPS').user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir avoir epargne {3} fbu alors que cela valait juste {4}'.format(group, group.commune, date_updated.strftime("%d-%m-%Y"), message_3, cost_expected))
+                    print sent
                 # sold
                 solds = Report.objects.filter(group=group).aggregate(Sum('sold_lamps'))
-                if group.lamps_in_stock < solds['sold_lamps__sum']:
-                    flag_report(Organization.objects.get(name='CPS').number, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir vendu plus de lampes ({3}) qu il n en restait en stock({4})'.format(group, group.commune, date_updated.strftime("%d-%m-%Y"), message_1, (group.lamps_in_stock - solds['sold_lamps__sum'])))
+                if message_1 != 0 and group.lamps_in_stock != solds['sold_lamps__sum']:
+                    sent = email_report_flagged(Organization.objects.get(name='CPS').user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir vendu plus de lampes ({3}) qu il n en restait en stock({4})'.format(group, group.commune, date_updated.strftime("%d-%m-%Y"), message_1, (group.lamps_in_stock - solds['sold_lamps__sum'])))
+                    print sent
 
 
             return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'amount': message_3, 'date': date_updated}, safe=False)
