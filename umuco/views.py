@@ -100,7 +100,6 @@ def save_report(request):
 
                 # cost
                 cost_expected = (message_1 * group.cost_lamp + message_2*group.cost_recharge)
-                # import ipdb; ipdb.set_trace()
                 if message_3 != 0 and message_3 != cost_expected :
                     sent = email_report_flagged(Organization.objects.get(name='CPS').user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir avoir epargne {3} fbu alors que cela valait juste {4}'.format(group, group.commune, date_updated.strftime("%d-%m-%Y"), message_3, cost_expected))
                     print sent
