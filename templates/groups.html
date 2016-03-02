@@ -22,6 +22,14 @@ All Nawe Nuze Groups
             </button>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse1">
+    <ul class="nav navbar-nav navbar-left">
+      <li class="active"><a href="{% url 'analytics' %}">Analytics</a></li>
+     <li class=""><a href="{% url 'groups' %}">Groups</a></li>
+     <li class=""><a href="{% url 'home' %}">Graphics</a></li>
+     {% if user.is_staff %}
+       <li class=""><a href="/report/add/group/">Register Group</a></li>
+       {% endif %}
+      </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="{% url 'home' %}"  target="_ext">Home+</a></li>
             <li><a href="#"><i class="glyphicon glyphicon-user"></i> {% if user.is_authenticated %}
