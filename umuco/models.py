@@ -3,23 +3,19 @@ from django.utils.translation import ugettext as _
 from django.utils import timezone
 from django.contrib.auth.models import Group
 from django.conf import settings
-from django.contrib.auth import get_user_model
-from authtools.models import User
-
-
+from django.core.validators import MaxValueValidator
+from bdiadmin.models import *
 
 def get_default_group():
     return NawenuzeGroup.objects.get_or_create(colline=_("Anonymous_Group"))
 
 
 class NawenuzeGroup(models.Model):
-    province = models.CharField(max_length=150, blank=True)
-    commune = models.CharField(max_length=150, blank=True, help_text=_('Required'))
-    colline = models.CharField(max_length=150, help_text=_('Required'), unique=True)
-    day_of_meeting = models.IntegerField(verbose_name=_("Day of meeting"), help_text=_('Number. Eg : For Monday put 1, Tuesday put 2, ...'), null=True)
-    lamps_in_stock = models.IntegerField(default=0 , null=True, blank=True)
-    cost_lamp = models.IntegerField(default=8000 , null=True, blank=True)
-    cost_recharge = models.IntegerField(default=300 , null=True, blank=True)
+    colline = models.OneToOneField(Colline, help_text=_('Required'))
+    day_of_meeting = models.PositiveIntegerField(verbose_name=_("Day of meeting"), help_text=_('Number. Eg : For Monday put 1, Tuesday put 2, ...'), null=True, validators=[MaxValueValidator(7),])
+    lamps_in_stock = models.PositiveIntegerField(default=0 , null=True, blank=True)
+    cost_lamp = models.PositiveIntegerField(default=8000 , null=True, blank=True)
+    cost_recharge = models.PositiveIntegerField(default=300 , null=True, blank=True)
 
     def __unicode__(self):
         return u'%s' % self.colline
@@ -38,9 +34,9 @@ class Report( models.Model):
     """
     date = models.DateTimeField(auto_now_add=True, verbose_name=_('Date submited'))
     date_updated = models.DateField(verbose_name=_('Date refering to'), default=timezone.now)
-    recharged_lamps = models.IntegerField(default=0,verbose_name=_('Recharged lamps'))
-    sold_lamps = models.IntegerField(default=0, verbose_name=_('Sold Lamps'))
-    amount = models.IntegerField(default=0, verbose_name=_('Amount'))
+    recharged_lamps = models.PositiveIntegerField(default=0,verbose_name=_('Recharged lamps'))
+    sold_lamps = models.PositiveIntegerField(default=0, verbose_name=_('Sold Lamps'))
+    amount = models.PositiveIntegerField(default=0, verbose_name=_('Amount'))
     group = models.ForeignKey(NawenuzeGroup, verbose_name=_('group'), default=get_default_group)
 
     def __unicode__(self):
@@ -51,7 +47,7 @@ class Reception(models.Model):
     reception of lamps
     """
     group = models.ForeignKey(NawenuzeGroup, verbose_name=_('group'), default=get_default_group)
-    lamps_received = models.IntegerField(default=0, verbose_name=_('Received lamps'))
+    lamps_received = models.PositiveIntegerField(default=0, verbose_name=_('Received lamps'))
     date_received = models.DateField(verbose_name=_('Date received'), default=timezone.now)
 
     def __unicode__(self):
@@ -59,7 +55,7 @@ class Reception(models.Model):
 
 class Organization(Group):
     pass_word = models.CharField(max_length=12, default=settings.PASSWORD, editable=False)
-    user = models.ForeignKey(User, help_text=_('Partenair focalt point '))
+    partner = models.ForeignKey(ProfileUser, help_text=_('Partenair focalt point '))
 
     def __unicode__(self):
-        return u'%s %s' % (self.name , self.number)
+        return u'%s' % (self.partner.user.name)

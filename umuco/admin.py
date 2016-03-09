@@ -57,13 +57,13 @@ admin.site.register(User, UserAdmin)
 class ReportAdminResource(resources.ModelResource):
     class Meta:
         model =Report
-        fields = ('date_updated', 'recharged_lamps', 'sold_lamps', 'amount', 'group__colline', 'group__commune')
+        fields = ('date_updated', 'recharged_lamps', 'sold_lamps', 'amount', 'group__colline')
 
 class ReportAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = ReportAdminResource
     date_hierarchy = 'date_updated'
     list_display = ('date_updated', 'group','recharged_lamps', 'sold_lamps', 'amount')
-    search_fields = ('group__colline', 'group__commune', )
+    search_fields = ('group__colline', 'group__colline__commune', )
 
 class NawenuzeGroupAdminResource(resources.ModelResource):
     class Meta:
@@ -73,29 +73,36 @@ class NawenuzeGroupAdminResource(resources.ModelResource):
 class NawenuzeGroupAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = NawenuzeGroupAdminResource
     list_display = ('colline', 'commune', 'day_of_meeting', 'lamps_in_stock', 'province', 'cost_lamp', 'cost_recharge')
-    search_fields = ('colline', 'commune',  'province')
+    search_fields = ('colline', 'colline__commune',  'colline__commune__province')
     list_filter = ( 'day_of_meeting',)
+
+
+    def commune(self, obj):
+        return obj.colline.commune
+
+    def province(self, obj):
+        return obj.colline.commune.province
 
 class PhoneModelAdminResource(resources.ModelResource):
     class Meta:
         model =PhoneModel
-        fields = ('number',  'group__colline', 'group__commune')
+        fields = ('number',  'group__colline',)
 
 class PhoneModelAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = PhoneModelAdminResource
     list_display = ('number', 'colline','commune')
-    search_fields = ('number', 'group__colline', 'group__commune', )
+    search_fields = ('number', 'group__colline', 'group__colline__commune', )
 
     def colline(self, obj):
         return obj.group.colline
 
     def commune(self, obj):
-        return obj.group.commune
+        return obj.group.colline.commune
 
 class ReceptionAdminResource(resources.ModelResource):
     class Meta:
         model =Reception
-        fields = ('lamps_received',  'group__colline', 'group__commune', 'date_received')
+        fields = ('lamps_received',  'group__colline', 'date_received')
 
 class ReceptionAdmin(ExportMixin, admin.ModelAdmin):
     resource_class =ReceptionAdminResource
@@ -106,17 +113,17 @@ class ReceptionAdmin(ExportMixin, admin.ModelAdmin):
         return obj.group.colline
 
     def commune(self, obj):
-        return obj.group.commune
+        return obj.group.colline.commune
 
 class OrganizationAdminResource(resources.ModelResource):
     class Meta:
         model =Organization
-        fields = ('name',   'user')
+        fields = ('name',   'partner')
 
 class OrganizationAdmin(ExportMixin, admin.ModelAdmin):
     resource_class =OrganizationAdminResource
-    list_display = ('name',  'user')
-    search_fields = ( 'name',  'user')
+    list_display = ('name',  'partner')
+    search_fields = ( 'name',  'partner')
 
 admin.site.register(Report, ReportAdmin)
 admin.site.register(NawenuzeGroup, NawenuzeGroupAdmin)

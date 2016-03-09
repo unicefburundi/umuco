@@ -2,6 +2,7 @@ from django import forms
 from umuco.models import Report, NawenuzeGroup, PhoneModel
 from authtools.forms import UserCreationForm
 from django.forms import inlineformset_factory
+from bdiadmin.models import *
 
 
 class RaportForm(forms.ModelForm):
@@ -33,9 +34,11 @@ class UserCreationForm(UserCreationForm):
 
 MAX_PHONENUMBER = 2
 class NaweNuzeForm(forms.ModelForm):
+    province = forms.ModelChoiceField(queryset=Province.objects.all())
+    commune = forms.ModelChoiceField(queryset=Commune.objects.all())
     class Meta:
         model = NawenuzeGroup
-        fields = ('province', 'commune', 'colline', 'day_of_meeting')
+        fields = ('colline', 'day_of_meeting')
 
 GroupFormset  = inlineformset_factory(NawenuzeGroup, PhoneModel, fields = ('number',), extra=MAX_PHONENUMBER)
 

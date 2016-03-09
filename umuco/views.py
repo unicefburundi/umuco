@@ -28,10 +28,10 @@ def home(request):
 
 
 def analytics(request):
-    groups = Report.objects.values('group__colline','group__commune').distinct()
+    groups = Report.objects.values('group__colline','group__colline__commune').distinct()
     statistics = []
     for i in groups:
-        reports = Report.objects.filter(group__colline=i['group__colline'], group__commune=i['group__commune'])
+        reports = Report.objects.filter(group__colline=i['group__colline'], group__colline__commune=i['group__colline__commune'])
         group = i
         group.update(reports.aggregate(sold_lamps=Sum('sold_lamps')))
         group.update(reports.aggregate(recharged_lamps=Sum('recharged_lamps')))

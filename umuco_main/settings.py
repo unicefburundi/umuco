@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'import_export',
     'umuco',
     'authtools',
+    'bdiadmin',
 )
 
 MIDDLEWARE_CLASSES = (
