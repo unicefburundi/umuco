@@ -11,6 +11,11 @@ class RaportForm(forms.ModelForm):
         fields = ('recharged_lamps', 'sold_lamps', 'amount')
         exclude = ('group',)
 
+class PhoneModelForm(forms.ModelForm):
+    class Meta:
+        model = PhoneModel
+        fields = ('group', 'number',  )
+
 class UserCreationForm(UserCreationForm):
     """
     A UserCreationForm with optional password inputs.

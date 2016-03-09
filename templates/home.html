@@ -48,13 +48,12 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       {% if user.is_authenticated %}
         <ul class="nav navbar-nav">
-        <li class="active"><a href=" {% url 'home' %}">Statistics <span class="sr-only">(current)</span></a></li>
-      </ul>
-      {% endif %}
-      <ul class="nav navbar-nav navbar-right">
         {% block contentright %}
         {% endblock contentright %}
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+      </ul>
+      {% endif %}
     </div>
   </div>
     </nav>

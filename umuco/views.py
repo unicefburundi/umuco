@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from jsonview.decorators import json_view
-from umuco.utils import ExcelResponse, validate_date, split_message, flag_report, email_report_flagged
+from umuco.utils import ExcelResponse, validate_date, split_message, email_report_flagged
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from umuco.models import *
@@ -16,6 +16,7 @@ from umuco.tables import ReportTable, ReportTable2
 from django.db.models import Sum
 from django.views.generic.edit import UpdateView, DeleteView
 from django.views.generic import ListView
+from bdiadmin.forms import *
 
 
 User = get_user_model()
@@ -248,6 +249,12 @@ class NaweNuzeCreate(CreateView):
     success_url = reverse_lazy('groups')
 
 def submit_group(request):
+    form = NaweNuzeForm()
+    phonemodel_formset = GroupFormset(instance=NawenuzeGroup())
+    province_form = ProvinceForm()
+    commune_form = CommuneForm()
+    colline_form = CollineForm()
+    phone_form = PhoneModelForm()
     if request.POST:
         form = NaweNuzeForm(request.POST)
         if form.is_valid():
@@ -263,4 +270,8 @@ def submit_group(request):
     return render(request, "umuco/group_submit.html", {
         "form": form,
         "phonemodel_formset": phonemodel_formset,
+        "province_form" : province_form,
+        "commune_form" : commune_form,
+        "colline_form" : colline_form,
+        "phone_form" : phone_form
     })

@@ -1,8 +1,20 @@
 {% extends "home.html" %}
 
+{% block contentright %}
+<ul class="nav nav-tabs">
+    <li {% block activegroup %}class="active"{% endblock activegroup %} ><a href="#group"   data-toggle="tab">Group</a></li>
+    <li {% block activeprovince %}{% endblock activeprovince %} ><a href="#province"   data-toggle="tab">Province</a></li>
+    <li {% block activecommune %}{% endblock activecommune %} ><a href="#commune"   data-toggle="tab">Commune</a></li>
+    <li {% block activecolline %}{% endblock activecolline %} ><a href="#colline"   data-toggle="tab">Colline</a></li>
+    <li {% block activetelephone %}{% endblock activetelephone %} ><a href="#telephone"   data-toggle="tab">Telephone</a></li>
+{% endblock contentright  %}
+
 {% block contents %}
-    <div class="container">
-        <form action="." method="post" class="recipe_form">
+<div class="col-md-1"></div>
+<div class="col-md-10">
+    <div class="tab-content">
+        <div class="tab-pane {% block activegroup1 %}active{% endblock activegroup1 %}" id="group">
+        <form action="." method="post" class="group_form">
             {% csrf_token %}
             <h3>Group</h3>
             <div class="row">
@@ -40,6 +52,80 @@
             <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
             </div>
         </form>
-        <a href="{% url 'groups' %}" class="btn default">Back to Groups</a>
+        <a href="{% url 'groups' %}" class="button btn default">Back to Groups</a>
+        </div>
+        <div class="tab-pane {% block activeprovince1 %}{% endblock activeprovince1 %}" id="province">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <label for="name">{{province_form.name.label_tag}}</label>
+                    <p>{{province_form.name.errors}}</p>
+                    <p>{{province_form.name}}</p>
+                </div>
+                <div class="col-md-4">
+                    <label for="code">{{province_form.code.label_tag}}</label>
+                    <p>{{province_form.code.errors}}</p>
+                    <p>{{province_form.code}}</p>
+                </div>
+                <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+            </div>
+        </div>
+        <div class="tab-pane {% block activecommune1 %}{% endblock activecommune1 %}" id="commune">
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="name">{{commune_form.province.label_tag}}</label>
+                    <p>{{commune_form.province.errors}}</p>
+                    <p>{{commune_form.province}}</p>
+                </div>
+                <div class="col-md-3">
+                    <label for="name">{{commune_form.name.label_tag}}</label>
+                    <p>{{commune_form.name.errors}}</p>
+                    <p>{{commune_form.name}}</p>
+                </div>
+                <div class="col-md-3">
+                    <label for="code">{{commune_form.code.label_tag}}</label>
+                    <p>{{commune_form.code.errors}}</p>
+                    <p>{{commune_form.code}}</p>
+                </div>
+                <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+            </div>
+        </div>
+        <div class="tab-pane {% block activecolline1 %}{% endblock activecolline1 %}" id="colline">
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="commune">{{colline_form.commune.label_tag}}</label>
+                    <p>{{colline_form.commune.errors}}</p>
+                    <p>{{colline_form.commune}}</p>
+                </div>
+                <div class="col-md-3">
+                    <label for="name">{{province_form.name.label_tag}}</label>
+                    <p>{{colline_form.name.errors}}</p>
+                    <p>{{colline_form.name}}</p>
+                </div>
+                <div class="col-md-3">
+                    <label for="code">{{colline_form.code.label_tag}}</label>
+                    <p>{{colline_form.code.errors}}</p>
+                    <p>{{colline_form.code}}</p>
+                </div>
+                <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+            </div>
+        </div>
+        <div class="tab-pane {% block activetelephone1 %}{% endblock activetelephone1 %}" id="telephone">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <label for="group">{{phone_form.group.label_tag}}</label>
+                    <p>{{phone_form.group.errors}}</p>
+                    <p>{{phone_form.group}}</p>
+                </div>
+                <div class="col-md-3">
+                    <label for="number">{{phone_form.number.label_tag}}</label>
+                    <p>{{phone_form.number.errors}}</p>
+                    <p>{{phone_form.number}}</p>
+                </div>
+                <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+            </div>
+        </div>
     </div>
+</div>
 {% endblock contents %}
