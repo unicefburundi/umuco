@@ -100,7 +100,7 @@
     <ul class="nav navbar-nav navbar-right">
      <li class="active"><a href="#">Muco</a></li>
      {% if user.is_authenticated %}
-       <li><a href="{% url 'logout' %}" role="button" data-toggle="modal">Logout</a></li>
+       <li><a href="{% url 'logout' %}?next=/" role="button" data-toggle="modal">Logout</a></li>
        {% else %}
        <li><a href="#loginModal" role="button" data-toggle="modal">Login</a></li>
      {% endif %}
