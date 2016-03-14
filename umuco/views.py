@@ -22,6 +22,10 @@ from bdiadmin.forms import *
 User = get_user_model()
 
 
+def landing(request):
+    form = AuthenticationForm()
+    return render(request, "landing_page.html", {'form': form})
+
 @csrf_exempt
 def home(request):
     form = AuthenticationForm()

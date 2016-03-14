@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from umuco.views import home, all_groups, analytics, NaweNuzeDetail, NaweNuzeCreate, PhoneModelCreate
+from umuco.views import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from umuco import backend
 
@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     url(r'^groups/$', all_groups, name="groups"),
     url(r'^analytics/$', analytics, name="analytics"),
     url(r'^home/$', home, name="home"),
-    url(r'^$', analytics, name="analytics"),
+    url(r'^$', landing, name="landing_page"),
     url(r'^create/group/$', NaweNuzeCreate.as_view(), name='add_nawenuze'),
     url(r'^create/number/$', PhoneModelCreate.as_view(), name='add_number'),
     url(r'^reports/(?P<pk>\d+)$', NaweNuzeDetail.as_view(), name='reports_by_groups2'),
