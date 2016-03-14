@@ -4,10 +4,10 @@ from umuco.models import  NawenuzeGroup, Report
 
 class ReportTable(tables.Table):
     group__colline = tables.Column(verbose_name='Colline', attrs={'th':{'data-footer-formatter':"totalTextFormatter"}})
+    group__commune = tables.Column(verbose_name='Commune')
     sold_lamps = tables.Column(verbose_name='Sold lamps', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     recharged_lamps = tables.Column(verbose_name='Recharged lamps', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     amount = tables.Column(verbose_name='Set aside ', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    group__commune = tables.Column(verbose_name='Commune')
     date_updated = tables.Column(verbose_name='Date ')
     edit = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-info">Edit</a>', verbose_name='Edit')
     delete = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-danger">Delete</a>', verbose_name='Delete')
@@ -25,21 +25,29 @@ class ReportTable(tables.Table):
 
 
 class ReportTable2(tables.Table):
-    group__colline = tables.Column(verbose_name='Colline', attrs={'th':{'data-footer-formatter':"totalTextFormatter"}})
+    colline = tables.Column(verbose_name='Colline', attrs={'th':{'data-footer-formatter':"totalTextFormatter"}})
+    commune = tables.Column(verbose_name='Commune')
     sold_lamps = tables.Column(verbose_name='Sold lamps', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     recharged_lamps = tables.Column(verbose_name='Recharged lamps', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     amount = tables.Column(verbose_name='Set aside ', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    group__commune = tables.Column(verbose_name='Commune')
     date_updated = tables.Column(verbose_name='Date ')
     details = tables.TemplateColumn('<a href="#" >Details</a>')
 
     def render_date_updated(self, value, record):
-        report = Report.objects.get(group__colline=record['group__colline'], date_updated=record['date_updated']).id
-        return SafeString('''<a href="/report/edit/%s">%s</a>''' % (report, value))
+        report = Report.objects.get(group__colline=record['colline'], date_updated=record['date_updated']).id
+        return SafeString('''<a href="/report/edit/%s">%s</a>''' % (report, value.name))
 
     def render_details(self, record):
-        ID = NawenuzeGroup.objects.get(colline=record['group__colline']).id
+        ID = NawenuzeGroup.objects.get(colline=record['colline']).id
         return SafeString('''<a href="/report/reports/%s" class="btn btn-xs btn-default">Details</a>''' % (ID))
+
+    def render_colline(self, record):
+        name = NawenuzeGroup.objects.get(colline=record['colline']).colline.name
+        return name
+
+    def render_commune(self, record):
+        name = NawenuzeGroup.objects.get(colline__commune=record['commune']).colline.commune.name
+        return name
 
     class Meta:
         attrs = {"class": "table ", "data-toggle":"table", "data-search":"true" ,"data-show-columns":"true" ,  "data-show-export":"true", 'data-export-types': "['csv','excel']", "data-show-footer":"true"}

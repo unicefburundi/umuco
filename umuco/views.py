@@ -17,6 +17,7 @@ from django.db.models import Sum
 from django.views.generic.edit import UpdateView, DeleteView
 from django.views.generic import ListView
 from bdiadmin.forms import *
+from django.db.models import F
 
 
 User = get_user_model()
@@ -33,10 +34,10 @@ def home(request):
 
 
 def analytics(request):
-    groups = Report.objects.values('group__colline','group__colline__commune').distinct()
+    groups = Report.objects.annotate(colline=F('group__colline')).annotate(commune=F('group__colline__commune')).values('colline','commune').distinct()
     statistics = []
     for i in groups:
-        reports = Report.objects.filter(group__colline=i['group__colline'], group__colline__commune=i['group__colline__commune'])
+        reports = Report.objects.filter(group__colline=i['colline'], group__colline__commune=i['commune'])
         group = i
         group.update(reports.aggregate(sold_lamps=Sum('sold_lamps')))
         group.update(reports.aggregate(recharged_lamps=Sum('recharged_lamps')))

@@ -7,6 +7,9 @@ class ReportSerializer(serializers.ModelSerializer):
         fields = ('recharged_lamps', 'sold_lamps', 'amount','group', 'telephone', 'date')
 
 class NawenuzeGroupSerializer(serializers.ModelSerializer):
+    colline = serializers.CharField(source='colline.name', read_only=True)
+    commune = serializers.CharField(source='colline.commune.name', read_only=True)
+
     class Meta:
         model = NawenuzeGroup
-        fields = ('colline', 'commune', 'day_of_meeting')
+        fields = ('colline', 'day_of_meeting', 'commune', )

@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import umuco.models
 import django.utils.timezone
 import django.core.validators
 
@@ -48,7 +47,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('lamps_received', models.PositiveIntegerField(default=0, verbose_name='Received lamps')),
                 ('date_received', models.DateField(default=django.utils.timezone.now, verbose_name='Date received')),
-                ('group', models.ForeignKey(default=umuco.models.get_default_group, verbose_name='group', to='umuco.NawenuzeGroup')),
+                ('group', models.ForeignKey(verbose_name='group', to='umuco.NawenuzeGroup')),
             ],
         ),
         migrations.CreateModel(
@@ -60,7 +59,7 @@ class Migration(migrations.Migration):
                 ('recharged_lamps', models.PositiveIntegerField(default=0, verbose_name='Recharged lamps')),
                 ('sold_lamps', models.PositiveIntegerField(default=0, verbose_name='Sold Lamps')),
                 ('amount', models.PositiveIntegerField(default=0, verbose_name='Amount')),
-                ('group', models.ForeignKey(default=umuco.models.get_default_group, verbose_name='group', to='umuco.NawenuzeGroup')),
+                ('group', models.ForeignKey(verbose_name='group', to='umuco.NawenuzeGroup')),
             ],
         ),
     ]

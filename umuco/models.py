@@ -6,8 +6,8 @@ from django.conf import settings
 from django.core.validators import MaxValueValidator
 from bdiadmin.models import *
 
-def get_default_group():
-    return NawenuzeGroup.objects.get_or_create(colline=_("Anonymous_Group"))
+# def get_default_group():
+#     return NawenuzeGroup.objects.get_or_create(colline=_("Anonymous_Group"))
 
 
 class NawenuzeGroup(models.Model):
@@ -37,7 +37,7 @@ class Report( models.Model):
     recharged_lamps = models.PositiveIntegerField(default=0,verbose_name=_('Recharged lamps'))
     sold_lamps = models.PositiveIntegerField(default=0, verbose_name=_('Sold Lamps'))
     amount = models.PositiveIntegerField(default=0, verbose_name=_('Amount'))
-    group = models.ForeignKey(NawenuzeGroup, verbose_name=_('group'), default=get_default_group)
+    group = models.ForeignKey(NawenuzeGroup, verbose_name=_('group'))
 
     def __unicode__(self):
         return u'%s %s %s %s' % (self.date_updated , self.sold_lamps, self.recharged_lamps, self.amount)
@@ -46,7 +46,7 @@ class Reception(models.Model):
     """
     reception of lamps
     """
-    group = models.ForeignKey(NawenuzeGroup, verbose_name=_('group'), default=get_default_group)
+    group = models.ForeignKey(NawenuzeGroup, verbose_name=_('group'))
     lamps_received = models.PositiveIntegerField(default=0, verbose_name=_('Received lamps'))
     date_received = models.DateField(verbose_name=_('Date received'), default=timezone.now)
 
