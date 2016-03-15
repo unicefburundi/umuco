@@ -190,7 +190,7 @@ class NaweNuzeDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(NaweNuzeDetail, self).get_context_data(**kwargs)
         nawenuzegroup = context['object']
-        reports = Report.objects.filter(group__colline=nawenuzegroup).values('group__colline', 'group__commune', 'sold_lamps', 'recharged_lamps', 'amount', 'date_updated', 'group__lamps_in_stock')
+        reports = Report.objects.filter(group=nawenuzegroup).values('group__colline', 'group__colline__commune', 'sold_lamps', 'recharged_lamps', 'amount', 'date_updated', 'group__lamps_in_stock')
         reports = ReportTable(reports)
         RequestConfig(self.request).configure(reports)
         context['reports'] = reports

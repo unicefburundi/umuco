@@ -3,12 +3,10 @@ from django.utils.safestring import SafeString
 from umuco.models import  NawenuzeGroup, Report
 
 class ReportTable(tables.Table):
-    group__colline = tables.Column(verbose_name='Colline', attrs={'th':{'data-footer-formatter':"totalTextFormatter"}})
-    group__commune = tables.Column(verbose_name='Commune')
+    date_updated = tables.Column(verbose_name='Date ', attrs={'th':{'data-footer-formatter':"totalTextFormatter"}})
     sold_lamps = tables.Column(verbose_name='Sold lamps', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     recharged_lamps = tables.Column(verbose_name='Recharged lamps', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     amount = tables.Column(verbose_name='Set aside ', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    date_updated = tables.Column(verbose_name='Date ')
     edit = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-info">Edit</a>', verbose_name='Edit')
     delete = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-danger">Delete</a>', verbose_name='Delete')
 
