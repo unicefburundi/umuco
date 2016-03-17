@@ -71,3 +71,9 @@ def email_report_flagged(receiver, message):
         raise e
     else:
         return 'Sent'
+
+def get_or_none(model, *args, **kwargs):
+    try:
+        return model.objects.get(*args, **kwargs)
+    except model.DoesNotExist:
+        return None

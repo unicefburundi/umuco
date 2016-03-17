@@ -67,18 +67,19 @@ def handel_rapidpro_request(request):
     identify_message(incoming_data)
     print("incoming_data['message_type']")
     print(incoming_data['message_type'])
+    # import ipdb; ipdb.set_trace()
     if(incoming_data['message_type']=='PHONE_REGISTRATION'):
         #This message is sent to register a reporter
-        record_reporter(incoming_data)
+        response = record_reporter(incoming_data)
 
-    if incoming_data['valide'] :
+    if response['valide'] :
         #The message have been recorded
         response['ok'] = True
     else:
     	#The message haven't been recorded
         response['ok'] = False
 
-    response['info_to_contact'] = incoming_data['info_to_contact']
-    response['envoye'] = incoming_data['envoye']
+    # response['info_to_contact'] = incoming_data['info_to_contact']
+    # response['envoye'] = incoming_data['envoye']
 
     return response

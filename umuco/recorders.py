@@ -1,9 +1,9 @@
 from django.conf import settings
 import re
-from models import *
+from umuco.models import *
 import requests
 import json
-
+from umuco.utils import get_or_none
 
 days = {1:'Lundi',2:'Mardi', 3:'Mercredi', 4:'Jeudi', 5:'Vendredi', 6:'Samedi', 7:'Dimanche'}
 
@@ -49,13 +49,18 @@ def check_commune(args):
     expression = r'[.~!@#$%^&*()=\|]'
 
     the_sent_commune_name = args['text'].split('#')[2]
-
     if re.search(expression, the_sent_commune_name):
         args['valide'] = False
         args['info_to_contact'] = "Erreur. Le nom de la commune ne peut etre compose que par de lettres, '_' et '-' ."
-    else:
+    elif Commune.objects.filter(name__iexact=the_sent_commune_name).exists():
         args['valide'] = True
         args['info_to_contact'] = "Le nom de la commune est bien ecrit."
+    else:
+        args['valide'] = False
+        args['info_to_contact'] = "Erreur. Le nom de la commune n existe pas."
+
+    return args
+
 
 
 def check_colline(args):
@@ -69,9 +74,12 @@ def check_colline(args):
     if re.search(expression, the_sent_colline_name):
         args['valide'] = False
         args['info_to_contact'] = "Erreur. Le nom de la colline ne peut etre compose que par de lettres, '_' et '-' ."
-    else:
+    elif Colline.objects.filter(name__iexact=the_sent_colline_name).exists():
         args['valide'] = True
         args['info_to_contact'] = "Le nom de la colline est bien ecrit."
+    else:
+        args['valide'] = False
+        args['info_to_contact'] = "Erreur. Le nom de la colline n existe pas."
 
 
 def check_phone(args):
@@ -107,65 +115,74 @@ def check_report_day(args):
         args['info_to_contact'] = "Le jour de rapportage indique est correct."
 
 def record_reporter(args):
+    # import ipdb; ipdb.set_trace()
     #Let's check if the message sent is composed by an expected number of values
     check_number_of_values(args)
     if not args['valide']:
-        return
+        return args
 
     #Let's check if this person sent a valid password
     check_password(args)
     if not args['valide']:
-        return
+        return args
 
     #Let's check if this person sent a valid commune name
     check_commune(args)
     if not args['valide']:
-        return
-
+        return args
     #Let's check if this person sent a valid colline name
     check_colline(args)
     if not args['valide']:
-        return
-
+        return args
     #Let's check if this person sent a valid phone number
     check_phone(args)
     # import ipdb; ipdb.set_trace()
     if not args['valide']:
-        return
+        return args
 
     #Let's check if this person sent a valid reporting day
     check_report_day(args)
     if not args['valide']:
-        return
-
-    the_commune = args['text'].split('#')[2].upper()
-    the_colline = args['text'].split('#')[3].upper()
+        return args
+    # import ipdb; ipdb.set_trace()
+    the_commune = args['text'].split('#')[2].title()
+    the_colline = args['text'].split('#')[3].title()
     the_phone_numbers = args['text'].split('#')[4:-1]
     the_meetting_day = args['text'].split('#')[-1]
+    the_concerned_group = get_or_none(NawenuzeGroup, colline__commune__name__iexact=the_commune, colline__name__iexact=the_colline)
+    if the_concerned_group :
+        the_concerned_group = the_concerned_group
+        the_concerned_group.day_of_meeting = the_meetting_day
+        the_concerned_group.save()
 
-    the_concerned_group, created = NawenuzeGroup.objects.get_or_create(commune = the_commune, colline = the_colline)
-    the_concerned_group = the_concerned_group
-    the_concerned_group.day_of_meeting = the_meetting_day
-    the_concerned_group.save()
+        numbers = []
+        for the_phone_number in the_phone_numbers:
+            the_phone_number = the_phone_number.replace(" ", "")
+            if len(the_phone_number) == 8:
+                the_phone_number = "+257"+the_phone_number
+            if len(the_phone_number) == 11:
+                the_phone_number = "+"+the_phone_number
 
-    numbers = []
-    for the_phone_number in the_phone_numbers:
-        the_phone_number = the_phone_number.replace(" ", "")
-        if len(the_phone_number) == 8:
-            the_phone_number = "+257"+the_phone_number
-        if len(the_phone_number) == 11:
-            the_phone_number = "+"+the_phone_number
+            the_phone_object, created = PhoneModel.objects.get_or_create(number = the_phone_number, group = the_concerned_group)
+            numbers.append(the_phone_number)
+        args['valide'] = True
+        args['info_to_contact'] = "Tu as enregistres le groupe {0} dans la commune {1} pour donner les rapports tous les {2}.".format(the_colline, the_commune, days[int(the_meetting_day)])
 
-        the_phone_object, created = PhoneModel.objects.get_or_create(number = the_phone_number, group = the_concerned_group)
-        numbers.append(the_phone_number)
-    args['valide'] = True
-    args['info_to_contact'] = "Tu as enregistres le groupe {0} dans la commune {1} pour donner les rapports tous les {2}.".format(the_colline, the_commune, days[int(the_meetting_day)])
+        url = "https://app.rapidpro.io/api/v1/broadcasts.json"
+        for i in numbers:
+            print 'envoi a %s' % (i)
+            the_message_to_send = "Tu as ete enregistres comme rapporteur du groupe {0} dans la commune {1}. Nous attendons les rapports tous les {2}".format(the_colline, the_commune, days[int(the_meetting_day)])
+            data = {"urns": ['tel:' + i],"text": the_message_to_send}
+            requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
+        args['envoye'] = the_message_to_send
+    else:
+        args['info_to_contact'] = "La colline et la commune n'exitent pas"
 
-    url = "https://app.rapidpro.io/api/v1/broadcasts.json"
-    for i in numbers:
-        print 'envoi a %s' % (i)
-        the_message_to_send = "Tu as ete enregistres comme rapporteur du groupe {0} dans la commune {1}. Nous attendons les rapports tous les {2}".format(the_colline, the_commune, days[int(the_meetting_day)])
-        data = {"urns": ['tel:' + i],"text": the_message_to_send}
-        requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
-    args['envoye'] = the_message_to_send
+    return args
+
+
+
+
+    return args
+
 
