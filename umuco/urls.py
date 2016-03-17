@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     url(r'^user/add/$', views.UserCreate.as_view(), name='create_user'),
     url(r'^user/detail/(?P<pk>\d+)$', views.UserDetail.as_view(), name='detail_user'),
     # for reception
-    url(r'^add/reception/$', views.add_lamps, name='add_reception'),
+    url(r'^add_reception/$', views.add_lamps, name='add_reception'),
     #report
     url(r'^list/$', views.ReportList.as_view(), name='report_list'),
     url(r'^edit/(?P<pk>\d+)$', views.ReportUpdate.as_view(), name='report_edit'),
