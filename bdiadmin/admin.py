@@ -17,22 +17,28 @@ class ProvinceAdmin(ExportMixin, admin.ModelAdmin):
 class CommuneResource(resources.ModelResource):
     class Meta:
         model = Commune
-        fields = ('name', 'code')
+        fields = ('name', 'code', 'province__name')
 
 class CommuneAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = CommuneResource
     search_fields = ('name', 'code')
-    list_display = ('name', 'code')
+    list_display = ('name', 'code', 'province')
+    list_filter = ('province__name',)
+
 
 class CollineResource(resources.ModelResource):
     class Meta:
         model = Colline
-        fields = ('name', 'code')
+        fields = ('name', 'code', 'commune__name', 'commune__province__name')
 
 class CollineAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = CollineResource
     search_fields = ('name', 'code')
-    list_display = ('name', 'code')
+    list_display = ('name', 'code', 'commune', 'province')
+    list_filter = ('commune__province__name',)
+
+    def province(self, obj):
+        return obj.commune.province.name
 
 admin.site.register(Province, ProvinceAdmin)
 admin.site.register(Commune, CommuneAdmin)

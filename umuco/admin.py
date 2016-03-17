@@ -57,18 +57,18 @@ admin.site.register(User, UserAdmin)
 class ReportAdminResource(resources.ModelResource):
     class Meta:
         model =Report
-        fields = ('date_updated', 'recharged_lamps', 'sold_lamps', 'amount', 'group__colline')
+        fields = ('date_updated', 'recharged_lamps', 'sold_lamps', 'amount', 'group__colline__name')
 
 class ReportAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = ReportAdminResource
     date_hierarchy = 'date_updated'
     list_display = ('date_updated', 'group','recharged_lamps', 'sold_lamps', 'amount')
-    search_fields = ('group__colline', 'group__colline__commune', )
+    search_fields = ('group__colline__name', 'group__colline__commune__name', )
 
 class NawenuzeGroupAdminResource(resources.ModelResource):
     class Meta:
         model =NawenuzeGroup
-        fields = ('colline', 'commune', 'province', 'day_of_meeting', 'lamps_in_stock', 'cost_lamp', 'cost_recharge')
+        fields = ('colline__name', 'colline__commune__name', 'colline__commune__province__name', 'day_of_meeting', 'lamps_in_stock', 'cost_lamp', 'cost_recharge')
 
 class NawenuzeGroupAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = NawenuzeGroupAdminResource
@@ -91,7 +91,7 @@ class PhoneModelAdminResource(resources.ModelResource):
 class PhoneModelAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = PhoneModelAdminResource
     list_display = ('number', 'colline','commune')
-    search_fields = ('number', 'group__colline', 'group__colline__commune', )
+    search_fields = ('number', 'group__colline__name', 'group__colline__commune__name', )
 
     def colline(self, obj):
         return obj.group.colline
@@ -102,12 +102,12 @@ class PhoneModelAdmin(ExportMixin, admin.ModelAdmin):
 class ReceptionAdminResource(resources.ModelResource):
     class Meta:
         model =Reception
-        fields = ('lamps_received',  'group__colline', 'date_received')
+        fields = ('lamps_received',  'group__colline__name', 'date_received', 'group__colline__commune__name', 'group__colline__commune__province__name')
 
 class ReceptionAdmin(ExportMixin, admin.ModelAdmin):
     resource_class =ReceptionAdminResource
     list_display = ('group', 'lamps_received', 'date_received', 'colline','commune')
-    search_fields = ( 'group__colline', 'group__commune', )
+    search_fields = ( 'group__colline__name', 'group__colline__commune__name', )
 
     def colline(self, obj):
         return obj.group.colline

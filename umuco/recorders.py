@@ -4,6 +4,7 @@ from umuco.models import *
 import requests
 import json
 from umuco.utils import get_or_none
+from bdiadmin.models import *
 
 days = {1:'Lundi',2:'Mardi', 3:'Mercredi', 4:'Jeudi', 5:'Vendredi', 6:'Samedi', 7:'Dimanche'}
 
@@ -87,7 +88,7 @@ def check_phone(args):
     contact_phone_numbers = args['text'].split('#')[4:-1]
     for contact_phone_number in contact_phone_numbers:
         contact_phone_number_no_space = contact_phone_number.replace(" ", "")
-        expression = r'^(\+?(257)?)((62)|(79)|(71)|(76)|(75)|(72))([0-9]{6})$'
+        expression = r'^(\+?(257)?)((62)|(79)|(71)|(76)|(75)|(72)|(61)|(69))([0-9]{6})$'
         print(contact_phone_number_no_space)
         if re.search(expression, contact_phone_number_no_space) is None:
             #The phone number is not well written
@@ -149,8 +150,9 @@ def record_reporter(args):
     the_colline = args['text'].split('#')[3].title()
     the_phone_numbers = args['text'].split('#')[4:-1]
     the_meetting_day = args['text'].split('#')[-1]
-    the_concerned_group = get_or_none(NawenuzeGroup, colline__commune__name__iexact=the_commune, colline__name__iexact=the_colline)
-    if the_concerned_group :
+    colline = get_or_none(Colline, name=the_colline, commune__name=the_commune)
+    if colline :
+        the_concerned_group = NawenuzeGroup(colline=colline)
         the_concerned_group = the_concerned_group
         the_concerned_group.day_of_meeting = the_meetting_day
         the_concerned_group.save()
@@ -176,13 +178,6 @@ def record_reporter(args):
             requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
         args['envoye'] = the_message_to_send
     else:
-        args['info_to_contact'] = "La colline et la commune n'exitent pas"
+        args['info_to_contact'] = "La colline {0} de la commune {1} n exite pas.".format(the_colline, the_commune)
 
     return args
-
-
-
-
-    return args
-
-
