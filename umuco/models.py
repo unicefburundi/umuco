@@ -6,8 +6,6 @@ from django.conf import settings
 from django.core.validators import MaxValueValidator
 from bdiadmin.models import *
 
-# def get_default_group():
-#     return NawenuzeGroup.objects.get_or_create(colline=_("Anonymous_Group"))
 
 
 class NawenuzeGroup(models.Model):

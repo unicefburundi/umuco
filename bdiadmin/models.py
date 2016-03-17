@@ -10,6 +10,9 @@ class ProfileUser(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=_("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."))
     telephone = models.CharField(_('telephone'), validators=[phone_regex], blank=True, help_text=_('The telephone to contact you.'), max_length=16)
 
+    def __unicode__(self):
+        return "{1} on {0}".format(self.user.email, self.user.name)
+
 class Province(models.Model):
     '''In this model, we will store burundi provinces'''
     name = models.CharField(_('name'),unique=True, max_length=20)
@@ -56,5 +59,4 @@ class Colline(models.Model):
 
     class Meta:
         ordering = ('name',)
-
 

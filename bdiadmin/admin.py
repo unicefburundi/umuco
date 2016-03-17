@@ -40,6 +40,23 @@ class CollineAdmin(ExportMixin, admin.ModelAdmin):
     def province(self, obj):
         return obj.commune.province.name
 
+class ProfileUserResource(resources.ModelResource):
+    class Meta:
+        model = ProfileUser
+        fields = ('user', 'telephone')
+
+class ProfileUserAdmin(ExportMixin, admin.ModelAdmin):
+    resource_class = ProfileUserResource
+    search_fields = ('user', 'telephone')
+    list_display = ('name', 'email', 'telephone')
+
+    def name(self, obj):
+        return obj.user.name
+
+    def email(self, obj):
+        return obj.user.email
+
 admin.site.register(Province, ProvinceAdmin)
 admin.site.register(Commune, CommuneAdmin)
 admin.site.register(Colline, CollineAdmin)
+admin.site.register(ProfileUser, ProfileUserAdmin)

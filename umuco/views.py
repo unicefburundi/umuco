@@ -105,14 +105,14 @@ def save_report(request):
                     repport.save()
 
                 # cost
-                cost_expected = (message_1 * group.cost_lamp + message_2*group.cost_recharge)
+                cost_expected = (message_2*group.cost_recharge)
                 if message_3 != 0 and message_3 != cost_expected :
-                    sent = email_report_flagged(Organization.objects.get(name='CPS').user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir avoir epargne {3} fbu alors que cela valait juste {4}'.format(group, group.commune, date_updated.strftime("%d-%m-%Y"), message_3, cost_expected))
+                    sent = email_report_flagged(Organization.objects.get(name='CPES').partner.user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir avoir epargne {3} fbu alors que cela valait juste {4}'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_3, cost_expected))
                     print sent
                 # sold
                 solds = Report.objects.filter(group=group).aggregate(Sum('sold_lamps'))
-                if message_1 != 0 and group.lamps_in_stock != solds['sold_lamps__sum']:
-                    sent = email_report_flagged(Organization.objects.get(name='CPS').user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir vendu plus de lampes ({3}) qu il n en restait en stock({4})'.format(group, group.commune, date_updated.strftime("%d-%m-%Y"), message_1, (group.lamps_in_stock - solds['sold_lamps__sum'])))
+                if message_1 != 0 and group.lamps_in_stock < solds['sold_lamps__sum']:
+                    sent = email_report_flagged(Organization.objects.get(name='CPES').partner.user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir vendu plus de lampes ({3}) qu il n en restait en stock({4})'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_1, (group.lamps_in_stock - solds['sold_lamps__sum'])))
                     print sent
 
 
@@ -200,6 +200,8 @@ class NaweNuzeDetail(DetailView):
 @csrf_exempt
 @json_view
 def add_lamps(request):
+    """Add reception of lamps"""
+
     response_data = split_message(request)
     if response_data['text'] != "":
         message = response_data['text'].split("#")
@@ -207,7 +209,7 @@ def add_lamps(request):
         response_data['message'] =  message
         if message[1] not in settings.PASSWORD:
             return {'Ok': "Pas", 'info_to_contact' : 'Le message est faux. Contacter le partenaire. ',  'error' : message[1]}
-        if NawenuzeGroup.objects.filter(colline=message[2].upper()).count() == 0:
+        if NawenuzeGroup.objects.filter(colline__name=message[2].title()).count() == 0:
             return {'Ok': "False", 'info_to_contact' : "Le groupe n'existe pas. Contacter le partenaire." ,  'error' : message[2]}
         try:
             lamps= int(message[3])
@@ -219,12 +221,12 @@ def add_lamps(request):
         date_received = validate_date(message[4])
         if date_received.date() > datetime.datetime.today().date():
             return {'Ok': "False", 'info_to_contact' : 'La date ne peut etre dans le futur. Renvoyer le message corrige.', 'raba': date_received}
-        group = NawenuzeGroup.objects.get(colline=message[2].upper())
+        group = NawenuzeGroup.objects.get(colline__name=message[2].title())
         reception , created = Reception.objects.get_or_create(group=group, lamps_received=lamps, date_received=date_received)
         if created:
             group.lamps_in_stock += lamps
             group.save()
-    return {'Ok': "True", 'info_to_contact' : 'Le groupe de la colline {0}( commune {3}) a recu {1} lampes le {2}. Merci a bientot.'.format(group, lamps, date_received.strftime("%d-%m-%Y"), group.commune) , 'raba': date_received.strftime("%d-%m-%Y")}
+    return {'Ok': "True", 'info_to_contact' : 'Le groupe de la colline {0} (commune {3}) a recu {1} lampes le {2}. Merci a bientot.'.format(group, lamps, date_received.strftime("%d-%m-%Y"), group.colline.commune) , 'raba': date_received.strftime("%d-%m-%Y")}
 
 
 class ReportList(ListView):
