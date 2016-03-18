@@ -14,11 +14,11 @@ class ReportTable(tables.Table):
 
     def render_group__colline(self, value):
         ID = NawenuzeGroup.objects.get(colline=value).id
-        return SafeString('''<a href="/report/reports/%s">%s</a>''' % (ID, value))
+        return SafeString('''<a href="/fr/report/reports/%s">%s</a>''' % (ID, value))
 
     def render_edit(self, record):
         report = Report.objects.get(group__colline=record['group__colline'], date_updated=record['date_updated']).id
-        return SafeString('''<a href="/report/edit/%s" class="btn btn-xs btn-info">Edit</a>''' % (report))
+        return SafeString('''<a href="/fr/report/edit/%s" class="btn btn-xs btn-info">Edit</a>''' % (report))
 
 
 class ReportTable2(tables.Table):
@@ -32,11 +32,11 @@ class ReportTable2(tables.Table):
 
     def render_date_updated(self, value, record):
         report = Report.objects.get(group__colline=record['colline'], date_updated=record['date_updated']).id
-        return SafeString('''<a href="/report/edit/%s">%s</a>''' % (report, value.name))
+        return SafeString('''<a href="/fr/report/edit/%s">%s</a>''' % (report, value.name))
 
     def render_details(self, record):
         ID = NawenuzeGroup.objects.get(colline=record['colline']).id
-        return SafeString('''<a href="/report/reports/%s" class="btn btn-xs btn-default">Details</a>''' % (ID))
+        return SafeString('''<a href="/fr/report/reports/%s" class="btn btn-xs btn-default">Details</a>''' % (ID))
 
     def render_colline(self, record):
         name = NawenuzeGroup.objects.get(colline=record['colline']).colline.name
