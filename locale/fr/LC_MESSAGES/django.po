@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-18 03:28+0200\n"
+"POT-Creation-Date: 2016-03-18 04:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Allan Stockman <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,6 +35,239 @@ msgstr "Le téléphone pour vous contacter."
 msgid "name"
 msgstr "nom"
 
+#: templates/groups.html:6
+msgid "All Nawe Nuze Groups"
+msgstr "Tous les groupes Nawe Nuze"
+
+#: templates/groups.html:27 templates/muco_layout.html:86
+msgid "Register Group"
+msgstr "Inscription groupe"
+
+#: templates/groups.html:31 templates/muco_layout.html:62
+msgid "Home+"
+msgstr "Accueil+"
+
+#: templates/groups.html:41
+msgid "NaweNuze Groups"
+msgstr "Groupes NaweNuze"
+
+#: templates/groups.html:42
+msgid "search:"
+msgstr "chercher:"
+
+#: templates/groups.html:44
+msgid "by:"
+msgstr "par:"
+
+#: templates/groups.html:46
+msgid "Name"
+msgstr "Nom"
+
+#: templates/groups.html:47
+msgid "Location"
+msgstr "Localisation"
+
+#: templates/home.html:76
+msgid "Terms of Service"
+msgstr "Conditions d'utilisation"
+
+#: templates/landing_page.html:10 templates/landing_page.html.py:61
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: templates/landing_page.html:39
+msgid "Projet Lumière Dashboard"
+msgstr "Projet Lumière dashboard"
+
+#: templates/landing_page.html:50
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/landing_page.html:55
+msgid "What is it ?"
+msgstr "Quoi ?"
+
+#: templates/landing_page.html:65 templates/login.html:6
+#: templates/muco_layout.html:104
+msgid "Logout"
+msgstr "Se déconnecter"
+
+#: templates/landing_page.html:67 templates/muco_layout.html:106
+#: templates/muco_layout.html.py:311
+msgid "Login"
+msgstr "S'identifier"
+
+#: templates/landing_page.html:93
+msgid "An innovative energy solution brings light to communities"
+msgstr "Une solution énergétique innovante apporte la lumière aux communautés"
+
+#: templates/landing_page.html:95
+#, fuzzy
+#| msgid ""
+#| "Project Lumière enables community groups to purchase a pedal-powered "
+#| "generator and fast-charging LED lights to sell within their community. "
+#| "The LED lights, powered by the bicycles, provide light for a household "
+#| "for up to  10 days. Project Lumière is providing a quality and affordable "
+#| "solution for the users, and at the same time, creating a sustainable "
+#| "sources of income for many families and new jobs linked to renewable "
+#| "energy."
+msgid ""
+"Project Lumière enables community groups to purchase a pedal-powered "
+"generator and fast-charging LED lights to sell within their community. The "
+"LED lights, powered by the bicycles, provide light for a household for up to "
+"10 days. Project Lumière is providing a quality and affordable solution for "
+"the users, and at the same time, creating a sustainable sources of income "
+"for many families and new jobs linked to renewable energy."
+msgstr ""
+"Projet Lumière permet aux groupes communautaires d'acheter une pédale "
+"alimenté par un générateur et chargement rapide lumières LED pour vendre au "
+"sein de leur communauté La lampe LED, alimentée par les bicyclettes, fournir "
+"de la lumière pour un ménage jusqu'à 10 jours. Le Projet Lumière offre une "
+"qualité et d'une solution abordable pour les utilisateurs, et en même temps, "
+"créant des sources de revenus durables pour de nombreuses familles et de "
+"nouveaux emplois liés aux énergies renouvelables."
+
+#: templates/landing_page.html:104
+msgid "Partners"
+msgstr "Les partenaires"
+
+#: templates/landing_page.html:106
+msgid ""
+"UNICEF is working to test and scale programs   that   will   combat   "
+"Burundi’s   energy   crisis  in  partnering with a local micro-finance NGO, "
+"FVS-Amade to help develop a national social enterprise to manage, procure "
+"and distribute rechargeable lights, and, in the future, other affordable "
+"micro-energy technologies, including solar.!"
+msgstr ""
+"L'UNICEF travaille à tester et à l'échelle des programmes qui lutte contre "
+"la crise de l'énergie du Burundi en partenariat avec un micro-finance ONG "
+"locale, FVS-Amade pour aider à développer une entreprise sociale nationale "
+"pour gérer, procurer et distribuer des lumières rechargeables, et, à "
+"l'avenir, d'autres prix abordable technologies micro-énergie, y compris "
+"l'énergie solaire.!"
+
+#: templates/landing_page.html:123
+msgid "It's beautiful and practical"
+msgstr "Beau et pratique"
+
+#: templates/landing_page.html:124
+msgid ""
+"Low-cost efficient pedal-powered lights recharged by microentrepreneurs. "
+msgstr ""
+"Lampes chargees par pédales efficaces à faible coût et rechargées par des "
+"micro entrepreneurs."
+
+#: templates/landing_page.html:125
+msgid ""
+"Nuru Energy has developed a rechargeable light and pedal charger. "
+"Microentrepreneur shopkeepers buy a charger and set of lights which are sold "
+"to shop customers, who then pay to have the lights recharged with the "
+"generator. "
+msgstr ""
+"Nuru Energy a mis au point une lampe rechargeable et un chargeur a  pédales. "
+"Les commerçants micro-entrepreneurs achètent un chargeur et des lampes qui "
+"sont revendues chez les clients qui paient alors d'avoir les lampes "
+"rechargées avec le générateur. "
+
+#: templates/landing_page.html:160
+msgid "Easy to charge and use"
+msgstr "Facile à charger et à utiliser"
+
+#: templates/landing_page.html:162
+msgid ""
+"A modular pedal-rechargeable directional LED light. It can be hung or placed "
+"on a table or desk, or carried around, or several lights can be put together "
+"to form a larger system. It has a 4 position switch for different levels of "
+"light. The Nuru Light is rechargeable by the POWERCycle!"
+msgstr ""
+"Une direction de pédale rechargeable modulaire de lumière LED. Il peut être "
+"accroché ou placé sur une table ou un bureau, ou porté autour, ou plusieurs "
+"lumières peuvent être mis en place pour former un système plus vaste. Il "
+"dispose d'un commutateur 4 positions pour différents niveaux de Lumière. Le "
+"Nuru Light est rechargeable par le cycle de puissance!"
+
+#: templates/login.html:5
+msgid "Hello, "
+msgstr "Salut,"
+
+#: templates/muco_layout.html:8
+msgid "Statistics"
+msgstr "Statistiques"
+
+#: templates/muco_layout.html:74
+msgid "Download"
+msgstr "Télécharger"
+
+#: templates/muco_layout.html:76
+msgid "All reports"
+msgstr "Tous les rapports"
+
+#: templates/muco_layout.html:82
+msgid "Analytics"
+msgstr "Statistiques"
+
+#: templates/muco_layout.html:83
+msgid "Groups"
+msgstr "Groupes"
+
+#: templates/muco_layout.html:84
+msgid "Graphics"
+msgstr "Graphiques"
+
+#: templates/muco_layout.html:108
+msgid "About"
+msgstr "A propos"
+
+#: templates/muco_layout.html:130 templates/muco_layout.html.py:179
+#: templates/muco_layout.html:228
+msgid "Title"
+msgstr "Titre"
+
+#: templates/muco_layout.html:136 templates/muco_layout.html.py:185
+#: templates/muco_layout.html:234
+msgid "Subtitle"
+msgstr "Sous-titre"
+
+#: templates/muco_layout.html:142 templates/muco_layout.html.py:191
+#: templates/muco_layout.html:240
+msgid "Width"
+msgstr "Largeur"
+
+#: templates/muco_layout.html:148 templates/muco_layout.html.py:197
+#: templates/muco_layout.html:246
+msgid "Height"
+msgstr "Hauteur"
+
+#: templates/muco_layout.html:156 templates/muco_layout.html.py:205
+#: templates/muco_layout.html:254
+msgid "Default Type"
+msgstr "Type par défaut"
+
+#: templates/muco_layout.html:162 templates/muco_layout.html.py:211
+#: templates/muco_layout.html:260
+msgid "Stack"
+msgstr "Pile"
+
+#: templates/muco_layout.html:269
+msgid "Pretty JSON"
+msgstr "Jolie JSON"
+
+#: templates/muco_layout.html:324
+msgid "(forgot password)"
+msgstr "(mot de passe oublié)"
+
+#: templates/muco_layout.html:330
+msgid "Register"
+msgstr "Enregistrer"
+
+#: templates/muco_layout.html:335
+msgid "Need help ?"
+msgstr "Besoin d'aide ?"
+
+#: templates/muco_layout.html:343
+msgid "Cancel"
+msgstr "Annuler"
+
 #: templates/registration/user_form.html:4
 msgid "New User ? "
 msgstr "Nouvel utilisateur ?"
@@ -43,6 +276,68 @@ msgstr "Nouvel utilisateur ?"
 msgid "Invalid data. Please try again."
 msgstr "Données invalides. Veuillez réessayer."
 
+#: templates/umuco/group_details.html:13
+msgid "No data for this group!"
+msgstr "Pas de données pour ce groupe!"
+
+#: templates/umuco/group_details.html:16
+msgid "Group:"
+msgstr "Groupe:"
+
+#: templates/umuco/group_details.html:17 templates/umuco/group_details.html:40
+msgid "Back to search"
+msgstr "Retour à la recherche"
+
+#: templates/umuco/group_details.html:20
+msgid "Displayed below are the cumulative performances of the NaweNuze Group"
+msgstr "Affichées ci-dessous, les performances cumulées des groupes NuzeNawe"
+
+#: templates/umuco/group_submit.html:5 templates/umuco/group_submit.html:19
+#: templates/umuco/nawenuzegroup_detail.html:11
+msgid "Group"
+msgstr "Groupe"
+
+#: templates/umuco/group_submit.html:9
+msgid "Telephone"
+msgstr "Téléphone"
+
+#: templates/umuco/group_submit.html:42
+msgid "Telephone(s)"
+msgstr "Téléphone"
+
+#: templates/umuco/group_submit.html:55
+msgid "Back to Groups"
+msgstr "Retour aux groupes"
+
+#: templates/umuco/nawenuzegroup_detail.html:29 umuco/models.py:13
+msgid "Day of meeting"
+msgstr "Jour de la réunion"
+
+#: templates/umuco/nawenuzegroup_detail.html:34
+#: templates/umuco/report_list.html:5
+msgid "Reports"
+msgstr "Rapports"
+
+#: templates/umuco/nawenuzegroup_form.html:5
+msgid "Add NaweNuze group"
+msgstr "Ajouter un groupe NaweNuze"
+
+#: templates/umuco/nawenuzegroup_form.html:11
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: templates/umuco/nawenuzegroup_form.html:13
+msgid "back to list"
+msgstr "retour à la liste"
+
+#: templates/umuco/report_form.html:5
+msgid "Edit Report"
+msgstr "Modifier le rapport"
+
+#: templates/umuco/report_list.html:16
+msgid "New"
+msgstr "Nouveau"
+
 #: umuco/forms.py:38
 msgid "Fill out both fields"
 msgstr "Remplissez tous les champs"
@@ -50,10 +345,6 @@ msgstr "Remplissez tous les champs"
 #: umuco/models.py:12
 msgid "Required"
 msgstr "Obligatoire"
-
-#: umuco/models.py:13
-msgid "Day of meeting"
-msgstr "Jour de la réunion"
 
 #: umuco/models.py:13
 msgid "Number. Eg : For Monday put 1, Tuesday put 2, ..."
@@ -96,28 +387,24 @@ msgid "Date received"
 msgstr "Date de réception"
 
 #: umuco/models.py:56
-#, fuzzy
-#| msgid "Partenair focalt point "
 msgid "Partner focal point "
 msgstr "Partenaire point focal"
 
 #: umuco/tables.py:8 umuco/tables.py:29
-#, fuzzy
-#| msgid "Sold Lamps"
 msgid "Sold lamps"
 msgstr "Lampes vendues"
 
 #: umuco/tables.py:10 umuco/tables.py:31
 msgid "Set aside "
-msgstr ""
+msgstr "Mettre de côté"
 
 #: umuco/tables.py:11
 msgid "Edit"
-msgstr ""
+msgstr "Effacer"
 
 #: umuco/tables.py:12
 msgid "Delete"
-msgstr ""
+msgstr "Delete"
 
 #: umuco_main/settings.py:90
 msgid "English"
