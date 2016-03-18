@@ -2,8 +2,8 @@
 {% block contentright %}
 {% if user.is_authenticated %}
     {% if user and not user.is_anonymous %}
-      <li><a>Hello, {{ user.get_full_name }}!</a></li>
-      <li><a href="/logout">Logout</a></li>
+      <li><a>{% trans "Hello, " %}{{ user.get_full_name }}!</a></li>
+      <li><a href="/logout">{% trans "Logout" %}</a></li>
     {% endif %}
 {% else %}
 {% endif %}

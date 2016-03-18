@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <title>Umuco - {% block page_title %}
-            Statistics
+            {% trans "Statistics" %}
             {% endblock page_title %} </title>
          <link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}favicon.ico">
             <script type="text/javascript" src=" {{ STATIC_URL }}js/jquery/jquery.min.js"></script>
@@ -59,7 +59,7 @@
             </div>
         </form>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'home' %}"  target="_ext">Home+</a></li>
+            <li><a href="{% url 'home' %}"  target="_ext">{% trans "Home+" %}</a></li>
             <li><a href="#"><i class="glyphicon glyphicon-user"></i> {% if user.is_authenticated %}
             {{ user.name}}
           {% endif %} </a></li>
@@ -71,19 +71,19 @@
     <div class="col-md-12">
       <div class="navbar-header">
       {% if user.is_authenticated %}
-        <a href="/" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Download <small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
+        <a href="/" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> {% trans "Download" %}<small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
         <ul class="nav dropdown-menu">
-          <li><a href="{% url 'umuco:download_reports' %}"><i class="glyphicon glyphicon glyphicon-export" style="color:#0000aa;"></i> All reports</a></li>
+          <li><a href="{% url 'umuco:download_reports' %}"><i class="glyphicon glyphicon glyphicon-export" style="color:#0000aa;"></i> {% trans "All reports" %}</a></li>
       </ul>
       {% endif %}
       {% if user.is_authenticated %}
         <div  class="nav navbar-right" id="navbar-collapse3">
     <ul class="nav navbar-nav navbar-right">
-    <li class="active"><a href="{% url 'analytics' %}">Analytics</a></li>
-     <li class=""><a href="{% url 'groups' %}">Groups</a></li>
-     <li class=""><a href="{% url 'home' %}">Graphics</a></li>
+    <li class="active"><a href="{% url 'analytics' %}">{% trans "Analytics" %}</a></li>
+     <li class=""><a href="{% url 'groups' %}">{% trans "Groups" %}</a></li>
+     <li class=""><a href="{% url 'home' %}">{% trans "Graphics" %}</a></li>
      {% if user.is_staff %}
-       <li class=""><a href="/report/add/group/">Register Group</a></li>
+       <li class=""><a href="/report/add/group/">{% trans "Register Group" %}</a></li>
      {% endif %}
  </ul>
 </div>
@@ -101,11 +101,11 @@
     <ul class="nav navbar-nav navbar-right">
      <li class="active"><a href="#">Muco</a></li>
      {% if user.is_authenticated %}
-       <li><a href="{% url 'logout' %}?next=/" role="button" data-toggle="modal">Logout</a></li>
+       <li><a href="{% url 'logout' %}?next=/" role="button" data-toggle="modal">{% trans "Logout" %}</a></li>
        {% else %}
-       <li><a href="#loginModal" role="button" data-toggle="modal">Login</a></li>
+       <li><a href="#loginModal" role="button" data-toggle="modal">{% trans "Login" %}</a></li>
      {% endif %}
-     <li><a href="#aboutModal" role="button" data-toggle="modal">About</a></li>
+     <li><a href="#aboutModal" role="button" data-toggle="modal">{% trans "About" %}</a></li>
  </ul>
 </div>
 </div>
@@ -127,25 +127,25 @@
                       <div class="well">
                         <div class="input-group">
                           <span class="input-group-addon" id="basic-addon1">
-                            Title
+                            {% trans "Title" %}
                         </span>
                         <input class="form-control" ng-model="chartConfig1.title.text">
                     </div>
                     <div class="input-group">
                       <span class="input-group-addon" id="basic-addon1">
-                        Subtitle
+                        {% trans "Subtitle" %}
                     </span>
                     <input  class="form-control" ng-model="chartConfig1.subtitle.text">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">
-                        Width
+                        {% trans "Width" %}
                     </span>
                     <input class="form-control" ng-model="chartConfig1.size.width">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">
-                        Height
+                        {% trans "Height" %}
                     </span>
                     <input  class="form-control" ng-model="chartConfig1.size.height">
                 </div>
@@ -153,13 +153,13 @@
             <hr>
             <div class="btn-group">
                 <div class="input-group-addon">
-                  Default Type
+                  {% trans "Default Type" %}
                   <select class="form-control" ng-model="chartConfig1.options.chart.type" ng-options="t.id as t.title for t in chartTypes">
                   </select>
               </div>
             </div>
             <div class="input-group-addon" >
-                Stack
+                {% trans "Stack" %}
                 <select class="form-control " ng-model="chartConfig1.options.plotOptions.series.stacking" ng-options="t.id as t.title for t in chartStack">
                 </select>
             </div>
@@ -176,25 +176,25 @@
           <div class="well">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon1">
-                Title
+                {% trans "Title" %}
             </span>
             <input class="form-control" ng-model="chartConfig2.title.text">
         </div>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">
-            Subtitle
+            {% trans "Subtitle" %}
         </span>
         <input  class="form-control" ng-model="chartConfig2.subtitle.text">
     </div>
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">
-            Width
+            {% trans "Width" %}
         </span>
         <input class="form-control" ng-model="chartConfig2.size.width">
     </div>
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">
-            Height
+            {% trans "Height" %}
         </span>
         <input  class="form-control" ng-model="chartConfig2.size.height">
     </div>
@@ -202,13 +202,13 @@
 <hr>
 <div class="btn-group">
     <div class="input-group-addon">
-      Default Type
+      {% trans "Default Type" %}
       <select class="form-control" ng-model="chartConfig2.options.chart.type" ng-options="t.id as t.title for t in chartTypes">
       </select>
   </div>
 </div>
 <div class="input-group-addon" >
-    Stack
+    {% trans "Stack" %}
     <select class="form-control " ng-model="chartConfig2.options.plotOptions.series.stacking" ng-options="t.id as t.title for t in chartStack">
     </select>
 </div>
@@ -225,25 +225,25 @@
           <div class="well">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon1">
-                Title
+                {% trans "Title" %}
             </span>
             <input class="form-control" ng-model="chartConfig3.title.text">
         </div>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">
-            Subtitle
+            {% trans "Subtitle" %}
         </span>
         <input  class="form-control" ng-model="chartConfig3.subtitle.text">
     </div>
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">
-            Width
+            {% trans "Width" %}
         </span>
         <input class="form-control" ng-model="chartConfig3.size.width">
     </div>
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">
-            Height
+            {% trans "Height" %}
         </span>
         <input  class="form-control" ng-model="chartConfig3.size.height">
     </div>
@@ -251,13 +251,13 @@
 <hr>
 <div class="btn-group">
     <div class="input-group-addon">
-      Default Type
+      {% trans "Default Type" %}
       <select class="form-control" ng-model="chartConfig3.options.chart.type" ng-options="t.id as t.title for t in chartTypes">
       </select>
   </div>
 </div>
 <div class="input-group-addon" >
-    Stack
+    {% trans "Stack" %}
     <select class="form-control " ng-model="chartConfig3.options.plotOptions.series.stacking" ng-options="t.id as t.title for t in chartStack">
     </select>
 </div>
@@ -266,7 +266,7 @@
         </div>
           {% if user.is_superuser %}
             <div class="well">
-              <label for="prettyJSON"><input id="prettyJSON" type="checkbox" ng-model="prettyJSON"> Pretty JSON</label>
+              <label for="prettyJSON"><input id="prettyJSON" type="checkbox" ng-model="prettyJSON"> {% trans "Pretty JSON" %}</label>
           </div>
           <div class="well">
               <pre ng-show="prettyJSON"> {% verbatim %}
@@ -308,7 +308,7 @@
           </button>
           <h2 class="text-center">
               <br>
-              Login
+              {% trans "Login" %}
           </h2>
       </div>
       <div class="modal-body">
@@ -321,18 +321,18 @@
   <div class="form-group">
     <label for="login__password">{{ form.password.label_tag }}</label>
     {{ form.password }}
-    <div for="pwd"><a href="{% url 'password_reset' %}">(forgot password)</a></div>
+    <div for="pwd"><a href="{% url 'password_reset' %}">{% trans "(forgot password)" %}</a></div>
   </div>
     <input type="submit" value="Login" class="btn btn-sm btn-success"/>
     <input type="hidden" name="next" value="{{ next }}" />
     <span class="pull-right">
         <a href="#">
-                Register
+                {% trans "Register" %}
         </a>
     </span>
     <span>
       <a href="#">
-            Need help ?
+            {% trans "Need help ?" %}
         </a>
     </span>
 </form>
@@ -340,7 +340,7 @@
 <div class="modal-footer">
     <div class="col-md-12">
       <button class="btn" data-dismiss="modal" aria-hidden="true">
-        Cancel
+        {% trans "Cancel" %}
     </button>
 </div>
 </div>

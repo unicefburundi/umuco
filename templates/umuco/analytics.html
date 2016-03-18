@@ -9,7 +9,7 @@
 function totalTextFormatter(data) {
         console.log(data);
           return '<strong class="text-primary" >Total</strong>';
-      };
+      }
 
 function sumFormatter(data) {
           var total = 0;
@@ -18,6 +18,6 @@ function sumFormatter(data) {
                 total += +(row[field]);
             });
           return '<strong>'+ total + '</strong>';
-      };
+      }
 </script>
 {% endblock charts %}

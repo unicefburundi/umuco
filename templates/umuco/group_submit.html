@@ -2,11 +2,11 @@
 
 {% block contentright %}
 <ul class="nav nav-tabs">
-    <li {% block activegroup %}class="active"{% endblock activegroup %} ><a href="#group"   data-toggle="tab">Group</a></li>
+    <li {% block activegroup %}class="active"{% endblock activegroup %} ><a href="#group"   data-toggle="tab">{% trans "Group" %}</a></li>
     <li {% block activeprovince %}{% endblock activeprovince %} ><a href="#province"   data-toggle="tab">Province</a></li>
     <li {% block activecommune %}{% endblock activecommune %} ><a href="#commune"   data-toggle="tab">Commune</a></li>
     <li {% block activecolline %}{% endblock activecolline %} ><a href="#colline"   data-toggle="tab">Colline</a></li>
-    <li {% block activetelephone %}{% endblock activetelephone %} ><a href="#telephone"   data-toggle="tab">Telephone</a></li>
+    <li {% block activetelephone %}{% endblock activetelephone %} ><a href="#telephone"   data-toggle="tab">{% trans "Telephone" %}</a></li>
 {% endblock contentright  %}
 
 {% block contents %}
@@ -16,7 +16,7 @@
         <div class="tab-pane {% block activegroup1 %}active{% endblock activegroup1 %}" id="group">
         <form action="." method="post" class="group_form">
             {% csrf_token %}
-            <h3>Group</h3>
+            <h3>{% trans "Group" %}</h3>
             <div class="row">
                 <div class="col-md-3">
                     <label for="province">{{form.province.label_tag}}</label>
@@ -39,7 +39,7 @@
                     <p>{{form.day_of_meeting}}</p>
                 </div>
             </div>
-            <h3>Telephone(s)</h3>
+            <h3>{% trans "Telephone(s)" %}</h3>
             <div class="row">
             {{phonemodel_formset.management_form}}
             {% for form  in phonemodel_formset.forms %}
@@ -52,7 +52,7 @@
             <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
             </div>
         </form>
-        <a href="{% url 'groups' %}" class="button btn default">Back to Groups</a>
+        <a href="{% url 'groups' %}" class="button btn default">{% trans "Back to Groups" %}</a>
         </div>
         <div class="tab-pane {% block activeprovince1 %}{% endblock activeprovince1 %}" id="province">
             <div class="row">

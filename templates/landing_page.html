@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 	<title>Umuco - {% block page_title %}
-            Dashboard
+            {% trans "Dashboard" %}
             {% endblock page_title %} </title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
@@ -36,7 +36,7 @@
                             <!-- you logо img -->
                         </div>
                         <div class="brand">
-                            Projet Lumière Dashboard
+                            {% trans "Projet Lumière Dashboard" %}
                         </div>
                     </div>
               </a>
@@ -47,24 +47,24 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <a href="/">
-                    Home
+                    {% trans "Home" %}
                 </a>
             </li>
             <li>
                 <a href="#">
-                    What is it ?
+                    {% trans "What is it ?" %}
                 </a>
             </li>
             {% if user.is_authenticated %}
             <li>
                 <a href="{% url 'home' %}">
-                    Dashboard
+                    {% trans "Dashboard" %}
                 </a>
             </li>
 
-            <li><a href="{% url 'logout' %}?next=/" role="button" data-toggle="modal">Logout</a></li>
+            <li><a href="{% url 'logout' %}?next=/" role="button" data-toggle="modal">{% trans "Logout" %}</a></li>
             {% else %}
-            <li><a href="{% url 'login' %}" role="button" data-toggle="modal">Login</a></li>
+            <li><a href="{% url 'login' %}" role="button" data-toggle="modal">{% trans "Login" %}</a></li>
             {% endif %}
 
             <li>
@@ -90,9 +90,9 @@
                 </div>
                 <div class="col-sm-6 col-xs-offset-1">
                     <div class="description">
-                        <h2>An innovative energy solution brings light to communities</h2>
+                        <h2>{% trans "An innovative energy solution brings light to communities" %}</h2>
                         <br>
-                        <h5>Project Lumière enables community groups to purchase a pedal-powered generator and fast-charging LED lights to sell within their community. The LED lights, powered by the bicycles, provide light for a household for up to 10 days. Project Lumière is providing a quality and affordable solution for the users, and at the same time, creating a sustainable sources of income for many families and new jobs linked to renewable energy.</h5>
+                        <h5>{% trans "Project Lumière enables community groups to purchase a pedal-powered generator and fast-charging LED lights to sell within their community. The LED lights, powered by the bicycles, provide light for a household for up to 10 days. Project Lumière is providing a quality and affordable solution for the users, and at the same time, creating a sustainable sources of income for many families and new jobs linked to renewable energy." %}</h5>
                     </div>
                 </div>
             </div>
@@ -101,9 +101,9 @@
 
     <div class="section section-gray section-clients">
         <div class="container text-center">
-            <h4 class="header-text">Partners</h4>
+            <h4 class="header-text">{% trans "Partners" %}</h4>
             <p>
-              UNICEF is working to test and scale programs   that   will   combat   Burundi’s   energy   crisis  in  partnering with a local micro-finance NGO, FVS-Amade to help develop a national social enterprise to manage, procure and distribute rechargeable lights, and, in the future, other affordable micro-energy technologies, including solar.!<br>
+              {% trans "UNICEF is working to test and scale programs   that   will   combat   Burundi’s   energy   crisis  in  partnering with a local micro-finance NGO, FVS-Amade to help develop a national social enterprise to manage, procure and distribute rechargeable lights, and, in the future, other affordable micro-energy technologies, including solar.!" %}<br>
             </p>
             <div class="logos">
                 <ul class="list-unstyled">
@@ -120,9 +120,9 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="description">
-                            <h4 class="header-text">It's beautiful and practical</h4>
-                            <p>Low-cost efficient pedal-powered lights recharged by microentrepreneurs. </p>
-                            <p>Nuru Energy has developed a rechargeable light and pedal charger. Microentrepreneur shopkeepers buy a charger and set of lights which are sold to shop customers, who then pay to have the lights recharged with the generator. <p>
+                            <h4 class="header-text">{% trans "It's beautiful and practical" %}</h4>
+                            <p>{% trans "Low-cost efficient pedal-powered lights recharged by microentrepreneurs. " %}</p>
+                            <p>{% trans "Nuru Energy has developed a rechargeable light and pedal charger. Microentrepreneur shopkeepers buy a charger and set of lights which are sold to shop customers, who then pay to have the lights recharged with the generator. " %}<p>
                     </div>
                 </div>
                 <div class="col-md-5 col-md-offset-1 hidden-xs">
@@ -157,9 +157,9 @@
                     </div>
                 </div>
                 <div class="col-md-5 col-md-offset-1">
-                    <h4 class="header-text">Easy to charge and use</h4>
+                    <h4 class="header-text">{% trans "Easy to charge and use" %}</h4>
                     <p>
-                        A modular pedal-rechargeable directional LED light. It can be hung or placed on a table or desk, or carried around, or several lights can be put together to form a larger system. It has a 4 position switch for different levels of light. The Nuru Light is rechargeable by the POWERCycle!
+                        {% trans "A modular pedal-rechargeable directional LED light. It can be hung or placed on a table or desk, or carried around, or several lights can be put together to form a larger system. It has a 4 position switch for different levels of light. The Nuru Light is rechargeable by the POWERCycle!" %}</p>
 
                 </div>
             </div>
@@ -171,13 +171,12 @@
     <footer class="footer">
         <div class="container">
             <nav class="pull-left copyright">
-                © {% now "Y" %} <a href="www.unicef.org"> Unicef </a> Burundi <i class="fa fa-heart"></i>
+                © {% now "Y" %} <a href="http://www.unicef.org"> Unicef </a> Burundi <i class="fa fa-heart"></i>
             </nav>
             <div class="social-area pull-right">
                 <a href="https://github.com/unicefburundi" class="btn btn-social btn-simple"><i class="fa fa-github-alt fa-fw"></i> <span class="network-name"></span></a>
                 <a href="https://www.facebook.com/UNICEFBurundi" class="btn btn-social btn-simple"><i class="fa fa-facebook fa-fw"></i> <span class="network-name"></span></a>
-                <a href="mailto:elkind@elkind.net" class="btn btn-social btn-simple"><i class="fa fa-envelope fa-fw"></i> <span class="network-name"></span></a>
-                <a href="https://plus.google.com/+JenyElkind/" class="btn btn-social btn-simple"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name"></span></a>
+                <a href="mailto:murikiranige@gmail.com" class="btn btn-social btn-simple"><i class="fa fa-envelope fa-fw"></i> <span class="network-name"></span></a>
             </div>
         </div>
         </footer>

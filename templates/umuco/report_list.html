@@ -2,7 +2,7 @@
 
 {% block contents %}
     <div class="container">
-        <h1>Reports</h1>
+        <h1>{% trans "Reports" %}</h1>
         {% for report in object_list %}
         <ul class="list-group">
             <li class="list-group-item">{{report.group.colline}}</li>
@@ -13,6 +13,6 @@
             </li>
         </div>
         {% endfor %}
-        <a href="/">New</a>
+        <a href="/">{% trans "New" %}</a>
     </div>
 {% endblock contents %}

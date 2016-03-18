@@ -3,7 +3,7 @@
 <html>
 <head>
 <title> {% block title %}
-All Nawe Nuze Groups
+{% trans "All Nawe Nuze Groups" %}
 {% endblock title %}</title>
  <link rel="shortcut icon" type="image/x-icon" href="{% static "favicon.ico" %}">
 <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap/bootstrap.css" %}">
@@ -23,15 +23,12 @@ All Nawe Nuze Groups
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse1">
     <ul class="nav navbar-nav navbar-left">
-      <li class="active"><a href="{% url 'analytics' %}">Analytics</a></li>
-     <li class=""><a href="{% url 'groups' %}">Groups</a></li>
-     <li class=""><a href="{% url 'home' %}">Graphics</a></li>
      {% if user.is_staff %}
-       <li class=""><a href="/report/add/group/">Register Group</a></li>
+       <li class=""><a href="/report/add/group/">{% trans "Register Group" %}</a></li>
        {% endif %}
       </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'home' %}"  target="_ext">Home+</a></li>
+            <li><a href="{% url 'home' %}"  target="_ext">{% trans "Home+" %}</a></li>
             <li><a href="#"><i class="glyphicon glyphicon-user"></i> {% if user.is_authenticated %}
             {{ user.name}}
           {% endif %} </a></li>
@@ -41,13 +38,13 @@ All Nawe Nuze Groups
 </nav>
     <div class="row">
         <div class="search">
-            <h1>NaweNuze Groups</h1>
-            <label >search: </label>
+            <h1>{% trans "NaweNuze Groups" %}</h1>
+            <label >{% trans "search:" %} </label>
             <input ng-model="query" placeholder="search for groups" autofocus>
-            <label class="formgroup">by:
+            <label class="formgroup">{% trans "by:" %}
               <select ng-model="groupOrder">
-                <option value="name">Name</option>
-                <option value="location">Location</option>
+                <option value="name">{% trans "Name" %}</option>
+                <option value="location">{% trans "Location" %}</option>
               </select>
             </label>
 

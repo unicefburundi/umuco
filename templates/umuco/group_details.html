@@ -10,14 +10,14 @@
 <section class="groupinfo">
     <div class="group cf" >
     {% if data == 'null' %}
-    <p>No data for this group!</p>
+    <p>{% trans "No data for this group!" %}</p>
     {% else %}
          <div class="row">
-                <h4>Group: {{nawenuze_group}}</h4>
-                <a href= {% url "groups" %} class="pull-right" >&laquo; Back to search</a>
+                <h4>{% trans "Group:" %} {{nawenuze_group}}</h4>
+                <a href= {% url "groups" %} class="pull-right" >&laquo; {% trans "Back to search" %}</a>
                 <div class="container">
                     <p>
-                        Displayed below are the cumulative performances of the NaweNuze Group {{nawenuze_group}}.
+                       {% trans "Displayed below are the cumulative performances of the NaweNuze Group" %} {{nawenuze_group}}.
                     </p>
                 </div>
                 <div></div>
@@ -37,7 +37,7 @@
         </div>
         </div>
     {% endif %}
-        <a href= {% url "groups" %}>&laquo; Back to search</a>
+        <a href= {% url "groups" %}>&laquo; {% trans "Back to search" %}</a>
 
 </section>
 <script>
@@ -153,6 +153,6 @@
     var chart = new Highcharts.Chart(groupDetailsOptions1);
     var chart2 = new Highcharts.Chart(groupDetailsOptions2);
     var chart3 = new Highcharts.Chart(groupDetailsOptions3);
-    });
+        });
 </script>
 {% endblock charts %}
