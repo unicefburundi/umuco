@@ -67,11 +67,11 @@ def save_report(request):
             if len(message) == 4:
                 group = PhoneModel.objects.get(number=response_data['phone']).group
                 date_updated = validate_date(message[0])
+
                 if date_updated.date() > datetime.datetime.today().date():
                     return {'Ok': "False", 'info_to_contact' : 'La date ne peut etre dans le futur. Renvoyer le message corrige', 'raba': date_updated}
-                if (date_updated.weekday() +1) != group.day_of_meeting:
+                if (date_updated.weekday() +1 ) != group.day_of_meeting:
                     return {'Ok': "False", 'info_to_contact' : 'La date doit etre le jours de votre rencontre. Renvoyer le message corrige', 'raba': date_updated}
-
 
                 try:
                     message_3 = int(message[3])
