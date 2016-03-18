@@ -8,7 +8,6 @@ group_urls = patterns('',
 
 urlpatterns = patterns('',
     url(r'^$', views.home, name='report_home'),
-    url(r'^add_report/$', views.save_report, name='add_report'),
     url(r'^overview/$', views.get_reports, name='get_reports'),
     url(r'^overview/(?P<colline>[0-9a-zA-Z_-]+)$', views.get_reports, name='get_groups_reports'),
     url(r'^export/$', views.download_reports, name='download_reports'),
@@ -23,8 +22,6 @@ urlpatterns = patterns('',
 
     url(r'^user/add/$', views.UserCreate.as_view(), name='create_user'),
     url(r'^user/detail/(?P<pk>\d+)$', views.UserDetail.as_view(), name='detail_user'),
-    # for reception
-    url(r'^add_reception/$', views.add_lamps, name='add_reception'),
     #report
     url(r'^list/$', views.ReportList.as_view(), name='report_list'),
     url(r'^edit/(?P<pk>\d+)$', views.ReportUpdate.as_view(), name='report_edit'),

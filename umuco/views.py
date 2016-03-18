@@ -52,6 +52,7 @@ def analytics(request):
 @csrf_exempt
 @json_view
 def save_report(request):
+    import ipdb; ipdb.set_trace()
     response_data = split_message(request)
     if PhoneModel.objects.filter(number=response_data['phone']).count() == 0:
         return {'Ok': "Pas", 'info_to_contact': "Vous n etes pas inscrit. Veuillez vous inscrire "}
@@ -204,11 +205,10 @@ class NaweNuzeDetail(DetailView):
 @json_view
 def add_lamps(request):
     """Add reception of lamps"""
-
+    # import ipdb; ipdb.set_trace()
     response_data = split_message(request)
     if response_data['text'] != "":
         message = response_data['text'].split("#")
-
         response_data['message'] =  message
         if message[1] not in settings.PASSWORD:
             return {'Ok': "Pas", 'info_to_contact' : 'Le message est faux. Contacter le partenaire. ',  'error' : message[1]}

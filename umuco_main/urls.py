@@ -6,11 +6,15 @@ from django.conf import settings
 from umuco.views import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from umuco import backend
+from umuco.views import add_lamps, save_report
 from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     url(r'^add_group/$', backend.handel_rapidpro_request, name='add_group'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^add_report/$', save_report, name='add_report'),
+    # for reception
+    url(r'^add_reception/$', add_lamps, name='add_reception'),
 ]
 
 urlpatterns += i18n_patterns(

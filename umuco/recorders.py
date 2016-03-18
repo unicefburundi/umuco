@@ -145,7 +145,6 @@ def record_reporter(args):
     check_report_day(args)
     if not args['valide']:
         return args
-    # import ipdb; ipdb.set_trace()
     the_commune = args['text'].split('#')[2].title()
     the_colline = args['text'].split('#')[3].title()
     the_phone_numbers = args['text'].split('#')[4:-1]

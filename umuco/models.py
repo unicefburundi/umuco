@@ -57,3 +57,4 @@ class Organization(Group):
 
     def __unicode__(self):
         return u'%s' % (self.partner.user.name)
+
