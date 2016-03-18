@@ -3,6 +3,7 @@ from umuco.models import Report, NawenuzeGroup, PhoneModel
 from authtools.forms import UserCreationForm
 from django.forms import inlineformset_factory
 from bdiadmin.models import *
+from django.utils.translation import ugettext as _
 
 
 class RaportForm(forms.ModelForm):
@@ -34,7 +35,7 @@ class UserCreationForm(UserCreationForm):
         password1 = self.cleaned_data.get("password1")
         password2 = super(UserCreationForm, self).clean_password2()
         if bool(password1) ^ bool(password2):
-            raise forms.ValidationError("Fill out both fields")
+            raise forms.ValidationError(_("Fill out both fields"))
         return password2
 
 MAX_PHONENUMBER = 2

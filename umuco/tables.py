@@ -1,14 +1,15 @@
 import django_tables2 as tables
 from django.utils.safestring import SafeString
 from umuco.models import  NawenuzeGroup, Report
+from django.utils.translation import ugettext as _
 
 class ReportTable(tables.Table):
     date_updated = tables.Column(verbose_name='Date ', attrs={'th':{'data-footer-formatter':"totalTextFormatter"}})
-    sold_lamps = tables.Column(verbose_name='Sold lamps', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    recharged_lamps = tables.Column(verbose_name='Recharged lamps', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    amount = tables.Column(verbose_name='Set aside ', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    edit = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-info">Edit</a>', verbose_name='Edit')
-    delete = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-danger">Delete</a>', verbose_name='Delete')
+    sold_lamps = tables.Column(verbose_name=_('Sold lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
+    recharged_lamps = tables.Column(verbose_name=_('Recharged lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
+    amount = tables.Column(verbose_name=_('Set aside '), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
+    edit = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-info">Edit</a>', verbose_name=_('Edit'))
+    delete = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-danger">Delete</a>', verbose_name=_('Delete'))
 
     class Meta:
         attrs = {"class": "table ", "data-toggle":"table", "data-search":"true" ,"data-show-columns":"true" ,  "data-show-export":"true", 'data-export-types': "['csv','excel']", "data-show-footer":"true"}
@@ -25,9 +26,9 @@ class ReportTable(tables.Table):
 class ReportTable2(tables.Table):
     colline = tables.Column(verbose_name='Colline', attrs={'th':{'data-footer-formatter':"totalTextFormatter"}})
     commune = tables.Column(verbose_name='Commune')
-    sold_lamps = tables.Column(verbose_name='Sold lamps', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    recharged_lamps = tables.Column(verbose_name='Recharged lamps', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    amount = tables.Column(verbose_name='Set aside ', attrs={'th':{'data-footer-formatter':"sumFormatter"}})
+    sold_lamps = tables.Column(verbose_name=_('Sold lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
+    recharged_lamps = tables.Column(verbose_name=_('Recharged lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
+    amount = tables.Column(verbose_name=_('Set aside '), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     date_updated = tables.Column(verbose_name='Date ')
     details = tables.TemplateColumn('<a href="#" >Details</a>')
 

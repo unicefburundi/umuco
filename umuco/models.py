@@ -53,7 +53,7 @@ class Reception(models.Model):
 
 class Organization(Group):
     pass_word = models.CharField(max_length=12, default=settings.PASSWORD, editable=False)
-    partner = models.ForeignKey(ProfileUser, help_text=_('Partenair focalt point '))
+    partner = models.ForeignKey(ProfileUser, help_text=_('Partner focal point '))
 
     def __unicode__(self):
         return u'%s' % (self.partner.user.name)

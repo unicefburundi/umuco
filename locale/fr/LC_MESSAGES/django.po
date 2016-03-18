@@ -1,0 +1,128 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016  UNICEF
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <murikiranige@gmail.com>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-18 03:28+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Allan Stockman <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bdiadmin/models.py:11
+msgid "Phone number in the format: '+999999999'. Up to 15 digits allowed."
+msgstr ""
+"Numero de téléphone au format : '+999999999'.Jusqu'à 15 chiffres permis."
+
+#: bdiadmin/models.py:12
+msgid "telephone"
+msgstr "téléphone"
+
+#: bdiadmin/models.py:12
+msgid "The telephone to contact you."
+msgstr "Le téléphone pour vous contacter."
+
+#: bdiadmin/models.py:19 bdiadmin/models.py:35 bdiadmin/models.py:51
+msgid "name"
+msgstr "nom"
+
+#: templates/registration/user_form.html:4
+msgid "New User ? "
+msgstr "Nouvel utilisateur ?"
+
+#: templates/registration/user_form.html:6
+msgid "Invalid data. Please try again."
+msgstr "Données invalides. Veuillez réessayer."
+
+#: umuco/forms.py:38
+msgid "Fill out both fields"
+msgstr "Remplissez tous les champs"
+
+#: umuco/models.py:12
+msgid "Required"
+msgstr "Obligatoire"
+
+#: umuco/models.py:13
+msgid "Day of meeting"
+msgstr "Jour de la réunion"
+
+#: umuco/models.py:13
+msgid "Number. Eg : For Monday put 1, Tuesday put 2, ..."
+msgstr "Nombre. Par exemple: Pour le lundi mettre 1, le mardi mettre 2, ..."
+
+#: umuco/models.py:22
+msgid "phone number"
+msgstr "numéro de téléphone"
+
+#: umuco/models.py:23 umuco/models.py:38 umuco/models.py:47
+msgid "group"
+msgstr "groupe"
+
+#: umuco/models.py:33
+msgid "Date submited"
+msgstr "Date de soumission"
+
+#: umuco/models.py:34
+msgid "Date refering to"
+msgstr "Date de référent à"
+
+#: umuco/models.py:35 umuco/tables.py:9 umuco/tables.py:30
+msgid "Recharged lamps"
+msgstr "Lampes rechargées"
+
+#: umuco/models.py:36
+msgid "Sold Lamps"
+msgstr "Lampes vendues"
+
+#: umuco/models.py:37
+msgid "Amount"
+msgstr "Montant"
+
+#: umuco/models.py:48
+msgid "Received lamps"
+msgstr "Lampes reçues"
+
+#: umuco/models.py:49
+msgid "Date received"
+msgstr "Date de réception"
+
+#: umuco/models.py:56
+#, fuzzy
+#| msgid "Partenair focalt point "
+msgid "Partner focal point "
+msgstr "Partenaire point focal"
+
+#: umuco/tables.py:8 umuco/tables.py:29
+#, fuzzy
+#| msgid "Sold Lamps"
+msgid "Sold lamps"
+msgstr "Lampes vendues"
+
+#: umuco/tables.py:10 umuco/tables.py:31
+msgid "Set aside "
+msgstr ""
+
+#: umuco/tables.py:11
+msgid "Edit"
+msgstr ""
+
+#: umuco/tables.py:12
+msgid "Delete"
+msgstr ""
+
+#: umuco_main/settings.py:90
+msgid "English"
+msgstr "Anglais"
+
+#: umuco_main/settings.py:91
+msgid "French"
+msgstr "Francais"

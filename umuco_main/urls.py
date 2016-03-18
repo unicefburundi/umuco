@@ -1,16 +1,21 @@
-from django.conf.urls import patterns, include, url
+# -*- coding: utf-8 -*-
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from umuco.views import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from umuco import backend
+from django.conf.urls.i18n import i18n_patterns
 
-urlpatterns = patterns('',
+urlpatterns = [
+    url(r'^add_group/$', backend.handel_rapidpro_request, name='add_group'),
+    url(r'^admin/', include(admin.site.urls)),
+]
+
+urlpatterns += i18n_patterns(
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
      url(r'^accounts/', include('authtools.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^add_group/$', backend.handel_rapidpro_request, name='add_group'),
     url(r'^report/', include('umuco.urls', namespace='report', app_name='umuco')),
     url(r'^groups/$', all_groups, name="groups"),
     url(r'^analytics/$', analytics, name="analytics"),
