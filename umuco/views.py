@@ -67,11 +67,12 @@ def save_report(request):
             if len(message) == 4:
                 group = PhoneModel.objects.get(number=response_data['phone']).group
                 date_updated = validate_date(message[0])
-                if (date_updated.weekday() + 1) != group.day_of_meeting:
-                    return {'Ok': "False", 'info_to_contact' : 'La date doit etre le jours de votre rencontre. Renvoyer le message corrige.', 'raba': date_updated}
-
                 if date_updated.date() > datetime.datetime.today().date():
                     return {'Ok': "False", 'info_to_contact' : 'La date ne peut etre dans le futur. Renvoyer le message corrige', 'raba': date_updated}
+                if (date_updated.weekday() ) != group.day_of_meeting:
+                    return {'Ok': "False", 'info_to_contact' : 'La date doit etre le jours de votre rencontre. Renvoyer le message corrige', 'raba': date_updated}
+
+
                 try:
                     message_3 = int(message[3])
                 except Exception:
@@ -82,17 +83,17 @@ def save_report(request):
                 try:
                     message_2= int(message[2])
                 except Exception:
-                    return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. Renvoyer le message corrige.', 'error': message[2]}
+                    return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. Renvoyer le message corrige', 'error': message[2]}
                 else:
                     if not isinstance(message_2, (int)) or  message_2 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. Renvoyer le message corrige.', 'error': message_2}
+                        return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. Renvoyer le message corrige', 'error': message_2}
                 try:
                     message_1 = int(message[1])
                 except Exception:
-                    return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige.', 'error': message[1]}
+                    return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige', 'error': message[1]}
                 else:
                     if not isinstance(message_1, (int)) or  message_1 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige.', 'error': message_1}
+                        return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige', 'error': message_1}
                 repport,  created = Report.objects.get_or_create(group=group, date_updated=date_updated)
                 if created:
                     repport.amount = message_3
@@ -100,7 +101,7 @@ def save_report(request):
                     repport.recharged_lamps = message_2
                     repport.save()
                 elif (datetime.datetime.today() - date_updated).days > 6 :
-                    return {'Ok': "Pas", 'info_to_contact' : 'Vous ne pouvez plus mettre a jours le rapport. Contacter le partenaire.', 'error': (datetime.datetime.today() - date_updated).days }
+                    return {'Ok': "Pas", 'info_to_contact' : 'Vous ne pouvez plus mettre a jours le rapport. Contacter le partenaire', 'error': (datetime.datetime.today() - date_updated).days }
                 else:
                     repport.amount = message_3
                     repport.sold_lamps = message_1
