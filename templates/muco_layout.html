@@ -71,19 +71,25 @@
     <div class="col-md-12">
       <div class="navbar-header">
       {% if user.is_authenticated %}
-        <a href="/" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> {% trans "Download" %}<small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
-        <ul class="nav dropdown-menu">
-          <li><a href="{% url 'umuco:download_reports' %}"><i class="glyphicon glyphicon glyphicon-export" style="color:#0000aa;"></i> {% trans "All reports" %}</a></li>
-      </ul>
-      {% endif %}
-      {% if user.is_authenticated %}
-        <div  class="nav navbar-right" id="navbar-collapse3">
+        <div  class="nav navbar-right" id="navbar-collapse3" style="margin-left:20px;">
     <ul class="nav navbar-nav navbar-right">
+    <div class="dropdown btn-group">
+    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Visualization" %}
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
     <li class="active"><a href="{% url 'analytics' %}">{% trans "Analytics" %}</a></li>
      <li class=""><a href="{% url 'groups' %}">{% trans "Groups" %}</a></li>
      <li class=""><a href="{% url 'home' %}">{% trans "Graphics" %}</a></li>
+     </ul>
+     </div>
      {% if user.is_staff %}
+     <div class="dropdown btn-group">
+    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Create" %}
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
        <li class=""><a href="/report/add/group/">{% trans "Register Group" %}</a></li>
+      </ul>
+      </div>
      {% endif %}
  </ul>
 </div>

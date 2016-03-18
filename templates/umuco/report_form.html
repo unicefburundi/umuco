@@ -1,5 +1,5 @@
 {% extends "home.html" %}
-
+{% load i18n %}
 {% block contents %}
     <div class="container">
         <h2>{% trans "Edit Report" %}</h2>
@@ -25,7 +25,7 @@
             <p>{{form.recharged_lamps.errors}}</p>
             <p>{{form.recharged_lamps}}</p>
         </div>
-            <input type="submit" value="Submit" class="btn btn-primary" />
+            <input type="submit" value="{% trans "Submit" %}" class="btn btn-primary" />
         </form>
     </div>
 {% endblock contents %}

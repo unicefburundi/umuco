@@ -1,17 +1,17 @@
 {% extends "groups.html" %}
-
+{% load i18n %}
 {% block charts %}
     <section>
     <div class="search">
         <h1>
-            Group Directory
+            {% trans "Group Directory" %}
         </h1>
-        <label >search: </label>
+        <label >{% trans "search:" %} </label>
         <input ng-model="query" placeholder="Search for Group" autofocus>
-        <label class="formgroup">by:
+        <label class="formgroup">{% trans "by:" %}
             <select ng-model="artistOrder">
-                <option value="name">Name</option>
-                <option value="location">Location</option>
+                <option value="name">{% trans "Name" %}</option>
+                <option value="location">{% trans "Location" %}</option>
             </select>
         </label>
         <label class="formgroup">

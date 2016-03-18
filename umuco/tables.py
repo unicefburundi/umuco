@@ -9,8 +9,6 @@ class ReportTable(tables.Table):
     recharged_lamps = tables.Column(verbose_name=_('Recharged lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     amount = tables.Column(verbose_name=_('Set aside '), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     edit = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-info">Edit</a>', verbose_name=_('Edit'))
-    delete = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-danger">Delete</a>', verbose_name=_('Delete'))
-
     class Meta:
         attrs = {"class": "table ", "data-toggle":"table", "data-search":"true" ,"data-show-columns":"true" ,  "data-show-export":"true", 'data-export-types': "['csv','excel']", "data-show-footer":"true"}
 

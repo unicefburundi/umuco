@@ -18,7 +18,7 @@ from django.views.generic.edit import UpdateView, DeleteView
 from django.views.generic import ListView
 from bdiadmin.forms import *
 from django.db.models import F
-
+from django.contrib.auth.decorators import login_required
 
 User = get_user_model()
 
@@ -27,6 +27,7 @@ def landing(request):
     form = AuthenticationForm()
     return render(request, "landing_page.html", {'form': form})
 
+@login_required
 @csrf_exempt
 def home(request):
     form = AuthenticationForm()
@@ -52,7 +53,6 @@ def analytics(request):
 @csrf_exempt
 @json_view
 def save_report(request):
-    import ipdb; ipdb.set_trace()
     response_data = split_message(request)
     if PhoneModel.objects.filter(number=response_data['phone']).count() == 0:
         return {'Ok': "Pas", 'info_to_contact': "Vous n etes pas inscrit. Veuillez vous inscrire "}
@@ -66,9 +66,8 @@ def save_report(request):
 
             if len(message) == 4:
                 group = PhoneModel.objects.get(number=response_data['phone']).group
-                import ipdb; ipdb.set_trace()
                 date_updated = validate_date(message[0])
-                if date_updated.weekday() != group.day_of_meeting:
+                if (date_updated.weekday() + 1) != group.day_of_meeting:
                     return {'Ok': "False", 'info_to_contact' : 'La date doit etre le jours de votre rencontre. Renvoyer le message corrige.', 'raba': date_updated}
 
                 if date_updated.date() > datetime.datetime.today().date():
@@ -129,6 +128,7 @@ def get_reports(request, colline=None):
     return jsonresponses
 
 
+@login_required
 def download_reports(request):
     queryset = Report.objects.all()
     columns = (
@@ -205,7 +205,6 @@ class NaweNuzeDetail(DetailView):
 @json_view
 def add_lamps(request):
     """Add reception of lamps"""
-    # import ipdb; ipdb.set_trace()
     response_data = split_message(request)
     if response_data['text'] != "":
         message = response_data['text'].split("#")
@@ -257,6 +256,7 @@ class NaweNuzeCreate(CreateView):
     fields = ('province', 'commune', 'colline')
     exclude = ('lamps_in_stock','cost_lamp','cost_recharge')
     success_url = reverse_lazy('groups')
+
 
 def submit_group(request):
     form = NaweNuzeForm()
