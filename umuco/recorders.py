@@ -183,6 +183,8 @@ def record_reporter(args):
             requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
         args['envoye'] = the_message_to_send
     else:
+        args['ok'] = False
+        args['valide'] = False
         args['info_to_contact'] = "La colline {0} de la commune {1} n exite pas.".format(the_colline, the_commune)
 
     return args
