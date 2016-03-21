@@ -181,18 +181,17 @@ def group_confirm(args):
         if re.search(expression, contact_phone_number_no_space) is None:
             #The phone number is not well written
             args['valide'] = (args['valide'] and False)
-            args['info_to_contact'] = "Erreur. Le numero de telephone envoye n est pas bien ecrit. Recommencez"
+            args['info_to_contact'] = "Erreur. Le numero de telephone envoye n est pas bien ecrit. Recommencez."
             return args
 
     temp = get_or_none(Temporaly, text__icontains=args['text'])
     #Let's check if this person sent a valid phone number
     if not temp:
-        return {'Ok': False, 'info_to_contact': 'Vous avez envoye un different numero. Recommencez', 'valide': False}
+        return {'Ok': False, 'info_to_contact': 'Vous avez envoye un different numero. Recommencez.', 'valide': False}
     else:
         the_colline = temp.colline
         the_commune = temp.colline.commune
         the_meetting_day = temp.day_of_meeting
-        # import ipdb; ipdb.set_trace()
         the_concerned_group , created= NawenuzeGroup.objects.get_or_create(colline=temp.colline, day_of_meeting=temp.day_of_meeting, lamps_in_stock=temp.lamps_in_stock, cost_lamp=temp.cost_lamp, cost_recharge=temp.cost_recharge)
         the_concerned_group.save()
         temp.delete()
