@@ -156,7 +156,6 @@ def record_reporter(args):
     the_colline = args['text'].split('#')[3].title()
     the_phone_numbers = args['text'].split('#')[4:-1]
     the_meetting_day = args['text'].split('#')[-1]
-    import ipdb; ipdb.set_trace()
     colline = get_or_none(Colline, name=the_colline, commune__name=the_commune)
     if colline :
         the_concerned_group, created = NawenuzeGroup.objects.get_or_create(colline=colline)
