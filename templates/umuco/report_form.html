@@ -4,7 +4,7 @@
     <div class="container">
         <h2>{% trans "Edit Report" %}</h2>
         <form method="post">{% csrf_token %}
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="group">{{form.group.label_tag}}</label>
             <p>{{form.group.errors}}</p>
             <p>{{form.group}}</p>
@@ -24,6 +24,11 @@
             <label for="recharged_lamps">{{form.recharged_lamps.label_tag}}</label>
             <p>{{form.recharged_lamps.errors}}</p>
             <p>{{form.recharged_lamps}}</p>
+        </div>
+        <div class="col-md-2">
+            <label for="date_updated">{{form.date_updated.label_tag}}</label>
+            <p>{{form.date_updated.errors}}</p>
+            <p>{{form.date_updated }}</p>
         </div>
             <input type="submit" value="{% trans "Submit" %}" class="btn btn-primary" />
         </form>
