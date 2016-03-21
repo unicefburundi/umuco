@@ -83,3 +83,37 @@ def handel_rapidpro_request(request):
     # response['envoye'] = incoming_data['envoye']
 
     return response
+
+
+@csrf_exempt
+@json_view
+def group_confirmation(request):
+    '''This function receives requests sent by RapidPro.
+    This function send json data to RapidPro as a response.'''
+    #We will put all data sent by RapidPro in this variable
+    incoming_data = {}
+
+    #Two couples of variable/value are separated by &
+    #Let's put couples of variable/value in a list called 'list_of_data'
+    list_of_data = request.body.split("&")
+
+    #Let's put all the incoming data in the dictionary 'incoming_data'
+    for couple in list_of_data:
+        incoming_data[couple.split("=")[0]] = couple.split("=")[1]
+
+    #Let's assume that the incoming data is valide
+    incoming_data['valide'] = True
+    incoming_data['info'] = "The default information."
+
+    #Because RapidPro sends the contact phone number by replacing "+" by "%2B"
+    #let's rewrite the phone number in a right way.
+    incoming_data['phone'] = incoming_data['phone'].replace("%2B","+")
+
+
+    #Let's eliminate unnecessary spaces in the incoming message
+    eliminate_unnecessary_spaces(incoming_data)
+
+    #Let's instantiate the variable this function will return
+    response = group_confirm(incoming_data)
+
+    return response

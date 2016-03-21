@@ -58,3 +58,13 @@ class Organization(Group):
     def __unicode__(self):
         return u'%s' % (self.partner.user.name)
 
+class Temporaly(models.Model):
+    text = models.CharField(max_length=500)
+    colline = models.OneToOneField(Colline, help_text=_('Required'))
+    day_of_meeting = models.PositiveIntegerField(verbose_name=_("Day of meeting"), help_text=_('Number. Eg : For Monday put 1, Tuesday put 2, ...'), null=True, validators=[MaxValueValidator(7),])
+    lamps_in_stock = models.PositiveIntegerField(default=0 , null=True, blank=True)
+    cost_lamp = models.PositiveIntegerField(default=8000 , null=True, blank=True)
+    cost_recharge = models.PositiveIntegerField(default=300 , null=True, blank=True)
+
+    def __unicode__(self):
+        return u'%s' % self.colline

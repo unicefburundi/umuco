@@ -3,7 +3,7 @@ import re
 from umuco.models import *
 import requests
 import json
-from umuco.utils import get_or_none, confirm_number
+from umuco.utils import get_or_none
 from bdiadmin.models import *
 
 
@@ -154,22 +154,40 @@ def record_reporter(args):
         return args
     the_commune = args['text'].split('#')[2].title()
     the_colline = args['text'].split('#')[3].title()
-    the_phone_numbers = args['text'].split('#')[4:-1]
     the_meetting_day = args['text'].split('#')[-1]
     colline = get_or_none(Colline, name=the_colline, commune__name=the_commune)
     if colline :
-        the_concerned_group, created = NawenuzeGroup.objects.get_or_create(colline=colline)
+        the_concerned_group, created = Temporaly.objects.get_or_create(colline=colline)
         the_concerned_group = the_concerned_group
         the_concerned_group.day_of_meeting = the_meetting_day
-        # confirmation  = confirm_number(args)
-        # if not confirmation:
-        #     the_concerned_group.delete()
-        #     return {'ok': False, 'info_to_contact': 'Les numers de telephone ne corresponent pas. Veuillez recommencer l enregistrement'}
-
+        the_concerned_group.text = args['text']
         the_concerned_group.save()
+        return args
 
+
+    else:
+        args['ok'] = False
+        args['valide'] = False
+        args['info_to_contact'] = "La colline {0} de la commune {1} n exite pas.".format(the_colline, the_commune)
+
+    return args
+
+def group_confirm(args):
+    temp = get_or_none(Temporaly, text__icontains=args['text'])
+    if not temp:
+        return {'ok': False, 'info_to_contact': 'Different numero'}
+    else:
+        the_colline = temp.colline
+        the_commune = temp.colline.commune
+        the_meetting_day = temp.day_of_meeting
+        # import ipdb; ipdb.set_trace()
+        the_concerned_group , created= NawenuzeGroup.objects.get_or_create(colline=temp.colline, day_of_meeting=temp.day_of_meeting, lamps_in_stock=temp.lamps_in_stock, cost_lamp=temp.cost_lamp, cost_recharge=temp.cost_recharge)
+        the_concerned_group.save()
+        temp.delete()
+        args['valide'] = True
+        args['info_to_contact'] = "Tu as enregistres le groupe {0} dans la commune {1} pour donner les rapports tous les {2}.".format(the_colline, the_commune, days[int(the_meetting_day)])
         numbers = []
-        for the_phone_number in the_phone_numbers:
+        for the_phone_number in args['text'].split('#'):
             the_phone_number = the_phone_number.replace(" ", "")
             if len(the_phone_number) == 8:
                 the_phone_number = "+257"+the_phone_number
@@ -178,8 +196,6 @@ def record_reporter(args):
 
             the_phone_object, created = PhoneModel.objects.get_or_create(number = the_phone_number, group = the_concerned_group)
             numbers.append(the_phone_number)
-        args['valide'] = True
-        args['info_to_contact'] = "Tu as enregistres le groupe {0} dans la commune {1} pour donner les rapports tous les {2}.".format(the_colline, the_commune, days[int(the_meetting_day)])
 
         url = "https://app.rapidpro.io/api/v1/broadcasts.json"
         for i in numbers:
@@ -188,9 +204,4 @@ def record_reporter(args):
             data = {"urns": ['tel:' + i],"text": the_message_to_send}
             requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
         args['envoye'] = the_message_to_send
-    else:
-        args['ok'] = False
-        args['valide'] = False
-        args['info_to_contact'] = "La colline {0} de la commune {1} n exite pas.".format(the_colline, the_commune)
-
-    return args
+        return args

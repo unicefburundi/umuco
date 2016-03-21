@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^add_report/$', save_report, name='add_report'),
     # for reception
     url(r'^add_reception/$', add_lamps, name='add_reception'),
+    url(r'^group_confirm/$', backend.group_confirmation, name='group_confirm'),
 ]
 
 urlpatterns += i18n_patterns(
