@@ -3,8 +3,9 @@ import re
 from umuco.models import *
 import requests
 import json
-from umuco.utils import get_or_none
+from umuco.utils import get_or_none, confirm_number
 from bdiadmin.models import *
+
 
 days = {1:'Lundi',2:'Mardi', 3:'Mercredi', 4:'Jeudi', 5:'Vendredi', 6:'Samedi', 7:'Dimanche'}
 
@@ -155,11 +156,17 @@ def record_reporter(args):
     the_colline = args['text'].split('#')[3].title()
     the_phone_numbers = args['text'].split('#')[4:-1]
     the_meetting_day = args['text'].split('#')[-1]
+    import ipdb; ipdb.set_trace()
     colline = get_or_none(Colline, name=the_colline, commune__name=the_commune)
     if colline :
-        the_concerned_group = NawenuzeGroup(colline=colline)
+        the_concerned_group, created = NawenuzeGroup.objects.get_or_create(colline=colline)
         the_concerned_group = the_concerned_group
         the_concerned_group.day_of_meeting = the_meetting_day
+        # confirmation  = confirm_number(args)
+        # if not confirmation:
+        #     the_concerned_group.delete()
+        #     return {'ok': False, 'info_to_contact': 'Les numers de telephone ne corresponent pas. Veuillez recommencer l enregistrement'}
+
         the_concerned_group.save()
 
         numbers = []

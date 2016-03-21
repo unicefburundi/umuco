@@ -77,3 +77,7 @@ def get_or_none(model, *args, **kwargs):
         return model.objects.get(*args, **kwargs)
     except model.DoesNotExist:
         return None
+
+def confirm_number(args):
+    url = "https://app.rapidpro.io/api/v1/broadcasts.json"
+    requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(args))
