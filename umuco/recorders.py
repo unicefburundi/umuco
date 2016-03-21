@@ -173,7 +173,19 @@ def record_reporter(args):
     return args
 
 def group_confirm(args):
+    contact_phone_numbers = args['text'].split('#')
+    for contact_phone_number in contact_phone_numbers:
+        contact_phone_number_no_space = contact_phone_number.replace(" ", "")
+        expression = r'^(\+?(257)?)((62)|(79)|(71)|(76)|(75)|(72)|(61)|(69))([0-9]{6})$'
+        print(contact_phone_number_no_space)
+        if re.search(expression, contact_phone_number_no_space) is None:
+            #The phone number is not well written
+            args['valide'] = (args['valide'] and False)
+            args['info_to_contact'] = "Erreur. Le numero de telephone envoye n est pas bien ecrit."
+            return args
+
     temp = get_or_none(Temporaly, text__icontains=args['text'])
+    #Let's check if this person sent a valid phone number
     if not temp:
         return {'ok': False, 'info_to_contact': 'Different numero'}
     else:
