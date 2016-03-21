@@ -242,13 +242,18 @@ class ReportList(ListView):
 
 class ReportUpdate(UpdateView):
     model = Report
-    fields = ['recharged_lamps','sold_lamps','amount','group']
+    fields = ['recharged_lamps','sold_lamps','amount','group', 'date_updated']
 
     def get_success_url(self, **kwargs):
         return reverse('reports_by_groups2', kwargs={'pk': self.object.group.id})
 
 class ReportDelete(DeleteView):
     model = Report
+    success_url = reverse_lazy('report_list')
+
+class ReportCreate(CreateView):
+    model = Report
+    fields = '__all__'
     success_url = reverse_lazy('report_list')
 
 

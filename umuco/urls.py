@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^user/add/$', views.UserCreate.as_view(), name='create_user'),
     url(r'^user/detail/(?P<pk>\d+)$', views.UserDetail.as_view(), name='detail_user'),
     #report
+    url(r'^report_create/?$', views.ReportCreate.as_view(), name='report_create'),
     url(r'^list/$', views.ReportList.as_view(), name='report_list'),
     url(r'^edit/(?P<pk>\d+)$', views.ReportUpdate.as_view(), name='report_edit'),
     url(r'^delete/(?P<pk>\d+)$', views.ReportDelete.as_view(), name='report_delete'),
