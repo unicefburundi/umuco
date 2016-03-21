@@ -21,7 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 SECRET_KEY = 'yz@q%2pw2s%#v48)9#5r=za$zv!ho3v^wt0u--wws)3o*+*+n)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = DEBUG
 
