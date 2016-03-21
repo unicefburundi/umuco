@@ -5,12 +5,6 @@
         <h2>{% trans "Edit Report" %}</h2>
         <form method="post">{% csrf_token %}
         <div class="col-md-2">
-            <label for="group">{{form.group.label_tag}}</label>
-            <p>{{form.group.errors}}</p>
-            <p>{{form.group}}</p>
-        </div>
-
-        <div class="col-md-2">
             <label for="amount">{{form.amount.label_tag}}</label>
             <p>{{form.amount.errors}}</p>
             <p>{{form.amount}}</p>
