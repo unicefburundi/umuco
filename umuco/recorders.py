@@ -84,7 +84,13 @@ def check_colline(args):
 
 
 def check_phone(args):
-    ''' This function cheks if the phone number is well written '''
+    ''' This function cheks if the phone number is well written and the register is not registering himself'''
+
+    if args['phone'].replace("+257", "") in args['text'] :
+        args['valide'] = (args['valide'] and False)
+        args['info_to_contact'] = "Erreur. Vous ne pouvez pas vous enregistrer vous meme"
+        return args
+
     contact_phone_numbers = args['text'].split('#')[4:-1]
     for contact_phone_number in contact_phone_numbers:
         contact_phone_number_no_space = contact_phone_number.replace(" ", "")
