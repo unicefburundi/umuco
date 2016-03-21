@@ -72,6 +72,8 @@ def save_report(request):
                     return {'Ok': "False", 'info_to_contact' : 'La date ne peut etre dans le futur. Renvoyer le message corrige', 'raba': date_updated}
                 if (date_updated.weekday() +1 ) != group.day_of_meeting:
                     return {'Ok': "False", 'info_to_contact' : 'La date doit etre le jours de votre rencontre. Renvoyer le message corrige', 'raba': date_updated}
+                if (datetime.datetime.today() - date_updated).days > 7 :
+                    return {'Ok': "Pas", 'info_to_contact' : 'Vous ne pouvez plus envoyer de rapports. Contacter le partenaire', 'error': (datetime.datetime.today() - date_updated).days }
 
                 try:
                     message_3 = int(message[3])
