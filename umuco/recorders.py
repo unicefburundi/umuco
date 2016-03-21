@@ -187,7 +187,7 @@ def group_confirm(args):
     temp = get_or_none(Temporaly, text__icontains=args['text'])
     #Let's check if this person sent a valid phone number
     if not temp:
-        return {'ok': False, 'info_to_contact': 'Different numero'}
+        return {'Ok': False, 'info_to_contact': 'Different numero'}
     else:
         the_colline = temp.colline
         the_commune = temp.colline.commune
