@@ -181,13 +181,13 @@ def group_confirm(args):
         if re.search(expression, contact_phone_number_no_space) is None:
             #The phone number is not well written
             args['valide'] = (args['valide'] and False)
-            args['info_to_contact'] = "Erreur. Le numero de telephone envoye n est pas bien ecrit."
+            args['info_to_contact'] = "Erreur. Le numero de telephone envoye n est pas bien ecrit. Recommencez"
             return args
 
     temp = get_or_none(Temporaly, text__icontains=args['text'])
     #Let's check if this person sent a valid phone number
     if not temp:
-        return {'Ok': False, 'info_to_contact': 'Different numero'}
+        return {'Ok': False, 'info_to_contact': 'Different numero', 'valide': False}
     else:
         the_colline = temp.colline
         the_commune = temp.colline.commune
