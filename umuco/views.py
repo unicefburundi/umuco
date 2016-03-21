@@ -104,6 +104,13 @@ def save_report(request):
                     repport.save()
                 elif (datetime.datetime.today() - date_updated).days > 6 :
                     return {'Ok': "Pas", 'info_to_contact' : 'Vous ne pouvez plus mettre a jours le rapport. Contacter le partenaire', 'error': (datetime.datetime.today() - date_updated).days }
+                # sold
+                solds = Report.objects.filter(group=group).aggregate(Sum('sold_lamps'))
+                # import ipdb; ipdb.set_trace()
+                if message_1 != 0 and group.lamps_in_stock < solds['sold_lamps__sum']:
+                    sent = email_report_flagged(Organization.objects.get(name='CPES').partner.user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir vendu plus de lampes ({3}) qu il n en restait en stock({4})'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_1, (group.lamps_in_stock - solds['sold_lamps__sum'])))
+                    print sent
+                    return {'Ok': False, 'info_to_contact': "Il ne vous restait pas de lampes. Contacter le partenaire"}
                 else:
                     repport.amount = message_3
                     repport.sold_lamps = message_1
@@ -112,14 +119,10 @@ def save_report(request):
 
                 # cost
                 cost_expected = (message_2*group.cost_recharge)
-                if message_3 != 0 and message_3 != cost_expected :
+                if message_3 != 0 and message_3 > cost_expected :
                     sent = email_report_flagged(Organization.objects.get(name='CPES').partner.user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir avoir epargne {3} fbu alors que cela valait juste {4}'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_3, cost_expected))
                     print sent
-                # sold
-                solds = Report.objects.filter(group=group).aggregate(Sum('sold_lamps'))
-                if message_1 != 0 and group.lamps_in_stock < solds['sold_lamps__sum']:
-                    sent = email_report_flagged(Organization.objects.get(name='CPES').partner.user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir vendu plus de lampes ({3}) qu il n en restait en stock({4})'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_1, (group.lamps_in_stock - solds['sold_lamps__sum'])))
-                    print sent
+
 
 
             return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'amount': message_3, 'date': date_updated}, safe=False)
