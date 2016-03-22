@@ -57,6 +57,7 @@
         <div class="tab-pane {% block activeprovince1 %}{% endblock activeprovince1 %}" id="province">
             <div class="row">
                 <div class="col-md-2"></div>
+                <form action="{% url 'report:submit_group' %}" method="POST" class="form-inline">{% csrf_token %}
                 <div class="col-md-4">
                     <label for="name">{{province_form.name.label_tag}}</label>
                     <p>{{province_form.name.errors}}</p>
@@ -68,10 +69,12 @@
                     <p>{{province_form.code}}</p>
                 </div>
                 <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+                </form>
             </div>
         </div>
         <div class="tab-pane {% block activecommune1 %}{% endblock activecommune1 %}" id="commune">
             <div class="row">
+            <form action="{% url 'report:submit_group' %}" method="POST" class="form-inline">{% csrf_token %}
                 <div class="col-md-3">
                     <label for="name">{{commune_form.province.label_tag}}</label>
                     <p>{{commune_form.province.errors}}</p>
@@ -88,10 +91,12 @@
                     <p>{{commune_form.code}}</p>
                 </div>
                 <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+            </form>
             </div>
         </div>
         <div class="tab-pane {% block activecolline1 %}{% endblock activecolline1 %}" id="colline">
             <div class="row">
+            <form action="{% url 'report:submit_group' %}" method="POST" class="form-inline">{% csrf_token %}
                 <div class="col-md-3">
                     <label for="commune">{{colline_form.commune.label_tag}}</label>
                     <p>{{colline_form.commune.errors}}</p>
@@ -108,10 +113,12 @@
                     <p>{{colline_form.code}}</p>
                 </div>
                 <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+            </form>
             </div>
         </div>
         <div class="tab-pane {% block activetelephone1 %}{% endblock activetelephone1 %}" id="telephone">
             <div class="row">
+            <form action="{% url 'report:submit_group' %}" method="POST" class="form-inline">{% csrf_token %}
                 <div class="col-md-3"></div>
                 <div class="col-md-3">
                     <label for="group">{{phone_form.group.label_tag}}</label>
@@ -124,6 +131,7 @@
                     <p>{{phone_form.number}}</p>
                 </div>
                 <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+            </form>
             </div>
         </div>
     </div>
