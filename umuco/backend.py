@@ -74,10 +74,10 @@ def handel_rapidpro_request(request):
 
     if response['valide'] :
         #The message have been recorded
-        response['ok'] = True
+        response['Ok'] = True
     else:
     	#The message haven't been recorded
-        response['ok'] = False
+        response['Ok'] = False
 
     # response['info_to_contact'] = incoming_data['info_to_contact']
     # response['envoye'] = incoming_data['envoye']
