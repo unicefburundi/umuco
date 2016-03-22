@@ -11,14 +11,12 @@
       <div class="col-md-3 panel panel-default" >
         <h5><i class="glyphicon glyphicon-list-alt"> </i> {{ object.colline|  capfirst }} {% trans "Group" %}</h5>
         <ul class="list-group">
-        {% if object.province %}
         <li class="list-group-item">
-            <span class="badge">{{object.province}}</span>
+            <span class="badge">{{object.colline.commune.province}}</span>
             Province :
           </li>
-        {% endif %}
           <li class="list-group-item">
-            <span class="badge">{{object.commune}}</span>
+            <span class="badge">{{object.colline.commune}}</span>
             Commune :
           </li>
           <li class="list-group-item">
