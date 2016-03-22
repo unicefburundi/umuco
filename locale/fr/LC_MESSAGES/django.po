@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-18 11:07+0200\n"
+"POT-Creation-Date: 2016-03-22 08:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Allan Stockman <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,7 +39,7 @@ msgstr "nom"
 msgid "All Nawe Nuze Groups"
 msgstr "Tous les groupes Nawe Nuze"
 
-#: templates/groups.html:27 templates/muco_layout.html:90
+#: templates/groups.html:27
 msgid "Register Group"
 msgstr "Inscription groupe"
 
@@ -88,12 +88,12 @@ msgid "What is it ?"
 msgstr "Quoi ?"
 
 #: templates/landing_page.html:65 templates/login.html:6
-#: templates/muco_layout.html:110
+#: templates/muco_layout.html:111
 msgid "Logout"
 msgstr "Se déconnecter"
 
-#: templates/landing_page.html:67 templates/muco_layout.html:112
-#: templates/muco_layout.html.py:317
+#: templates/landing_page.html:67 templates/muco_layout.html:113
+#: templates/muco_layout.html.py:318
 msgid "Login"
 msgstr "S'identifier"
 
@@ -214,57 +214,65 @@ msgstr "Graphiques"
 msgid "Create"
 msgstr "Créer"
 
-#: templates/muco_layout.html:114
+#: templates/muco_layout.html:90
+msgid "A Group"
+msgstr "Groupe"
+
+#: templates/muco_layout.html:91
+msgid "A Report"
+msgstr "Rapports"
+
+#: templates/muco_layout.html:115
 msgid "About"
 msgstr "A propos"
 
-#: templates/muco_layout.html:136 templates/muco_layout.html.py:185
-#: templates/muco_layout.html:234
+#: templates/muco_layout.html:137 templates/muco_layout.html.py:186
+#: templates/muco_layout.html:235
 msgid "Title"
 msgstr "Titre"
 
-#: templates/muco_layout.html:142 templates/muco_layout.html.py:191
-#: templates/muco_layout.html:240
+#: templates/muco_layout.html:143 templates/muco_layout.html.py:192
+#: templates/muco_layout.html:241
 msgid "Subtitle"
 msgstr "Sous-titre"
 
-#: templates/muco_layout.html:148 templates/muco_layout.html.py:197
-#: templates/muco_layout.html:246
+#: templates/muco_layout.html:149 templates/muco_layout.html.py:198
+#: templates/muco_layout.html:247
 msgid "Width"
 msgstr "Largeur"
 
-#: templates/muco_layout.html:154 templates/muco_layout.html.py:203
-#: templates/muco_layout.html:252
+#: templates/muco_layout.html:155 templates/muco_layout.html.py:204
+#: templates/muco_layout.html:253
 msgid "Height"
 msgstr "Hauteur"
 
-#: templates/muco_layout.html:162 templates/muco_layout.html.py:211
-#: templates/muco_layout.html:260
+#: templates/muco_layout.html:163 templates/muco_layout.html.py:212
+#: templates/muco_layout.html:261
 msgid "Default Type"
 msgstr "Type par défaut"
 
-#: templates/muco_layout.html:168 templates/muco_layout.html.py:217
-#: templates/muco_layout.html:266
+#: templates/muco_layout.html:169 templates/muco_layout.html.py:218
+#: templates/muco_layout.html:267
 msgid "Stack"
 msgstr "Pile"
 
-#: templates/muco_layout.html:275
+#: templates/muco_layout.html:276
 msgid "Pretty JSON"
 msgstr "Jolie JSON"
 
-#: templates/muco_layout.html:330
+#: templates/muco_layout.html:331
 msgid "(forgot password)"
 msgstr "(mot de passe oublié)"
 
-#: templates/muco_layout.html:336
+#: templates/muco_layout.html:337
 msgid "Register"
 msgstr "Enregistrer"
 
-#: templates/muco_layout.html:341
+#: templates/muco_layout.html:342
 msgid "Need help ?"
 msgstr "Besoin d'aide ?"
 
-#: templates/muco_layout.html:349
+#: templates/muco_layout.html:350
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -293,8 +301,6 @@ msgid "Displayed below are the cumulative performances of the NaweNuze Group"
 msgstr "Affichées ci-dessous, les performances cumulées des groupes NuzeNawe"
 
 #: templates/umuco/group_list.html:7
-#, fuzzy
-#| msgid "Group directory"
 msgid "Group Directory"
 msgstr "Repertoire des groupes"
 
@@ -315,11 +321,12 @@ msgstr "Téléphone"
 msgid "Back to Groups"
 msgstr "Retour aux groupes"
 
-#: templates/umuco/nawenuzegroup_detail.html:30 umuco/models.py:13
+#: templates/umuco/nawenuzegroup_detail.html:28 umuco/models.py:13
+#: umuco/models.py:64
 msgid "Day of meeting"
-msgstr "Jour de la réunion"
+msgstr "Jour de réunion"
 
-#: templates/umuco/nawenuzegroup_detail.html:35
+#: templates/umuco/nawenuzegroup_detail.html:33
 #: templates/umuco/report_list.html:5
 msgid "Reports"
 msgstr "Rapports"
@@ -336,27 +343,33 @@ msgstr "Sauvegarder"
 msgid "back to list"
 msgstr "retour à la liste"
 
-#: templates/umuco/report_form.html:5
+#: templates/umuco/report_create.html:5 templates/umuco/report_form.html:5
 msgid "Edit Report"
 msgstr "Modifier le rapport"
 
-#: templates/umuco/report_form.html:28
+#: templates/umuco/report_create.html:32 templates/umuco/report_form.html:32
 msgid "Submit"
 msgstr "Envoyer"
 
-#: templates/umuco/report_list.html:16
+#: templates/umuco/report_list.html:11
 msgid "New"
 msgstr "Nouveau"
 
-#: umuco/forms.py:38
+#: umuco/forms.py:37
 msgid "Fill out both fields"
 msgstr "Remplissez tous les champs"
 
-#: umuco/models.py:12
+#: umuco/forms.py:46
+#, fuzzy
+#| msgid "Day of meeting"
+msgid "day_of_meeting"
+msgstr "Jour de réunion"
+
+#: umuco/models.py:12 umuco/models.py:63
 msgid "Required"
 msgstr "Obligatoire"
 
-#: umuco/models.py:13
+#: umuco/models.py:13 umuco/models.py:64
 msgid "Number. Eg : For Monday put 1, Tuesday put 2, ..."
 msgstr "Nombre. Par exemple: Pour le lundi mettre 1, le mardi mettre 2, ..."
 

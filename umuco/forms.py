@@ -43,7 +43,7 @@ class NaweNuzeForm(forms.ModelForm):
     commune = forms.ModelChoiceField(queryset=Commune.objects.all())
     class Meta:
         model = NawenuzeGroup
-        fields = ('colline', 'day_of_meeting')
+        fields = ('colline', _('day_of_meeting'))
 
 GroupFormset  = inlineformset_factory(NawenuzeGroup, PhoneModel, fields = ('number',), extra=MAX_PHONENUMBER)
 

@@ -90,7 +90,7 @@ LANGUAGES = (
     ('en', _('English')),
     ('fr', _('French')),
 )
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-uk'
 
 TIME_ZONE = 'Africa/Bujumbura'
 
