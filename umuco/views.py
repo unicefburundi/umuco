@@ -163,7 +163,7 @@ def get_cumulative(request, colline=None):
     if not colline:
         reports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
     else:
-        reports = Report.objects.filter(group__colline=colline).values('amount','sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
+        reports = Report.objects.filter(group__colline__name=colline).values('amount','sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
     if not reports:
         return JsonResponse(None, safe=False)
 
