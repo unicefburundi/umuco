@@ -243,18 +243,29 @@ class ReportList(ListView):
 class ReportUpdate(UpdateView):
     model = Report
     fields = ['recharged_lamps','sold_lamps','amount','group', 'date_updated']
+    # print(self)
 
     def get_success_url(self, **kwargs):
         return reverse('reports_by_groups2', kwargs={'pk': self.object.group.id})
+
+    def get_initial(self):
+        return {'group' : self.object.group}
 
 class ReportDelete(DeleteView):
     model = Report
     success_url = reverse_lazy('report_list')
 
 class ReportCreate(CreateView):
+    template_name = 'umuco/report_create.html'
     model = Report
     fields = '__all__'
-    success_url = reverse_lazy('report_list')
+
+    def render_to_response(self, context, **response_kwargs):
+        self.request.current_app = self.request.resolver_match.namespace
+        return super(ReportCreate, self).render_to_response(context, **response_kwargs)
+
+    def get_success_url(self):
+        return reverse('report:report_list',  current_app=self.request.resolver_match.namespace)
 
 
 class PhoneModelCreate(CreateView):
