@@ -48,5 +48,11 @@ class NaweNuzeForm(forms.ModelForm):
         model = NawenuzeGroup
         fields = ('colline', _('day_of_meeting'))
 
+    def form_valid(self, form):
+
+        return super(EmployeeCreate, self).form_valid(form)
+
+
+
 GroupFormset  = inlineformset_factory(NawenuzeGroup, PhoneModel, fields = ('number',), extra=MAX_PHONENUMBER)
 
