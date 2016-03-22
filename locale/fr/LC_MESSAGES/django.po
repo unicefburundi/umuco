@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-22 08:48+0200\n"
+"POT-Creation-Date: 2016-03-22 08:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Allan Stockman <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -372,6 +372,20 @@ msgstr "Obligatoire"
 #: umuco/models.py:13 umuco/models.py:64
 msgid "Number. Eg : For Monday put 1, Tuesday put 2, ..."
 msgstr "Nombre. Par exemple: Pour le lundi mettre 1, le mardi mettre 2, ..."
+
+#: umuco/models.py:14
+msgid "lamps in stock"
+msgstr ""
+
+#: umuco/models.py:15
+#, fuzzy
+#| msgid "Sold lamps"
+msgid "cost lamp "
+msgstr "prix de lampe"
+
+#: umuco/models.py:16
+msgid "cost recharge"
+msgstr "prix de recharge"
 
 #: umuco/models.py:22
 msgid "phone number"
