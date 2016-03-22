@@ -38,9 +38,12 @@ class UserCreationForm(UserCreationForm):
         return password2
 
 MAX_PHONENUMBER = 2
+
+
 class NaweNuzeForm(forms.ModelForm):
     province = forms.ModelChoiceField(queryset=Province.objects.all())
-    commune = forms.ModelChoiceField(queryset=Commune.objects.all())
+    commune = forms.ModelChoiceField(queryset=Commune.objects.none())
+    colline = forms.ModelChoiceField(queryset=Colline.objects.none())
     class Meta:
         model = NawenuzeGroup
         fields = ('colline', _('day_of_meeting'))
