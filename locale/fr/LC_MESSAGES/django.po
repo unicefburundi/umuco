@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-22 08:51+0200\n"
-"PO-Revision-Date: 2016-04-18 12:19+0200\n"
+"POT-Creation-Date: 2016-04-18 18:28+0200\n"
+"PO-Revision-Date: 2016-04-18 18:31+0200\n"
 "Last-Translator: Allan Stockman <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language-Team: \n"
 "X-Generator: Poedit 1.8.7.1\n"
 
 #: bdiadmin/models.py:11
@@ -283,7 +283,7 @@ msgstr "Pas de données pour ce groupe!"
 msgid "Group:"
 msgstr "Groupe:"
 
-#: templates/umuco/group_details.html:18 templates/umuco/group_details.html:41
+#: templates/umuco/group_details.html:18 templates/umuco/group_details.html:50
 msgid "Back to search"
 msgstr "Retour à la recherche"
 
@@ -295,7 +295,7 @@ msgstr "Affichées ci-dessous, les performances cumulées des groupes NuzeNawe"
 msgid "Group Directory"
 msgstr "Repertoire des groupes"
 
-#: templates/umuco/group_submit.html:5 templates/umuco/group_submit.html:19
+#: templates/umuco/group_submit.html:5 templates/umuco/group_submit.html:20
 #: templates/umuco/nawenuzegroup_detail.html:12
 msgid "Group"
 msgstr "Groupe"
@@ -304,11 +304,11 @@ msgstr "Groupe"
 msgid "Telephone"
 msgstr "Téléphone"
 
-#: templates/umuco/group_submit.html:42
+#: templates/umuco/group_submit.html:43
 msgid "Telephone(s)"
-msgstr "Téléphone"
+msgstr "Téléphone(s)"
 
-#: templates/umuco/group_submit.html:55
+#: templates/umuco/group_submit.html:56
 msgid "Back to Groups"
 msgstr "Retour aux groupes"
 
@@ -350,7 +350,7 @@ msgstr "Nouveau"
 msgid "Fill out both fields"
 msgstr "Remplissez tous les champs"
 
-#: umuco/forms.py:46
+#: umuco/forms.py:49
 msgid "day_of_meeting"
 msgstr "Jour de réunion"
 
