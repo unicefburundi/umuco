@@ -288,14 +288,18 @@ def submit_group(request):
     colline_form = CollineForm()
     phone_form = PhoneModelForm()
     if request.POST:
+        import ipdb; ipdb.set_trace()
         form = NaweNuzeForm(request.POST)
         if form.is_valid():
+            import ipdb; ipdb.set_trace()
             group = form.save(commit=False)
             phonemodel_formset = GroupFormset(request.POST, instance=group)
             if phonemodel_formset.is_valid():
                 group.save()
                 phonemodel_formset.save()
                 return HttpResponseRedirect(reverse('groups'))
+        else:
+            form = form
     else:
         form = NaweNuzeForm()
         phonemodel_formset = GroupFormset(instance=NawenuzeGroup())

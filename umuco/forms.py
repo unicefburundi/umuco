@@ -48,9 +48,21 @@ class NaweNuzeForm(forms.ModelForm):
         model = NawenuzeGroup
         fields = ('colline', _('day_of_meeting'))
 
-    def form_valid(self, form):
 
-        return super(EmployeeCreate, self).form_valid(form)
+    def clean_colline(self):
+        self.cleaned_data['colline'] = Colline.objects.get(id=int(self.data.get('colline')))
+        return self.cleaned_data['colline']
+
+    def clean_commune(self):
+        self.cleaned_data['commune'] = Commune.objects.get(id=int(self.data.get('commune')))
+        return self.cleaned_data['commune']
+
+    def clean(self):
+        self.cleaned_data = super(NaweNuzeForm, self).clean()
+        self.cleaned_data['colline'] = Colline.objects.get(id=int(self.data.get('colline')))
+        self.cleaned_data['commune'] = Commune.objects.get(id=int(self.data.get('commune')))
+        return self.cleaned_data
+
 
 
 

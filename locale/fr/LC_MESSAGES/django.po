@@ -3,25 +3,25 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <murikiranige@gmail.com>, 2016.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-22 08:51+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2016-04-18 12:19+0200\n"
 "Last-Translator: Allan Stockman <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: bdiadmin/models.py:11
 msgid "Phone number in the format: '+999999999'. Up to 15 digits allowed."
 msgstr ""
-"Numero de téléphone au format : '+999999999'.Jusqu'à 15 chiffres permis."
+"Numéro de téléphone au format : '+999999999'.Jusqu'à 15 chiffres permis."
 
 #: bdiadmin/models.py:12
 msgid "telephone"
@@ -102,15 +102,6 @@ msgid "An innovative energy solution brings light to communities"
 msgstr "Une solution énergétique innovante apporte la lumière aux communautés"
 
 #: templates/landing_page.html:95
-#, fuzzy
-#| msgid ""
-#| "Project Lumière enables community groups to purchase a pedal-powered "
-#| "generator and fast-charging LED lights to sell within their community. "
-#| "The LED lights, powered by the bicycles, provide light for a household "
-#| "for up to  10 days. Project Lumière is providing a quality and affordable "
-#| "solution for the users, and at the same time, creating a sustainable "
-#| "sources of income for many families and new jobs linked to renewable "
-#| "energy."
 msgid ""
 "Project Lumière enables community groups to purchase a pedal-powered "
 "generator and fast-charging LED lights to sell within their community. The "
@@ -154,7 +145,7 @@ msgstr "Beau et pratique"
 msgid ""
 "Low-cost efficient pedal-powered lights recharged by microentrepreneurs. "
 msgstr ""
-"Lampes chargees par pédales efficaces à faible coût et rechargées par des "
+"Lampes chargées par pédales efficaces à faible coût et rechargées par des "
 "micro entrepreneurs."
 
 #: templates/landing_page.html:125
@@ -188,7 +179,7 @@ msgstr ""
 
 #: templates/login.html:5
 msgid "Hello, "
-msgstr "Salut,"
+msgstr "Salut, "
 
 #: templates/muco_layout.html:8
 msgid "Statistics"
@@ -360,8 +351,6 @@ msgid "Fill out both fields"
 msgstr "Remplissez tous les champs"
 
 #: umuco/forms.py:46
-#, fuzzy
-#| msgid "Day of meeting"
 msgid "day_of_meeting"
 msgstr "Jour de réunion"
 
@@ -375,13 +364,11 @@ msgstr "Nombre. Par exemple: Pour le lundi mettre 1, le mardi mettre 2, ..."
 
 #: umuco/models.py:14
 msgid "lamps in stock"
-msgstr ""
+msgstr "lampes en stock"
 
 #: umuco/models.py:15
-#, fuzzy
-#| msgid "Sold lamps"
 msgid "cost lamp "
-msgstr "prix de lampe"
+msgstr "prix d'une lampe"
 
 #: umuco/models.py:16
 msgid "cost recharge"
@@ -433,7 +420,7 @@ msgstr "Lampes vendues"
 
 #: umuco/tables.py:10 umuco/tables.py:29
 msgid "Set aside "
-msgstr "Epargne"
+msgstr "Épargne"
 
 #: umuco/tables.py:11
 msgid "Edit"
@@ -445,4 +432,4 @@ msgstr "Anglais"
 
 #: umuco_main/settings.py:91
 msgid "French"
-msgstr "Francais"
+msgstr "Français "

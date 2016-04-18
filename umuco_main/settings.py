@@ -1,5 +1,5 @@
 """
-Django settings for turabeneza project.
+Django settings for umuco project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -162,6 +162,9 @@ LOGIN_REDIRECT_URL = reverse_lazy("analytics")
 LOGOUT_REDIRECT_URL = reverse_lazy("home")
 
 TOKEN = 'rapidprotoken'
+
+# store schedule in the DB:
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
 # Django extensions
 try:
