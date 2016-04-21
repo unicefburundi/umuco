@@ -42,27 +42,54 @@ MAX_PHONENUMBER = 2
 
 class NaweNuzeForm(forms.ModelForm):
     province = forms.ModelChoiceField(queryset=Province.objects.all())
-    commune = forms.ChoiceField(widget = forms.Select(), choices=([('0','------'), ]))
-    colline = forms.ChoiceField(widget = forms.Select(), choices=([('0','------'), ]))
+    commune = forms.ChoiceField(widget = forms.Select(), required=False, choices=([('','------'), ]))
+    colline = forms.ChoiceField(widget = forms.Select(), required=False, choices=([('','------'), ]))
 
     class Meta:
         model = NawenuzeGroup
         fields = ('colline', _('day_of_meeting'))
 
 
-    def clean_colline(self):
-        self.cleaned_data['colline'] = Colline.objects.get(id=int(self.data.get('colline')))
-        return self.cleaned_data['colline']
+    def is_valid(self):
+        valid = super(NaweNuzeForm, self).is_valid()
 
-    def clean_commune(self):
-        self.cleaned_data['commune'] = Commune.objects.get(id=int(self.data.get('commune')))
-        return self.cleaned_data['commune']
+        # we're done now if not valid
+        if not valid:
+            return valid
+
+        try:
+            self.cleaned_data['colline'] = Colline.objects.get(id=int(self.data.get('colline')))
+        except:
+            self._errors['colline'] = "Colline doesn't exist"
+            return False
+
+        # dangerous hack
+        if self.data.get('colline') and 'colline' in self.errors:
+            del self._errors['colline']
+
+        # dangerous hack
+        if self.data.get('commune') and 'commune' in self.errors:
+            del self._errors['commune']
+
+        return True
 
     def clean(self):
-        # import ipdb; ipdb.set_trace()
         self.cleaned_data = super(NaweNuzeForm, self).clean()
-        self.cleaned_data['colline'] = Colline.objects.get(id=int(self.data.get('colline')))
-        self.cleaned_data['commune'] = Commune.objects.get(id=int(self.data.get('commune')))
+
+        try:
+            self.cleaned_data['colline'] = Colline.objects.get(id=int(self.data.get('colline')))
+        except:
+            self._errors['colline'] = "Colline doesn't exist"
+            return False
+
+        # dangerous hack
+        if self.data.get('colline') and 'colline' in self.errors:
+            del self._errors['colline']
+
+        # dangerous hack
+        if self.data.get('commune') and 'commune' in self.errors:
+            del self._errors['commune']
+
         return self.cleaned_data
 
 
