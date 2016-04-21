@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-18 18:28+0200\n"
+"POT-Creation-Date: 2016-04-18 19:03+0200\n"
 "PO-Revision-Date: 2016-04-18 18:31+0200\n"
 "Last-Translator: Allan Stockman <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -93,7 +93,7 @@ msgid "Logout"
 msgstr "Se déconnecter"
 
 #: templates/landing_page.html:67 templates/muco_layout.html:113
-#: templates/muco_layout.html.py:318
+#: templates/muco_layout.html.py:318 templates/muco_layout.html:333
 msgid "Login"
 msgstr "S'identifier"
 
@@ -213,7 +213,7 @@ msgstr "Groupe"
 msgid "A Report"
 msgstr "Rapports"
 
-#: templates/muco_layout.html:115
+#: templates/muco_layout.html:115 templates/muco_layout.html.py:368
 msgid "About"
 msgstr "A propos"
 
@@ -267,6 +267,18 @@ msgstr "Besoin d'aide ?"
 msgid "Cancel"
 msgstr "Annuler"
 
+#: templates/muco_layout.html:374
+msgid "This dashoard displays"
+msgstr ""
+
+#: templates/muco_layout.html:376
+msgid "collected data on Projet Lumiere"
+msgstr ""
+
+#: templates/muco_layout.html:378
+msgid "and was made by UNICEF Burundi. It's open sourced."
+msgstr ""
+
 #: templates/registration/user_form.html:5
 msgid "New User ? "
 msgstr "Nouvel utilisateur ?"
@@ -308,6 +320,13 @@ msgstr "Téléphone"
 msgid "Telephone(s)"
 msgstr "Téléphone(s)"
 
+#: templates/umuco/group_submit.html:53 templates/umuco/group_submit.html:71
+#: templates/umuco/group_submit.html:91 templates/umuco/group_submit.html:111
+#: templates/umuco/group_submit.html:127 templates/umuco/report_create.html:32
+#: templates/umuco/report_form.html:32
+msgid "Submit"
+msgstr "Envoyer"
+
 #: templates/umuco/group_submit.html:56
 msgid "Back to Groups"
 msgstr "Retour aux groupes"
@@ -337,10 +356,6 @@ msgstr "retour à la liste"
 #: templates/umuco/report_create.html:5 templates/umuco/report_form.html:5
 msgid "Edit Report"
 msgstr "Modifier le rapport"
-
-#: templates/umuco/report_create.html:32 templates/umuco/report_form.html:32
-msgid "Submit"
-msgstr "Envoyer"
 
 #: templates/umuco/report_list.html:11
 msgid "New"

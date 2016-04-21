@@ -50,7 +50,7 @@
                     <p>{{form.number}}</p>
                 </div>
             {% endfor %}
-            <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+            <a href="#"><input type="submit" name="submit" value="{% trans "Submit" %}" class="button"></a>
             </div>
         </form>
         <a href="{% url 'groups' %}" class="button btn default">{% trans "Back to Groups" %}</a>
@@ -68,7 +68,7 @@
                     <p>{{province_form.code.errors}}</p>
                     <p>{{province_form.code}}</p>
                 </div>
-                <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+                <a href="#"><input type="submit" name="submit" value="{% trans "Submit" %}" class="button"></a>
             </div>
         </div>
         <div class="tab-pane {% block activecommune1 %}{% endblock activecommune1 %}" id="commune">
@@ -88,7 +88,7 @@
                     <p>{{commune_form.code.errors}}</p>
                     <p>{{commune_form.code}}</p>
                 </div>
-                <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+                <a href="#"><input type="submit" name="submit" value="{% trans "Submit" %}" class="button"></a>
             </div>
         </div>
         <div class="tab-pane {% block activecolline1 %}{% endblock activecolline1 %}" id="colline">
@@ -108,7 +108,7 @@
                     <p>{{colline_form.code.errors}}</p>
                     <p>{{colline_form.code}}</p>
                 </div>
-                <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+                <a href="#"><input type="submit" name="submit" value="{% trans "Submit" %}" class="button"></a>
             </div>
         </div>
         <div class="tab-pane {% block activetelephone1 %}{% endblock activetelephone1 %}" id="telephone">
@@ -124,7 +124,7 @@
                     <p>{{phone_form.number.errors}}</p>
                     <p>{{phone_form.number}}</p>
                 </div>
-                <a href="#"><input type="submit" name="submit" value="Submit" class="button"></a>
+                <a href="#"><input type="submit" name="submit" value="{% trans "Submit" %}" class="button"></a>
             </div>
         </div>
     </div>

@@ -330,7 +330,7 @@
     {{ form.password }}
     <div for="pwd"><a href="{% url 'password_reset' %}">{% trans "(forgot password)" %}</a></div>
   </div>
-    <input type="submit" value="Login" class="btn btn-sm btn-success"/>
+    <input type="submit" value="{% trans "Login" %}" class="btn btn-sm btn-success"/>
     <input type="hidden" name="next" value="{{ next }}" />
     <span class="pull-right">
         <a href="#">
@@ -365,26 +365,20 @@
               ×
           </button>
           <h2 class="text-center">
-              About
+              {% trans "About" %}
           </h2>
       </div>
       <div class="modal-body">
         <div class="col-md-12 text-center">
-          <a href="http://www.bootply.com/DwnjTNuvVt">
-            This Bootstrap Template
+          <a href="http://umuco.unicefburundi.org/">
+            {% trans "This dashoard displays" %}
         </a>
-        <br>w
-        as made with
-        <i class="glyphicon glyphicon-heart">
-
-        </i>
-        by
-        <a href="http://bootply.com/templates">
-            Bootply
-        </a>
+        <br>{% trans "collected data on Projet Lumiere" %}
+        <i class="glyphicon glyphicon-heart"></i>
+        {% trans "and was made by UNICEF Burundi. It's open sourced." %}
         <br>
         <br>
-        <a href="https://github.com/iatek/bootstrap-google-plus">GitHub Fork
+        <a href="https://github.com/unicefburundi/umuco">GitHub Fork
         </a>
     </div>
 </div>
