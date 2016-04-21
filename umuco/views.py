@@ -149,11 +149,14 @@ def download_reports(request):
 
 
 def by_group(request, colline=None):
+    # import ipdb; ipdb.set_trace()
     response = get_cumulative(request=request, colline=colline)
+    groupe, created = NawenuzeGroup.objects.get_or_create(colline__name=colline)
+    rapporteurs = PhoneModel.objects.filter(group__colline__name=colline)
     print response
-    return render(request, "umuco/group_details.html", {"data": response.content, "nawenuze_group": colline.title()})
+    return render(request, "umuco/group_details.html", {"data": response.content, "nawenuze_group": colline.title(), 'groupe': groupe, 'rapporteurs': rapporteurs})
 
-
+@login_required
 def all_groups(request):
     return render(request, "umuco/group_list.html")
 
@@ -279,7 +282,7 @@ class NaweNuzeCreate(CreateView):
     exclude = ('lamps_in_stock','cost_lamp','cost_recharge')
     success_url = reverse_lazy('groups')
 
-
+@login_required
 def submit_group(request):
     form = NaweNuzeForm()
     phonemodel_formset = GroupFormset(instance=NawenuzeGroup())

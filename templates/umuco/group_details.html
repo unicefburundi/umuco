@@ -8,14 +8,41 @@
     {{nawenuze_group }}
 {% endblock page_title %}
 {% block charts %}
-<section class="groupinfo">
+<div class="col-md-3 panel panel-default" >
+        <h5><i class="glyphicon glyphicon-list-alt"> </i> {{ groupe.colline.name|  capfirst }} {% trans "Group" %}</h5>
+        <ul class="list-group">
+        <li class="list-group-item">
+            <span class="badge">{{groupe.colline.commune.province.name}}</span>
+            Province :
+          </li>
+          <li class="list-group-item">
+            <span class="badge">{{groupe.colline.commune.name}}</span>
+            Commune :
+          </li>
+          <li class="list-group-item">
+            <span class="badge">{{groupe.colline.name}}</span>
+            Colline :
+          </li>
+          <li class="list-group-item">
+            <span class="badge">{{groupe.day_of_meeting}}</span>
+            {% trans "Day of meeting" %} :
+          </li>
+          {% for rapporteur in rapporteurs  %}
+            <li class="list-group-item">
+            <span class="badge">{{rapporteur.number}}</span>
+            {% trans "Telephone" %} :
+          </li>
+          {% endfor %}
+        </ul>
+        <a href= {% url "groups" %} class="pull-right" >&laquo; {% trans "Back to search" %}</a>
+      </div>
+<section class="col-md-9 panel panel-default">
     <div class="group cf" >
     {% if data == 'null' %}
     <p>{% trans "No data for this group!" %}</p>
     {% else %}
          <div class="row">
                 <h4>{% trans "Group:" %} {{nawenuze_group}}</h4>
-                <a href= {% url "groups" %} class="pull-right" >&laquo; {% trans "Back to search" %}</a>
                 <div class="container">
                     <p>
                        {% trans "Displayed below are the cumulative performances of the NaweNuze Group" %} {{nawenuze_group}}.
@@ -47,7 +74,6 @@
         </div>
         </div>
     {% endif %}
-        <a href= {% url "groups" %}>&laquo; {% trans "Back to search" %}</a>
 
 </section>
 <script>

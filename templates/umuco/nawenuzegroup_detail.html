@@ -8,27 +8,6 @@
 
 {% block charts %}
 {% if object %}
-      <div class="col-md-3 panel panel-default" >
-        <h5><i class="glyphicon glyphicon-list-alt"> </i> {{ object.colline|  capfirst }} {% trans "Group" %}</h5>
-        <ul class="list-group">
-        <li class="list-group-item">
-            <span class="badge">{{object.colline.commune.province}}</span>
-            Province :
-          </li>
-          <li class="list-group-item">
-            <span class="badge">{{object.colline.commune}}</span>
-            Commune :
-          </li>
-          <li class="list-group-item">
-            <span class="badge">{{object.colline}}</span>
-            Colline :
-          </li>
-          <li class="list-group-item">
-            <span class="badge">{{object.day_of_meeting}}</span>
-            {% trans "Day of meeting" %} :
-          </li>
-        </ul>
-      </div>
       <div class="col-md-9 panel panel-default" >
       <h5><i class="glyphicon glyphicon-list-alt"> </i> {{ object.colline|  capfirst }} {% trans "Reports" %}</h5>
         <div  >
