@@ -8,6 +8,13 @@
     {{nawenuze_group }}
 {% endblock page_title %}
 {% block charts %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 <div class="col-md-3 panel panel-default" >
         <h5><i class="glyphicon glyphicon-list-alt"> </i> {{ groupe.colline.name|  capfirst }} {% trans "Group" %}</h5>
         <ul class="list-group">

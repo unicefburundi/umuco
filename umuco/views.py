@@ -19,6 +19,7 @@ from django.views.generic import ListView
 from bdiadmin.forms import *
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 User = get_user_model()
 
@@ -291,7 +292,7 @@ def submit_group(request):
     colline_form = CollineForm()
     phone_form = PhoneModelForm()
     if request.POST:
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         form = NaweNuzeForm({'province': request.POST.get('province'), 'day_of_meeting': request.POST.get('day_of_meeting'), 'colline' : request.POST.get('colline'), 'commune' : request.POST.get('commune')})
         try:
             colline = Colline.objects.get(id=int(request.POST.get('colline')))
@@ -314,6 +315,7 @@ def submit_group(request):
             if phonemodel_formset.is_valid():
                 group.save()
                 phonemodel_formset.save()
+                messages.add_message(request, messages.SUCCESS, 'Saved group and sent SMS')
                 return HttpResponseRedirect(reverse('report:group_detail', kwargs={'colline':group.colline}))
 
         else:

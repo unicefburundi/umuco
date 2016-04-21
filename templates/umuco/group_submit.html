@@ -6,7 +6,7 @@
     <li {% block activeprovince %}{% endblock activeprovince %} ><a href="#province"   data-toggle="tab">Province</a></li>
     <li {% block activecommune %}{% endblock activecommune %} ><a href="#commune"   data-toggle="tab">Commune</a></li>
     <li {% block activecolline %}{% endblock activecolline %} ><a href="#colline"   data-toggle="tab">Colline</a></li>
-    <li {% block activetelephone %}{% endblock activetelephone %} ><a href="#telephone"   data-toggle="tab">{% trans "Telephone" %}</a></li>
+    </ul>
 {% endblock contentright  %}
 
 {% block contents %}
@@ -15,7 +15,8 @@
 <div class="col-md-10">
     <div class="tab-content">
         <div class="tab-pane {% block activegroup1 %}active{% endblock activegroup1 %}" id="group">
-        <form action="." method="post" class="group_form">
+        {% block groupe %}
+            <form action="." method="post" class="group_form">
             {% csrf_token %}
             <h3>{% trans "Group" %}</h3>
             <div class="row">
@@ -53,12 +54,14 @@
             <a href="#"><input type="submit" name="submit" value="{% trans "Submit" %}" class="button"></a>
             </div>
         </form>
+        {% endblock groupe %}
         <a href="{% url 'groups' %}" class="button btn default">{% trans "Back to Groups" %}</a>
         </div>
         <div class="tab-pane {% block activeprovince1 %}{% endblock activeprovince1 %}" id="province">
             <div class="row">
                 <div class="col-md-2"></div>
-                <form action="{% url 'report:submit_group' %}" method="POST" class="form-inline">{% csrf_token %}
+                {% block province %}
+                    <form action="{% url 'bdiadmin:province_add' %}" method="POST" class="form-inline">{% csrf_token %}
                 <div class="col-md-4">
                     <label for="name">{{province_form.name.label_tag}}</label>
                     <p>{{province_form.name.errors}}</p>
@@ -70,11 +73,14 @@
                     <p>{{province_form.code}}</p>
                 </div>
                 <a href="#"><input type="submit" name="submit" value="{% trans "Submit" %}" class="button"></a>
+                </form>
+                {% endblock province %}
             </div>
         </div>
         <div class="tab-pane {% block activecommune1 %}{% endblock activecommune1 %}" id="commune">
             <div class="row">
-            <form action="{% url 'report:submit_group' %}" method="POST" class="form-inline">{% csrf_token %}
+            {% block commune %}
+                <form action="{% url 'bdiadmin:commune_add' %}" method="POST" class="form-inline">{% csrf_token %}
                 <div class="col-md-3">
                     <label for="name">{{commune_form.province.label_tag}}</label>
                     <p>{{commune_form.province.errors}}</p>
@@ -91,11 +97,14 @@
                     <p>{{commune_form.code}}</p>
                 </div>
                 <a href="#"><input type="submit" name="submit" value="{% trans "Submit" %}" class="button"></a>
+               </form>
+            {% endblock commune %}
             </div>
         </div>
         <div class="tab-pane {% block activecolline1 %}{% endblock activecolline1 %}" id="colline">
             <div class="row">
-            <form action="{% url 'report:submit_group' %}" method="POST" class="form-inline">{% csrf_token %}
+            {% block colline %}
+                <form action="{% url 'bdiadmin:colline_add' %}" method="POST" class="form-inline">{% csrf_token %}
                 <div class="col-md-3">
                     <label for="commune">{{colline_form.commune.label_tag}}</label>
                     <p>{{colline_form.commune.errors}}</p>
@@ -112,6 +121,8 @@
                     <p>{{colline_form.code}}</p>
                 </div>
                 <a href="#"><input type="submit" name="submit" value="{% trans "Submit" %}" class="button"></a>
+                </form>
+            {% endblock colline %}
             </div>
         </div>
         <div class="tab-pane {% block activetelephone1 %}{% endblock activetelephone1 %}" id="telephone">
@@ -129,6 +140,7 @@
                     <p>{{phone_form.number}}</p>
                 </div>
                 <a href="#"><input type="submit" name="submit" value="{% trans "Submit" %}" class="button"></a>
+                </form>
             </div>
         </div>
     </div>
