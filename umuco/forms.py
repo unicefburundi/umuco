@@ -42,8 +42,9 @@ MAX_PHONENUMBER = 2
 
 class NaweNuzeForm(forms.ModelForm):
     province = forms.ModelChoiceField(queryset=Province.objects.all())
-    commune = forms.ModelChoiceField(queryset=Commune.objects.none())
-    colline = forms.ModelChoiceField(queryset=Colline.objects.none())
+    commune = forms.ChoiceField(widget = forms.Select(), choices=([('0','------'), ]))
+    colline = forms.ChoiceField(widget = forms.Select(), choices=([('0','------'), ]))
+
     class Meta:
         model = NawenuzeGroup
         fields = ('colline', _('day_of_meeting'))
@@ -58,6 +59,7 @@ class NaweNuzeForm(forms.ModelForm):
         return self.cleaned_data['commune']
 
     def clean(self):
+        # import ipdb; ipdb.set_trace()
         self.cleaned_data = super(NaweNuzeForm, self).clean()
         self.cleaned_data['colline'] = Colline.objects.get(id=int(self.data.get('colline')))
         self.cleaned_data['commune'] = Commune.objects.get(id=int(self.data.get('commune')))

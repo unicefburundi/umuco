@@ -291,7 +291,7 @@ def submit_group(request):
         import ipdb; ipdb.set_trace()
         form = NaweNuzeForm(request.POST)
         if form.is_valid():
-            import ipdb; ipdb.set_trace()
+            # import ipdb; ipdb.set_trace()
             group = form.save(commit=False)
             phonemodel_formset = GroupFormset(request.POST, instance=group)
             if phonemodel_formset.is_valid():
