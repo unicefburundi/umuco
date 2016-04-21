@@ -11,9 +11,9 @@ from bdiadmin.models import *
 class NawenuzeGroup(models.Model):
     colline = models.OneToOneField(Colline, help_text=_('Required'))
     day_of_meeting = models.PositiveIntegerField(verbose_name=_("Day of meeting"), help_text=_('Number. Eg : For Monday put 1, Tuesday put 2, ...'), null=True, validators=[MaxValueValidator(7),])
-    lamps_in_stock = models.PositiveIntegerField(default=0 , null=True, blank=True)
-    cost_lamp = models.PositiveIntegerField(default=8000 , null=True, blank=True)
-    cost_recharge = models.PositiveIntegerField(default=300 , null=True, blank=True)
+    lamps_in_stock = models.PositiveIntegerField(verbose_name=_("lamps in stock"), default=0 , null=True, blank=True)
+    cost_lamp = models.PositiveIntegerField(verbose_name=_("cost lamp "), default=8000 , null=True, blank=True)
+    cost_recharge = models.PositiveIntegerField(verbose_name=_("cost recharge"), default=300 , null=True, blank=True)
 
     def __unicode__(self):
         return u'%s' % self.colline

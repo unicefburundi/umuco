@@ -163,7 +163,7 @@ def get_cumulative(request, colline=None):
     if not colline:
         reports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
     else:
-        reports = Report.objects.filter(group__colline=colline).values('amount','sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
+        reports = Report.objects.filter(group__colline__name=colline).values('amount','sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
     if not reports:
         return JsonResponse(None, safe=False)
 
@@ -288,14 +288,18 @@ def submit_group(request):
     colline_form = CollineForm()
     phone_form = PhoneModelForm()
     if request.POST:
+        import ipdb; ipdb.set_trace()
         form = NaweNuzeForm(request.POST)
         if form.is_valid():
+            import ipdb; ipdb.set_trace()
             group = form.save(commit=False)
             phonemodel_formset = GroupFormset(request.POST, instance=group)
             if phonemodel_formset.is_valid():
                 group.save()
                 phonemodel_formset.save()
                 return HttpResponseRedirect(reverse('groups'))
+        else:
+            form = form
     else:
         form = NaweNuzeForm()
         phonemodel_formset = GroupFormset(instance=NawenuzeGroup())

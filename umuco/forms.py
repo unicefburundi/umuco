@@ -38,12 +38,33 @@ class UserCreationForm(UserCreationForm):
         return password2
 
 MAX_PHONENUMBER = 2
+
+
 class NaweNuzeForm(forms.ModelForm):
     province = forms.ModelChoiceField(queryset=Province.objects.all())
-    commune = forms.ModelChoiceField(queryset=Commune.objects.all())
+    commune = forms.ModelChoiceField(queryset=Commune.objects.none())
+    colline = forms.ModelChoiceField(queryset=Colline.objects.none())
     class Meta:
         model = NawenuzeGroup
-        fields = ('colline', 'day_of_meeting')
+        fields = ('colline', _('day_of_meeting'))
+
+
+    def clean_colline(self):
+        self.cleaned_data['colline'] = Colline.objects.get(id=int(self.data.get('colline')))
+        return self.cleaned_data['colline']
+
+    def clean_commune(self):
+        self.cleaned_data['commune'] = Commune.objects.get(id=int(self.data.get('commune')))
+        return self.cleaned_data['commune']
+
+    def clean(self):
+        self.cleaned_data = super(NaweNuzeForm, self).clean()
+        self.cleaned_data['colline'] = Colline.objects.get(id=int(self.data.get('colline')))
+        self.cleaned_data['commune'] = Commune.objects.get(id=int(self.data.get('commune')))
+        return self.cleaned_data
+
+
+
 
 GroupFormset  = inlineformset_factory(NawenuzeGroup, PhoneModel, fields = ('number',), extra=MAX_PHONENUMBER)
 

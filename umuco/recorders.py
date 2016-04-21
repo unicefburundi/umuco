@@ -32,7 +32,6 @@ def check_number_of_values(args):
 def check_password(args):
     ''' This function checks if the person who sent this message sent a valid password.
     The password to use is saved in localsettings'''
-    # import ipdb; ipdb.set_trace()
     the_expected_password = getattr(settings,'PASSWORD','')
     the_sent_password = args['text'].split('#')[1]
 
@@ -123,7 +122,6 @@ def check_report_day(args):
         args['info_to_contact'] = "Le jour de rapportage indique est correct."
 
 def record_reporter(args):
-    # import ipdb; ipdb.set_trace()
     #Let's check if the message sent is composed by an expected number of values
     check_number_of_values(args)
     if not args['valide']:
@@ -144,7 +142,6 @@ def record_reporter(args):
         return args
     #Let's check if this person sent a valid phone number
     check_phone(args)
-    # import ipdb; ipdb.set_trace()
     if not args['valide']:
         return args
 
@@ -162,15 +159,15 @@ def record_reporter(args):
         the_concerned_group.day_of_meeting = the_meetting_day
         the_concerned_group.text = args['text']
         the_concerned_group.save()
+        args['info_to_contact'] = 'Confirmer le(s) numero de telephone'
         return args
 
 
     else:
-        args['ok'] = False
+        args['Ok'] = False
         args['valide'] = False
         args['info_to_contact'] = "La colline {0} de la commune {1} n exite pas.".format(the_colline, the_commune)
 
-    return args
 
 def group_confirm(args):
     contact_phone_numbers = args['text'].split('#')

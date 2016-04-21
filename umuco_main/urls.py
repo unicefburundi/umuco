@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^add_report/$', save_report, name='add_report'),
     # for reception
+    url(r'^bdiadmin/', include('bdiadmin.urls', namespace='bdiadmin', app_name='bdiadmin')),
     url(r'^add_reception/$', add_lamps, name='add_reception'),
     url(r'^group_confirm/$', backend.group_confirmation, name='group_confirm'),
 ]
