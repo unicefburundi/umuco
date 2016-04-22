@@ -5,14 +5,14 @@ var myapp = angular.module('myapp', ["highcharts-ng"]);
 myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
 
   $scope.chartTypes = [
-    {"id": "line", "title": "Line"},
-    {"id": "spline", "title": "Smooth line"},
-    {"id": "area", "title": "Area"},
-    {"id": "areaspline", "title": "Smooth area"},
-    {"id": "column", "title": "Column"},
-    {"id": "bar", "title": "Bar"},
-    {"id": "pie", "title": "Pie"},
-    {"id": "scatter", "title": "Scatter"}
+    {"id": "line", "title": "Ligne"},
+    {"id": "spline", "title": "Ligne lisse"},
+    {"id": "area", "title": "surface"},
+    {"id": "areaspline", "title": "surface lisse"},
+    {"id": "column", "title": "Colonne"},
+    {"id": "bar", "title": "Barre"},
+    {"id": "pie", "title": "Tarte"},
+    {"id": "scatter", "title": "Dispersion"}
   ];
 
   $scope.dashStyles = [
@@ -42,14 +42,14 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
   error(function(data, status, headers, config) {
     // called asynchronously if an error occurs
     // or server returns response with an error status.
-    console.log(status)
-    console.log(data)
+    console.log(status);
+    console.log(data);
   });
 
   $scope.chartStack = [
-    {"id": '', "title": "No"},
-    {"id": "normal", "title": "Normal"},
-    {"id": "percent", "title": "Percent"}
+    {"id": '', "title": "Sans"},
+    {"id": "normal", "title": "Normale"},
+    {"id": "percent", "title": "Poucent"}
   ];
 
 

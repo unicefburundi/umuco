@@ -4,7 +4,7 @@ from umuco.models import Report, NawenuzeGroup
 class ReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
-        fields = ('recharged_lamps', 'sold_lamps', 'total_amount','group', 'telephone', 'date')
+        fields = ('recharged_lamps', 'sold_lamps', 'total_amount','group', 'telephone', 'date', 'pl_amount')
 
 class NawenuzeGroupSerializer(serializers.ModelSerializer):
     colline = serializers.CharField(source='colline.name', read_only=True)

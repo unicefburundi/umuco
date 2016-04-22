@@ -60,12 +60,12 @@ def save_report(request):
     if response_data['text']:
         if response_data['text'] != "":
             message = response_data['text'].split("#")
-            if len(message)  < 4:
+            if len(message)  < 5:
                 return {'Ok': "False", 'info_to_contact' : 'Vous avez donne peu de valeurs. Renvoyer le message corrige', 'raba': message }
-            if len(message)  > 4 :
+            if len(message)  > 5 :
                 return {'Ok': "False", 'info_to_contact' : 'Vous avez donne beaucoup de valeurs. Renvoyer le message corrige', 'raba': message }
 
-            if len(message) == 4:
+            if len(message) == 5:
                 group = PhoneModel.objects.get(number=response_data['phone']).group
                 date_updated = validate_date(message[0])
 
@@ -77,12 +77,12 @@ def save_report(request):
                     return {'Ok': "Pas", 'info_to_contact' : 'Vous ne pouvez plus envoyer de rapports. Contacter le partenaire', 'error': (datetime.datetime.today() - date_updated).days }
 
                 try:
-                    message_3 = int(message[3])
+                    message_1 = int(message[1])
                 except Exception:
-                    return {'Ok': "False", 'info_to_contact' : 'L argent epargnee n est pas valide. Renvoyer le message corrige ', 'error': message[3]}
+                    return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige', 'error': message[1]}
                 else:
-                    if not isinstance(message_3, (int)) or  message_3 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'L argent epargnee n est pas valide. Renvoyer le message corrige', 'error': message_3}
+                    if not isinstance(message_1, (int)) or  message_1 < 0 :
+                        return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige', 'error': message_1}
                 try:
                     message_2= int(message[2])
                 except Exception:
@@ -90,18 +90,29 @@ def save_report(request):
                 else:
                     if not isinstance(message_2, (int)) or  message_2 < 0 :
                         return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. Renvoyer le message corrige', 'error': message_2}
+
                 try:
-                    message_1 = int(message[1])
+                    message_3 = int(message[3])
                 except Exception:
-                    return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige', 'error': message[1]}
+                    return {'Ok': "False", 'info_to_contact' : 'Le montant total epargnee n est pas valide. Renvoyer le message corrige ', 'error': message[3]}
                 else:
-                    if not isinstance(message_1, (int)) or  message_1 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige', 'error': message_1}
+                    if not isinstance(message_3, (int)) or  message_3 < 0 :
+                        return {'Ok': "False", 'info_to_contact' : 'Le montant total epargnee n est pas valide. Renvoyer le message corrige', 'error': message_3}
+
+                try:
+                    message_4 = int(message[4])
+                except Exception:
+                    return {'Ok': "False", 'info_to_contact' : 'Le montant du projet lumiere epargnee n est pas valide. Renvoyer le message corrige ', 'error': message[4]}
+                else:
+                    if not isinstance(message_4, (int)) or  message_4 < 0 :
+                        return {'Ok': "False", 'info_to_contact' : 'Le montant du projet lumiere epargnee n est pas valide. Renvoyer le message corrige', 'error': message_4}
+
                 repport,  created = Report.objects.get_or_create(group=group, date_updated=date_updated)
                 if created:
-                    repport.total_amount = message_3
                     repport.sold_lamps = message_1
                     repport.recharged_lamps = message_2
+                    repport.total_amount = message_3
+                    repport.pl_amount = message_4
                     repport.save()
                 elif (datetime.datetime.today() - date_updated).days > 6 :
                     return {'Ok': "Pas", 'info_to_contact' : 'Vous ne pouvez plus mettre a jours le rapport. Contacter le partenaire', 'error': (datetime.datetime.today() - date_updated).days }
@@ -113,20 +124,21 @@ def save_report(request):
                     print sent
                     return {'Ok': False, 'info_to_contact': "Il ne vous restait pas de lampes. Contacter le partenaire"}
                 else:
-                    repport.total_amount = message_3
                     repport.sold_lamps = message_1
                     repport.recharged_lamps = message_2
+                    repport.total_amount = message_3
+                    repport.pl_amount = message_4
                     repport.save()
 
                 # cost
-                cost_expected = (message_2*group.cost_recharge)
-                if message_3 != 0 and message_3 > cost_expected :
-                    sent = email_report_flagged(Organization.objects.get(name='CPES').partner.user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir avoir epargne {3} fbu alors que cela valait juste {4}'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_3, cost_expected))
-                    print sent
+                # cost_expected = (message_2*group.cost_recharge)
+                # if message_3 != 0 and message_3 > cost_expected :
+                #     sent = email_report_flagged(Organization.objects.get(name='CPES').partner.user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir avoir epargne {3} fbu alors que cela valait juste {4}'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_3, cost_expected))
+                #     print sent
 
 
 
-            return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'total_amount': message_3, 'date': date_updated}, safe=False)
+            return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'total_amount': message_3, 'pl_amount': message_4, 'date': date_updated}, safe=False)
 
 
 @json_view

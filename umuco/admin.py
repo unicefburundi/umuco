@@ -57,12 +57,12 @@ admin.site.register(User, UserAdmin)
 class ReportAdminResource(resources.ModelResource):
     class Meta:
         model =Report
-        fields = ('date_updated', 'recharged_lamps', 'sold_lamps', 'total_amount', 'group__colline__name')
+        fields = ('date_updated', 'recharged_lamps', 'sold_lamps', 'total_amount', 'group__colline__name', 'pl_amount')
 
 class ReportAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = ReportAdminResource
     date_hierarchy = 'date_updated'
-    list_display = ('date_updated', 'group','recharged_lamps', 'sold_lamps', 'total_amount')
+    list_display = ('date_updated', 'group','recharged_lamps', 'sold_lamps', 'total_amount', 'pl_amount')
     search_fields = ('group__colline__name', 'group__colline__commune__name', )
 
 class NawenuzeGroupAdminResource(resources.ModelResource):
