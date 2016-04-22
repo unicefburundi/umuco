@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 class RaportForm(forms.ModelForm):
     class Meta:
         model = Report
-        fields = ('recharged_lamps', 'sold_lamps', 'amount', 'date_updated', 'group')
+        fields = ('recharged_lamps', 'sold_lamps', 'total_amount', 'date_updated', 'group')
 
 class PhoneModelForm(forms.ModelForm):
     class Meta:

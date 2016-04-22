@@ -34,11 +34,12 @@ class Report( models.Model):
     date_updated = models.DateField(verbose_name=_('Date refering to'), default=timezone.now)
     recharged_lamps = models.PositiveIntegerField(default=0,verbose_name=_('Recharged lamps'))
     sold_lamps = models.PositiveIntegerField(default=0, verbose_name=_('Sold Lamps'))
-    amount = models.PositiveIntegerField(default=0, verbose_name=_('Amount'))
+    total_amount = models.PositiveIntegerField(default=0, verbose_name=_('total amount'))
+    pl_amount = models.PositiveIntegerField(default=0, verbose_name=_('PL amount'))
     group = models.ForeignKey(NawenuzeGroup, verbose_name=_('group'))
 
     def __unicode__(self):
-        return u'%s %s %s %s' % (self.date_updated , self.sold_lamps, self.recharged_lamps, self.amount)
+        return u'%s %s %s %s' % (self.date_updated , self.sold_lamps, self.recharged_lamps, self.total_amount)
 
 class Reception(models.Model):
     """

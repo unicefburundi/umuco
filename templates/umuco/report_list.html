@@ -5,7 +5,7 @@
         <h1>{% trans "Reports" %}</h1>
         <div class="list-group">
         {% for report in object_list %}
-        <li class="list-group-item"><span class="badge">{{report.id}}</span> On {{report.date_updated}}, group {{report.group}} sold {{report.sold_lamps}} lamps , recharged {{report.recharged_lamps}} lamps and earned {{report.amount}} </li>
+        <li class="list-group-item"><span class="badge">{{report.id}}</span> On {{report.date_updated}}, group {{report.group}} sold {{report.sold_lamps}} lamps , recharged {{report.recharged_lamps}} lamps and earned {{report.total_amount}} </li>
         {% endfor %}
         </div>
         <a href="/">{% trans "New" %}</a>

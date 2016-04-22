@@ -84,9 +84,9 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
     },
     series: $scope.chartSeries1,
     title: {
-      text: 'Amount set aside in the OEV fund',
+      text: 'Montant mis de côté dans le fonds de OEV',
     },
-    subtitle: {text: 'Cumulative for all groups'},
+    subtitle: {text: 'Cumulatif pour tous les groupes'},
     credits: {
       enabled: true
     },
@@ -141,9 +141,9 @@ $scope.chartConfig2 = {
     },
     series: $scope.chartSeries2,
     title: {
-      text: 'Recharged lamps'
+      text: 'Lampes rechargées'
     },
-    subtitle: {text: 'Cumulative for all groups'},
+    subtitle: {text: 'Cumulatif pour tous les groupes'},
     credits: {
       enabled: true
     },
@@ -160,7 +160,7 @@ $scope.chartConfig2 = {
         },
      yAxis: {
             title: {
-                text: 'Units'
+                text: 'Unités'
             }
         },
     loading: false,
@@ -198,9 +198,9 @@ $scope.chartConfig2 = {
     },
     series: $scope.chartSeries3,
     title: {
-      text: 'Sold lamps'
+      text: 'Lampes vendues'
     },
-    subtitle: {text: 'Cumulative for all groups'},
+    subtitle: {text: 'Cumulatif pour tous les groupes'},
     credits: {
       enabled: true
     },
@@ -217,7 +217,7 @@ $scope.chartConfig2 = {
         },
      yAxis: {
             title: {
-                text: 'Units'
+                text: 'Unités'
             }
         },
     loading: false,

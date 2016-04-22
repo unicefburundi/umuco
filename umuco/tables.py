@@ -7,7 +7,7 @@ class ReportTable(tables.Table):
     date_updated = tables.Column(verbose_name='Date ', attrs={'th':{'data-footer-formatter':"totalTextFormatter"}})
     sold_lamps = tables.Column(verbose_name=_('Sold lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     recharged_lamps = tables.Column(verbose_name=_('Recharged lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    amount = tables.Column(verbose_name=_('Set aside '), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
+    total_amount = tables.Column(verbose_name=_('Total Set aside '), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     edit = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-info">Edit</a>', verbose_name=_('Edit'))
     class Meta:
         attrs = {"class": "table ", "data-toggle":"table", "data-search":"true" ,"data-show-columns":"true" ,  "data-show-export":"true", 'data-export-types': "['csv','excel']", "data-show-footer":"true"}
@@ -26,7 +26,7 @@ class ReportTable2(tables.Table):
     commune = tables.Column(verbose_name='Commune')
     sold_lamps = tables.Column(verbose_name=_('Sold lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     recharged_lamps = tables.Column(verbose_name=_('Recharged lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    amount = tables.Column(verbose_name=_('Set aside '), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
+    total_amount = tables.Column(verbose_name=_('Total Set aside '), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     date_updated = tables.Column(verbose_name='Date ')
     details = tables.TemplateColumn('<a href="#" >Details</a>')
 

@@ -43,7 +43,7 @@ def analytics(request):
         group = i
         group.update(reports.aggregate(sold_lamps=Sum('sold_lamps')))
         group.update(reports.aggregate(recharged_lamps=Sum('recharged_lamps')))
-        group.update(reports.aggregate(amount=Sum('amount')))
+        group.update(reports.aggregate(total_amount=Sum('total_amount')))
         statistics.append(group)
     statistics = ReportTable2(statistics)
     statistics.exclude = ('date_updated', )
@@ -99,7 +99,7 @@ def save_report(request):
                         return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige', 'error': message_1}
                 repport,  created = Report.objects.get_or_create(group=group, date_updated=date_updated)
                 if created:
-                    repport.amount = message_3
+                    repport.total_amount = message_3
                     repport.sold_lamps = message_1
                     repport.recharged_lamps = message_2
                     repport.save()
@@ -113,7 +113,7 @@ def save_report(request):
                     print sent
                     return {'Ok': False, 'info_to_contact': "Il ne vous restait pas de lampes. Contacter le partenaire"}
                 else:
-                    repport.amount = message_3
+                    repport.total_amount = message_3
                     repport.sold_lamps = message_1
                     repport.recharged_lamps = message_2
                     repport.save()
@@ -126,7 +126,7 @@ def save_report(request):
 
 
 
-            return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'amount': message_3, 'date': date_updated}, safe=False)
+            return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'total_amount': message_3, 'date': date_updated}, safe=False)
 
 
 @json_view
@@ -143,7 +143,7 @@ def download_reports(request):
         'date_updated',
         'recharged_lamps',
         'sold_lamps',
-        'amount',)
+        'total_amount',)
 
     response = ExcelResponse(queryset, headers=columns)
     return response
@@ -165,24 +165,24 @@ def all_groups(request):
 def get_cumulative(request, colline=None):
     reports = None
     if not colline:
-        reports = Report.objects.values('amount', 'sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
+        reports = Report.objects.values('total_amount', 'sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
     else:
-        reports = Report.objects.filter(group__colline__name=colline).values('amount','sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
+        reports = Report.objects.filter(group__colline__name=colline).values('total_amount','sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
     if not reports:
         return JsonResponse(None, safe=False)
 
     first_date = int(reports[0]["date_updated"].strftime('%s'))*1000
-    cumulative_amount = [[first_date, int(reports[0]['amount'])]]
+    cumulative_total_amount = [[first_date, int(reports[0]['total_amount'])]]
     cumulative_recharged = [[first_date, int(reports[0]['recharged_lamps'])]]
     cumulative_sold = [[first_date, int(reports[0]['sold_lamps'])]]
     max_length = len(reports)
     for k in range(max_length)[1:]:
         date = int(reports[k]["date_updated"].strftime('%s'))*1000
-        cumulative_amount.append([date, int(reports[k]['amount'] + cumulative_amount[k-1][1])])
+        cumulative_total_amount.append([date, int(reports[k]['total_amount'] + cumulative_total_amount[k-1][1])])
         cumulative_recharged.append([date, int(reports[k]['recharged_lamps'] + cumulative_recharged[k-1][1])])
         cumulative_sold.append([date, int(reports[k]['sold_lamps'] + cumulative_sold[k-1][1])])
 
-    return JsonResponse([{"name": "Amount", "data": cumulative_amount}, {"name":"Recharged Lamps", "data": cumulative_recharged}, {"name":"Sold Lamps", "data": cumulative_sold}, {"Disposable": cumulative_amount[max_length-1], "Charged": cumulative_recharged[max_length
+    return JsonResponse([{"name": "total_amount", "data": cumulative_total_amount}, {"name":"Recharged Lamps", "data": cumulative_recharged}, {"name":"Sold Lamps", "data": cumulative_sold}, {"Disposable": cumulative_total_amount[max_length-1], "Charged": cumulative_recharged[max_length
         -1], "Selling": cumulative_sold[max_length-1]}], safe=False)
 
 
@@ -204,7 +204,7 @@ class NaweNuzeDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(NaweNuzeDetail, self).get_context_data(**kwargs)
         nawenuzegroup = context['object']
-        reports = Report.objects.filter(group=nawenuzegroup).values('group__colline', 'group__colline__commune', 'sold_lamps', 'recharged_lamps', 'amount', 'date_updated', 'group__lamps_in_stock')
+        reports = Report.objects.filter(group=nawenuzegroup).values('group__colline', 'group__colline__commune', 'sold_lamps', 'recharged_lamps', 'total_amount', 'date_updated', 'group__lamps_in_stock')
         reports = ReportTable(reports)
         RequestConfig(self.request).configure(reports)
         context['reports'] = reports
@@ -246,7 +246,7 @@ class ReportList(ListView):
 
 class ReportUpdate(UpdateView):
     model = Report
-    fields = ['recharged_lamps','sold_lamps','amount','group', 'date_updated']
+    fields = ['recharged_lamps','sold_lamps','total_amount','group', 'date_updated']
     # print(self)
 
     def get_success_url(self, **kwargs):
