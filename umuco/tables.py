@@ -1,7 +1,7 @@
 import django_tables2 as tables
 from django.utils.safestring import SafeString
 from umuco.models import  NawenuzeGroup, Report
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 class ReportTable(tables.Table):
     date_updated = tables.Column(verbose_name='Date ', attrs={'th':{'data-footer-formatter':"totalTextFormatter"}})

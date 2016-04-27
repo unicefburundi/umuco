@@ -6,7 +6,17 @@ from bdiadmin.models import *
 from django.utils.translation import ugettext as _
 
 
+def make_custom_datefield(f):
+    # import ipdb; ipdb.set_trace()
+    formfield = f.formfield()
+    if isinstance(f, models.DateField):
+        formfield.widget.format = '%m/%d/%Y'
+        formfield.widget.attrs.update({'class':'datePicker', 'readonly':'true'})
+    return formfield
+
 class RaportForm(forms.ModelForm):
+    formfield_callback = make_custom_datefield
+
     class Meta:
         model = Report
         fields = ('recharged_lamps', 'sold_lamps', 'total_amount', 'date_updated', 'group', 'pl_amount')

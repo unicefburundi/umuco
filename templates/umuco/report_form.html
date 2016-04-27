@@ -1,7 +1,14 @@
 {% extends "home.html" %}
 {% load i18n %}
 {% block contents %}
-    <div class="container">
+<script>
+    // on page load
+
+    $(function() {
+    $( ".datePicker" ).datepicker();
+    });
+</script>
+ <div class="container">
         <h2>{% trans "Edit Report" %}</h2>
         <form method="post">{% csrf_token %}
         <div class="col-md-2">
@@ -25,11 +32,17 @@
             <p>{{form.total_amount}}</p>
         </div>
         <div class="col-md-2">
+            <label for="pl_amount">{{form.pl_amount.label_tag}}</label>
+            <p>{{form.pl_amount.errors}}</p>
+            <p>{{form.pl_amount }}</p>
+        </div>
+        <div class="col-md-2">
             <label for="date_updated">{{form.date_updated.label_tag}}</label>
             <p>{{form.date_updated.errors}}</p>
-            <p>{{form.date_updated }}</p>
+            <p class="datePicker">{{form.date_updated }}</p>
         </div>
             <input type="submit" value="{% trans "Submit" %}" class="btn btn-primary" />
         </form>
     </div>
+
 {% endblock contents %}

@@ -44,6 +44,7 @@ def analytics(request):
         group.update(reports.aggregate(sold_lamps=Sum('sold_lamps')))
         group.update(reports.aggregate(recharged_lamps=Sum('recharged_lamps')))
         group.update(reports.aggregate(total_amount=Sum('total_amount')))
+        group.update(reports.aggregate(pl_amount=Sum('pl_amount')))
         statistics.append(group)
     statistics = ReportTable2(statistics)
     statistics.exclude = ('date_updated', )
@@ -216,7 +217,7 @@ class NaweNuzeDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(NaweNuzeDetail, self).get_context_data(**kwargs)
         nawenuzegroup = context['object']
-        reports = Report.objects.filter(group=nawenuzegroup).values('group__colline', 'group__colline__commune', 'sold_lamps', 'recharged_lamps', 'total_amount', 'date_updated', 'group__lamps_in_stock')
+        reports = Report.objects.filter(group=nawenuzegroup).values('group__colline', 'group__colline__commune', 'sold_lamps', 'recharged_lamps', 'total_amount', 'date_updated', 'group__lamps_in_stock', 'pl_amount')
         reports = ReportTable(reports)
         RequestConfig(self.request).configure(reports)
         context['reports'] = reports
@@ -258,7 +259,7 @@ class ReportList(ListView):
 
 class ReportUpdate(UpdateView):
     model = Report
-    fields = ['recharged_lamps','sold_lamps','total_amount','group', 'date_updated']
+    fields = ['recharged_lamps','sold_lamps','total_amount','group', 'date_updated', 'pl_amount']
     # print(self)
 
     def get_success_url(self, **kwargs):

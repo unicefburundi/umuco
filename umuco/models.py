@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import Group
 from django.conf import settings
@@ -7,10 +7,9 @@ from django.core.validators import MaxValueValidator
 from bdiadmin.models import *
 
 
-
 class NawenuzeGroup(models.Model):
     colline = models.OneToOneField(Colline, help_text=_('Required'))
-    day_of_meeting = models.PositiveIntegerField(verbose_name=_("Day of meeting"), help_text=_('Number. Eg : For Monday put 1, Tuesday put 2, ...'), null=True, validators=[MaxValueValidator(7),])
+    day_of_meeting = models.PositiveIntegerField(verbose_name=_("Reporting day"), help_text=_('Number. Eg : For Monday put 1, Tuesday put 2, ...'), null=True, validators=[MaxValueValidator(7),])
     lamps_in_stock = models.PositiveIntegerField(verbose_name=_("lamps in stock"), default=0 , null=True, blank=True)
     cost_lamp = models.PositiveIntegerField(verbose_name=_("cost lamp "), default=8000 , null=True, blank=True)
     cost_recharge = models.PositiveIntegerField(verbose_name=_("cost recharge"), default=300 , null=True, blank=True)
@@ -31,9 +30,9 @@ class Report( models.Model):
     a model for a NaweNuze report
     """
     date = models.DateTimeField(auto_now_add=True, verbose_name=_('Date submited'))
-    date_updated = models.DateField(verbose_name=_('Date refering to'), default=timezone.now)
+    date_updated = models.DateField(verbose_name=_('Date submited'), default=timezone.now)
     recharged_lamps = models.PositiveIntegerField(default=0,verbose_name=_('Recharged lamps'))
-    sold_lamps = models.PositiveIntegerField(default=0, verbose_name=_('Sold Lamps'))
+    sold_lamps = models.PositiveIntegerField(_('Sold Lamps'), default=0)
     total_amount = models.PositiveIntegerField(default=0, verbose_name=_('total amount'))
     pl_amount = models.PositiveIntegerField(default=0, verbose_name=_('PL amount'))
     group = models.ForeignKey(NawenuzeGroup, verbose_name=_('group'))

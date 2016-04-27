@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-18 19:03+0200\n"
-"PO-Revision-Date: 2016-04-18 18:31+0200\n"
+"POT-Creation-Date: 2016-04-27 13:51+0200\n"
+"PO-Revision-Date: 2016-04-27 11:36+0200\n"
 "Last-Translator: Allan Stockman <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -34,6 +34,17 @@ msgstr "Le téléphone pour vous contacter."
 #: bdiadmin/models.py:19 bdiadmin/models.py:35 bdiadmin/models.py:51
 msgid "name"
 msgstr "nom"
+
+#: templates/bdiadmin/province_form.html:5
+#: templates/umuco/group_details.html:19 templates/umuco/group_submit.html:5
+#: templates/umuco/group_submit.html:21
+msgid "Group"
+msgstr "Groupe"
+
+#: templates/bdiadmin/province_form.html:9
+#: templates/umuco/group_details.html:40
+msgid "Telephone"
+msgstr "Téléphone"
 
 #: templates/groups.html:6
 msgid "All Nawe Nuze Groups"
@@ -67,7 +78,7 @@ msgstr "Nom"
 msgid "Location"
 msgstr "Localisation"
 
-#: templates/home.html:77
+#: templates/home.html:78
 msgid "Terms of Service"
 msgstr "Conditions d'utilisation"
 
@@ -198,7 +209,7 @@ msgid "Groups"
 msgstr "Groupes"
 
 #: templates/muco_layout.html:82
-msgid "Graphics"
+msgid "Charts"
 msgstr "Graphiques"
 
 #: templates/muco_layout.html:87
@@ -206,8 +217,8 @@ msgid "Create"
 msgstr "Créer"
 
 #: templates/muco_layout.html:90
-msgid "A Group"
-msgstr "Groupe"
+msgid "A Group/Location"
+msgstr "Groupe/Lieu"
 
 #: templates/muco_layout.html:91
 msgid "A Report"
@@ -269,15 +280,15 @@ msgstr "Annuler"
 
 #: templates/muco_layout.html:374
 msgid "This dashoard displays"
-msgstr ""
+msgstr "Ce tableau de bord montre"
 
 #: templates/muco_layout.html:376
 msgid "collected data on Projet Lumiere"
-msgstr ""
+msgstr "données collectées sur le Projet Lumière"
 
 #: templates/muco_layout.html:378
 msgid "and was made by UNICEF Burundi. It's open sourced."
-msgstr ""
+msgstr "et construit par l'UNICEF Burundi. Il est open source."
 
 #: templates/registration/user_form.html:5
 msgid "New User ? "
@@ -287,19 +298,23 @@ msgstr "Nouvel utilisateur ?"
 msgid "Invalid data. Please try again."
 msgstr "Données invalides. Veuillez réessayer."
 
-#: templates/umuco/group_details.html:14
-msgid "No data for this group!"
-msgstr "Pas de données pour ce groupe!"
+#: templates/umuco/group_details.html:35 umuco/models.py:64
+msgid "Day of meeting"
+msgstr "Jour de réunion"
 
-#: templates/umuco/group_details.html:17
-msgid "Group:"
-msgstr "Groupe:"
-
-#: templates/umuco/group_details.html:18 templates/umuco/group_details.html:50
+#: templates/umuco/group_details.html:44
 msgid "Back to search"
 msgstr "Retour à la recherche"
 
-#: templates/umuco/group_details.html:21
+#: templates/umuco/group_details.html:49
+msgid "No data for this group!"
+msgstr "Pas de données pour ce groupe!"
+
+#: templates/umuco/group_details.html:52
+msgid "Group:"
+msgstr "Groupe:"
+
+#: templates/umuco/group_details.html:55
 msgid "Displayed below are the cumulative performances of the NaweNuze Group"
 msgstr "Affichées ci-dessous, les performances cumulées des groupes NuzeNawe"
 
@@ -307,36 +322,22 @@ msgstr "Affichées ci-dessous, les performances cumulées des groupes NuzeNawe"
 msgid "Group Directory"
 msgstr "Repertoire des groupes"
 
-#: templates/umuco/group_submit.html:5 templates/umuco/group_submit.html:20
-#: templates/umuco/nawenuzegroup_detail.html:12
-msgid "Group"
-msgstr "Groupe"
-
-#: templates/umuco/group_submit.html:9
-msgid "Telephone"
-msgstr "Téléphone"
-
-#: templates/umuco/group_submit.html:43
+#: templates/umuco/group_submit.html:44
 msgid "Telephone(s)"
 msgstr "Téléphone(s)"
 
-#: templates/umuco/group_submit.html:53 templates/umuco/group_submit.html:71
-#: templates/umuco/group_submit.html:91 templates/umuco/group_submit.html:111
-#: templates/umuco/group_submit.html:127 templates/umuco/report_create.html:32
-#: templates/umuco/report_form.html:32
+#: templates/umuco/group_submit.html:54 templates/umuco/group_submit.html:75
+#: templates/umuco/group_submit.html:99 templates/umuco/group_submit.html:123
+#: templates/umuco/group_submit.html:142 templates/umuco/report_create.html:32
+#: templates/umuco/report_form.html:44
 msgid "Submit"
 msgstr "Envoyer"
 
-#: templates/umuco/group_submit.html:56
+#: templates/umuco/group_submit.html:58
 msgid "Back to Groups"
 msgstr "Retour aux groupes"
 
-#: templates/umuco/nawenuzegroup_detail.html:28 umuco/models.py:13
-#: umuco/models.py:64
-msgid "Day of meeting"
-msgstr "Jour de réunion"
-
-#: templates/umuco/nawenuzegroup_detail.html:33
+#: templates/umuco/nawenuzegroup_detail.html:12
 #: templates/umuco/report_list.html:5
 msgid "Reports"
 msgstr "Rapports"
@@ -353,7 +354,7 @@ msgstr "Sauvegarder"
 msgid "back to list"
 msgstr "retour à la liste"
 
-#: templates/umuco/report_create.html:5 templates/umuco/report_form.html:5
+#: templates/umuco/report_create.html:5 templates/umuco/report_form.html:12
 msgid "Edit Report"
 msgstr "Modifier le rapport"
 
@@ -361,61 +362,65 @@ msgstr "Modifier le rapport"
 msgid "New"
 msgstr "Nouveau"
 
-#: umuco/forms.py:37
+#: umuco/forms.py:47
 msgid "Fill out both fields"
 msgstr "Remplissez tous les champs"
 
-#: umuco/forms.py:49
+#: umuco/forms.py:60
 msgid "day_of_meeting"
 msgstr "Jour de réunion"
 
-#: umuco/models.py:12 umuco/models.py:63
+#: umuco/models.py:11 umuco/models.py:63
 msgid "Required"
 msgstr "Obligatoire"
 
-#: umuco/models.py:13 umuco/models.py:64
+#: umuco/models.py:12
+msgid "Reporting day"
+msgstr "Jour du rapport"
+
+#: umuco/models.py:12 umuco/models.py:64
 msgid "Number. Eg : For Monday put 1, Tuesday put 2, ..."
 msgstr "Nombre. Par exemple: Pour le lundi mettre 1, le mardi mettre 2, ..."
 
-#: umuco/models.py:14
+#: umuco/models.py:13
 msgid "lamps in stock"
 msgstr "lampes en stock"
 
-#: umuco/models.py:15
+#: umuco/models.py:14
 msgid "cost lamp "
 msgstr "prix d'une lampe"
 
-#: umuco/models.py:16
+#: umuco/models.py:15
 msgid "cost recharge"
 msgstr "prix de recharge"
 
-#: umuco/models.py:22
+#: umuco/models.py:21
 msgid "phone number"
 msgstr "numéro de téléphone"
 
-#: umuco/models.py:23 umuco/models.py:38 umuco/models.py:47
+#: umuco/models.py:22 umuco/models.py:38 umuco/models.py:47
 msgid "group"
 msgstr "groupe"
 
-#: umuco/models.py:33
+#: umuco/models.py:32 umuco/models.py:33
 msgid "Date submited"
 msgstr "Date de soumission"
 
-#: umuco/models.py:34
-msgid "Date refering to"
-msgstr "Date de référent à"
-
-#: umuco/models.py:35 umuco/tables.py:9 umuco/tables.py:28
+#: umuco/models.py:34 umuco/tables.py:29 umuco/tables.py:50
 msgid "Recharged lamps"
 msgstr "Lampes rechargées"
 
-#: umuco/models.py:36
+#: umuco/models.py:35
 msgid "Sold Lamps"
 msgstr "Lampes vendues"
 
+#: umuco/models.py:36
+msgid "total amount"
+msgstr "montant total"
+
 #: umuco/models.py:37
-msgid "Amount"
-msgstr "Montant"
+msgid "PL amount"
+msgstr "Montant du PL"
 
 #: umuco/models.py:48
 msgid "Received lamps"
@@ -429,15 +434,19 @@ msgstr "Date de réception"
 msgid "Partner focal point "
 msgstr "Partenaire point focal"
 
-#: umuco/tables.py:8 umuco/tables.py:27
+#: umuco/tables.py:28 umuco/tables.py:49
 msgid "Sold lamps"
 msgstr "Lampes vendues"
 
-#: umuco/tables.py:10 umuco/tables.py:29
-msgid "Set aside "
-msgstr "Épargne"
+#: umuco/tables.py:30 umuco/tables.py:51
+msgid "Total Set aside "
+msgstr "Épargne totale"
 
-#: umuco/tables.py:11
+#: umuco/tables.py:31 umuco/tables.py:52
+msgid "PL Set aside "
+msgstr "Épargne du PL"
+
+#: umuco/tables.py:32
 msgid "Edit"
 msgstr "Editer"
 
@@ -448,3 +457,12 @@ msgstr "Anglais"
 #: umuco_main/settings.py:91
 msgid "French"
 msgstr "Français "
+
+#~ msgid "Date refering to"
+#~ msgstr "Date de référent à"
+
+#~ msgid "Graphics"
+#~ msgstr "Graphiques"
+
+#~ msgid "A Group"
+#~ msgstr "Groupe"
