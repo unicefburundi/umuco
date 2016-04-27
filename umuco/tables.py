@@ -2,24 +2,33 @@ import django_tables2 as tables
 from django.utils.safestring import SafeString
 from umuco.models import  NawenuzeGroup, Report
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
+
 
 class ReportTable(tables.Table):
     date_updated = tables.Column(verbose_name='Date ', attrs={'th':{'data-footer-formatter':"totalTextFormatter"}})
     sold_lamps = tables.Column(verbose_name=_('Sold lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     recharged_lamps = tables.Column(verbose_name=_('Recharged lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     total_amount = tables.Column(verbose_name=_('Total Set aside '), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    pl_amount = tables.Column(verbose_name=_('PL Set aside '), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
+    pl_amount = tables.Column(verbose_name=_('PL Set aside '), attrs={'th':{'data-formatter':"percentFormater"}})
     edit = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-info">Edit</a>', verbose_name=_('Edit'))
     class Meta:
         attrs = {"class": "table ", "data-toggle":"table", "data-search":"true" ,"data-show-columns":"true" ,  "data-show-export":"true", 'data-export-types': "['csv','excel']", "data-show-footer":"true"}
 
     def render_group__colline(self, value):
         ID = NawenuzeGroup.objects.get(colline=value).id
-        return SafeString('''<a href="/fr/report/reports/%s">%s</a>''' % (ID, value))
+        return SafeString('<a href='+reverse("report:reports_by_groups", args=[ID])+'>'+value+'</a>')
 
     def render_edit(self, record):
         report = Report.objects.get(group__colline=record['group__colline'], date_updated=record['date_updated']).id
-        return SafeString('''<a href="/fr/report/edit/%s" class="btn btn-xs btn-info">Edit</a>''' % (report))
+        return SafeString('<a href='+reverse("report:report_edit", args=[report])+'>Edit</a>')
+
+    def render_pl_amount(self, value, record):
+        if record['total_amount'] == 0:
+            return 0
+        else :
+            percent = 100*int(value)/record['total_amount']
+            return percent
 
 
 class ReportTable2(tables.Table):
@@ -28,7 +37,7 @@ class ReportTable2(tables.Table):
     sold_lamps = tables.Column(verbose_name=_('Sold lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     recharged_lamps = tables.Column(verbose_name=_('Recharged lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     total_amount = tables.Column(verbose_name=_('Total Set aside '), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    pl_amount = tables.Column(verbose_name=_('PL Set aside '), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
+    pl_amount = tables.Column(verbose_name=_('PL Set aside '), attrs={'th':{'data-formatter':"percentFormater"}})
     date_updated = tables.Column(verbose_name='Date ')
     details = tables.TemplateColumn('<a href="#" >Details</a>')
 
@@ -38,7 +47,7 @@ class ReportTable2(tables.Table):
 
     def render_details(self, record):
         ID = NawenuzeGroup.objects.get(colline=record['colline']).id
-        return SafeString('''<a href="/fr/report/reports/%s" class="btn btn-xs btn-default">Details</a>''' % (ID))
+        return SafeString('<a href='+reverse("report:reports_by_groups", args=[ID])+'>Details</a>')
 
     def render_colline(self, record):
         name = NawenuzeGroup.objects.get(colline=record['colline']).colline.name
@@ -47,6 +56,13 @@ class ReportTable2(tables.Table):
     def render_commune(self, record):
         name = NawenuzeGroup.objects.get(colline__commune=record['commune']).colline.commune.name
         return name
+
+    def render_pl_amount(self, value, record):
+        if record['total_amount'] == 0:
+            return 0
+        else :
+            percent = 100*int(value)/record['total_amount']
+            return percent
 
     class Meta:
         attrs = {"class": "table ", "data-toggle":"table", "data-search":"true" ,"data-show-columns":"true" ,  "data-show-export":"true", 'data-export-types': "['csv','excel']", "data-show-footer":"true"}

@@ -3,7 +3,7 @@ from umuco.models import Report, NawenuzeGroup, PhoneModel
 from authtools.forms import UserCreationForm
 from django.forms import inlineformset_factory
 from bdiadmin.models import *
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 
 def make_custom_datefield(f):
@@ -49,15 +49,25 @@ class UserCreationForm(UserCreationForm):
 
 MAX_PHONENUMBER = 2
 
+DAYS_OF_WEEK = (
+    (1, _('Monday')),
+    (2, _('Tuesday')),
+    (3, _('Wednesday')),
+    (4, _('Thursday')),
+    (5, _('Friday')),
+    (6, _('Saturday')),
+    (7, _('Sunday')),
+)
 
 class NaweNuzeForm(forms.ModelForm):
     province = forms.ModelChoiceField(queryset=Province.objects.all())
     commune = forms.ChoiceField(widget = forms.Select(), required=False, choices=([('','------'), ]))
     colline = forms.ChoiceField(widget = forms.Select(), required=False, choices=([('','------'), ]))
+    day_of_meeting = forms.ChoiceField(label=_('Day of reporting'), widget = forms.Select(), required=False, choices=DAYS_OF_WEEK)
 
     class Meta:
         model = NawenuzeGroup
-        fields = ('colline', _('day_of_meeting'))
+        fields = ('colline', 'day_of_meeting')
 
 
     def is_valid(self):

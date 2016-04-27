@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-27 13:51+0200\n"
-"PO-Revision-Date: 2016-04-27 11:36+0200\n"
+"POT-Creation-Date: 2016-04-27 14:33+0200\n"
+"PO-Revision-Date: 2016-04-27 14:35+0200\n"
 "Last-Translator: Allan Stockman <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -366,9 +366,37 @@ msgstr "Nouveau"
 msgid "Fill out both fields"
 msgstr "Remplissez tous les champs"
 
-#: umuco/forms.py:60
-msgid "day_of_meeting"
-msgstr "Jour de réunion"
+#: umuco/forms.py:53
+msgid "Monday"
+msgstr "Lundi"
+
+#: umuco/forms.py:54
+msgid "Tuesday"
+msgstr "Mardi"
+
+#: umuco/forms.py:55
+msgid "Wednesday"
+msgstr "Mercredi"
+
+#: umuco/forms.py:56
+msgid "Thursday"
+msgstr "Jeudi"
+
+#: umuco/forms.py:57
+msgid "Friday"
+msgstr "Vendredi"
+
+#: umuco/forms.py:58
+msgid "Saturday"
+msgstr "Samedi"
+
+#: umuco/forms.py:59
+msgid "Sunday"
+msgstr "Dimanche"
+
+#: umuco/forms.py:66
+msgid "Day of reporting"
+msgstr "Jour de rapportage"
 
 #: umuco/models.py:11 umuco/models.py:63
 msgid "Required"
@@ -406,7 +434,7 @@ msgstr "groupe"
 msgid "Date submited"
 msgstr "Date de soumission"
 
-#: umuco/models.py:34 umuco/tables.py:29 umuco/tables.py:50
+#: umuco/models.py:34 umuco/tables.py:9 umuco/tables.py:29
 msgid "Recharged lamps"
 msgstr "Lampes rechargées"
 
@@ -434,19 +462,19 @@ msgstr "Date de réception"
 msgid "Partner focal point "
 msgstr "Partenaire point focal"
 
-#: umuco/tables.py:28 umuco/tables.py:49
+#: umuco/tables.py:8 umuco/tables.py:28
 msgid "Sold lamps"
 msgstr "Lampes vendues"
 
-#: umuco/tables.py:30 umuco/tables.py:51
+#: umuco/tables.py:10 umuco/tables.py:30
 msgid "Total Set aside "
 msgstr "Épargne totale"
 
-#: umuco/tables.py:31 umuco/tables.py:52
+#: umuco/tables.py:11 umuco/tables.py:31
 msgid "PL Set aside "
 msgstr "Épargne du PL"
 
-#: umuco/tables.py:32
+#: umuco/tables.py:12
 msgid "Edit"
 msgstr "Editer"
 
@@ -457,6 +485,9 @@ msgstr "Anglais"
 #: umuco_main/settings.py:91
 msgid "French"
 msgstr "Français "
+
+#~ msgid "day_of_meeting"
+#~ msgstr "Jour de réunion"
 
 #~ msgid "Date refering to"
 #~ msgstr "Date de référent à"

@@ -17,7 +17,6 @@
 {% endif %}
 <script>
 function totalTextFormatter(data) {
-        console.log(data);
           return '<strong class="text-primary" >Total</strong>';
       }
 
@@ -29,5 +28,9 @@ function sumFormatter(data) {
             });
           return '<strong>'+ total + '</strong>';
       }
+function percentFormater(value, row) {
+        return  value + ' %';
+    }
+
 </script>
 {% endblock charts %}
