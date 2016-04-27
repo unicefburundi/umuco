@@ -32,5 +32,15 @@ function percentFormater(value, row) {
         return  value + ' %';
     }
 
+function sumpercentFormatter(data) {
+          var total = 0;
+          var counter = 0;
+          field = this.field;
+          $.each(data, function (i, row) {
+                total += +(row[field]);
+                counter += 1;
+            });
+          return '<strong>'+ total/counter + '</strong> %';
+      }
 </script>
 {% endblock charts %}
