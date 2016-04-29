@@ -87,6 +87,7 @@
     $(document).ready(function() {
     var group = '{{nawenuze_group|safe}}';
     var chartData = {{data|safe}};
+    console.log(chartData);
     // Group details charts
      var groupDetailsOptions1 = {
         chart: {
@@ -117,7 +118,7 @@
                 text: "L'argent dans la trésorerie (Fbu)"
             }
         },
-        series : [{}],
+        series : [{}, {}],
     };
     // Group details charts
      var groupDetailsOptions2 = {
@@ -192,6 +193,9 @@
     groupDetailsOptions2.series[0].data = chartData[1].data;
     groupDetailsOptions3.series[0].name = chartData[2].name;
     groupDetailsOptions3.series[0].data = chartData[2].data;
+    groupDetailsOptions1.series[1].name = chartData[3].name;
+    groupDetailsOptions1.series[1].data = chartData[3].data;
+    console.log(groupDetailsOptions1.series[1] );
     var chart = new Highcharts.Chart(groupDetailsOptions1);
     var chart2 = new Highcharts.Chart(groupDetailsOptions2);
     var chart3 = new Highcharts.Chart(groupDetailsOptions3);

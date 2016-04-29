@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
@@ -195,9 +197,9 @@ def get_cumulative(request, colline=None):
         cumulative_total_amount.append([date, int(reports[k]['total_amount'] + cumulative_total_amount[k-1][1])])
         cumulative_recharged.append([date, int(reports[k]['recharged_lamps'] + cumulative_recharged[k-1][1])])
         cumulative_sold.append([date, int(reports[k]['sold_lamps'] + cumulative_sold[k-1][1])])
-        cumulative_pl_amount.append([date, int(reports[k]['pl_amount'] + cumulative_sold[k-1][1])])
+        cumulative_pl_amount.append([date, int(reports[k]['pl_amount'] + cumulative_pl_amount[k-1][1])])
 
-    return JsonResponse([{"name": "Total set aside", "data": cumulative_total_amount}, {"name":"Recharged Lamps", "data": cumulative_recharged}, {"name":"Sold Lamps", "data": cumulative_sold}, {"name":"PL set aside", "data": cumulative_pl_amount},{"Disposable": cumulative_total_amount[max_length-1], "Charged": cumulative_recharged[max_length
+    return JsonResponse([{"name": "Total epargné", "data": cumulative_total_amount}, {"name":"Lampes rechargées", "data": cumulative_recharged}, {"name":"Lampes vendues", "data": cumulative_sold}, {"name":"PL epargné", "data": cumulative_pl_amount},{"Disposable": cumulative_total_amount[max_length-1], "Charges": cumulative_recharged[max_length
         -1], "Selling": cumulative_sold[max_length-1]}], safe=False)
 
 
