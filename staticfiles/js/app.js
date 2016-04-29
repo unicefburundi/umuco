@@ -38,7 +38,7 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
       $scope.chartConfig1.series.push(data[0]);
       $scope.chartConfig2.series.push(data[1]);
       $scope.chartConfig3.series.push(data[2]);
-      console.log($scope.chartConfig1.series);
+      $scope.chartConfig1.series.push(data[3]);
 
    }).
   error(function(data, status, headers, config) {
