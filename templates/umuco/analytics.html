@@ -46,7 +46,7 @@ function sumFormatter(data) {
                 total += +(row[field]);
                 counter += 1;
             });
-          return '<strong>'+ total/counter + '</strong> %';
+          return '<strong>'+ (total/counter).toFixed(2) + '</strong> %';
       }
 </script>
 {% endblock charts %}

@@ -7,7 +7,6 @@ import urllib
 
 def identify_message(args):
 	''' This function identifies which kind of message this message is. '''
-	# import ipdb; ipdb.set_trace()
 	incoming_prefix = args['text'].split('#')[0].upper()
 	print("incoming_prefix")
 	print(incoming_prefix)
@@ -24,7 +23,6 @@ def eliminate_unnecessary_spaces(args):
 	print("The text before sub             "+the_incoming_message)
 	#Messages from RapidPro comes with spaces replaced by '+'
 	#Let's replace those '+' (one or more) by one space
-	# import ipdb; ipdb.set_trace()
 	the_new_message = urllib.unquote_plus(the_incoming_message)
 	the_new_message = re.sub('[\#]+','#',the_new_message)
 	# Find any comma
@@ -67,7 +65,6 @@ def handel_rapidpro_request(request):
     identify_message(incoming_data)
     print("incoming_data['message_type']")
     print(incoming_data['message_type'])
-    # import ipdb; ipdb.set_trace()
     if(incoming_data['message_type']=='PHONE_REGISTRATION'):
         #This message is sent to register a reporter
         response = record_reporter(incoming_data)

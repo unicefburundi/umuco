@@ -121,7 +121,6 @@ def save_report(request):
                     return {'Ok': "Pas", 'info_to_contact' : 'Vous ne pouvez plus mettre a jours le rapport. Contacter le partenaire', 'error': (datetime.datetime.today() - date_updated).days }
                 # sold
                 solds = Report.objects.filter(group=group).aggregate(Sum('sold_lamps'))
-                # import ipdb; ipdb.set_trace()
                 if message_1 != 0 and group.lamps_in_stock < solds['sold_lamps__sum']:
                     sent = email_report_flagged(Organization.objects.get(name='CPES').partner.user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir vendu plus de lampes ({3}) qu il n en restait en stock({4})'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_1, (group.lamps_in_stock - solds['sold_lamps__sum'])))
                     print sent
@@ -165,7 +164,6 @@ def download_reports(request):
 
 
 def by_group(request, colline=None):
-    # import ipdb; ipdb.set_trace()
     response = get_cumulative(request=request, colline=colline)
     groupe, created = NawenuzeGroup.objects.get_or_create(colline__name=colline)
     rapporteurs = PhoneModel.objects.filter(group__colline__name=colline)
@@ -309,7 +307,6 @@ def submit_group(request):
     colline_form = CollineForm()
     phone_form = PhoneModelForm()
     if request.POST:
-        import ipdb; ipdb.set_trace()
         form = NaweNuzeForm({'province': request.POST.get('province'), 'day_of_meeting': request.POST.get('day_of_meeting'), 'colline' : request.POST.get('colline'), 'commune' : request.POST.get('commune')})
         try:
             colline = Colline.objects.get(id=int(request.POST.get('colline')))
