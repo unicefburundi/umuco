@@ -22,7 +22,7 @@ function sumFormatter(data) {
       }
 
   function iconFormater(value, row) {
-        var icon = row.id % 2 === 0 ? 'glyphicon-star' : 'glyphicon-star-empty'
+        var icon = row.id % 2 === 0 ? 'glyphicon-star' : 'glyphicon-star-empty';
         return '<i class="glyphicon ' + icon + '"></i> ' + value;
     }
   function percentFormater(value, row) {
@@ -46,7 +46,7 @@ function sumFormatter(data) {
                 total += +(row[field]);
                 counter += 1;
             });
-          return '<strong>'+ total/counter + '</strong>';
+          return '<strong>'+ total/counter + '</strong> %';
       }
 </script>
 {% endblock charts %}

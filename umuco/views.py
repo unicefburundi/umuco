@@ -178,9 +178,9 @@ def all_groups(request):
 def get_cumulative(request, colline=None):
     reports = None
     if not colline:
-        reports = Report.objects.values('total_amount', 'sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
+        reports = Report.objects.values('total_amount', 'sold_lamps', 'recharged_lamps', 'date_updated', 'pl_amount').order_by('date_updated')
     else:
-        reports = Report.objects.filter(group__colline__name=colline).values('total_amount','sold_lamps', 'recharged_lamps', 'date_updated').order_by('date_updated')
+        reports = Report.objects.filter(group__colline__name=colline).values('total_amount','sold_lamps', 'recharged_lamps', 'date_updated', 'pl_amount').order_by('date_updated')
     if not reports:
         return JsonResponse(None, safe=False)
 
@@ -188,14 +188,16 @@ def get_cumulative(request, colline=None):
     cumulative_total_amount = [[first_date, int(reports[0]['total_amount'])]]
     cumulative_recharged = [[first_date, int(reports[0]['recharged_lamps'])]]
     cumulative_sold = [[first_date, int(reports[0]['sold_lamps'])]]
+    cumulative_pl_amount = [[first_date, int(reports[0]['pl_amount'])]]
     max_length = len(reports)
     for k in range(max_length)[1:]:
         date = int(reports[k]["date_updated"].strftime('%s'))*1000
         cumulative_total_amount.append([date, int(reports[k]['total_amount'] + cumulative_total_amount[k-1][1])])
         cumulative_recharged.append([date, int(reports[k]['recharged_lamps'] + cumulative_recharged[k-1][1])])
         cumulative_sold.append([date, int(reports[k]['sold_lamps'] + cumulative_sold[k-1][1])])
+        cumulative_pl_amount.append([date, int(reports[k]['pl_amount'] + cumulative_sold[k-1][1])])
 
-    return JsonResponse([{"name": "total_amount", "data": cumulative_total_amount}, {"name":"Recharged Lamps", "data": cumulative_recharged}, {"name":"Sold Lamps", "data": cumulative_sold}, {"Disposable": cumulative_total_amount[max_length-1], "Charged": cumulative_recharged[max_length
+    return JsonResponse([{"name": "Total set aside", "data": cumulative_total_amount}, {"name":"Recharged Lamps", "data": cumulative_recharged}, {"name":"Sold Lamps", "data": cumulative_sold}, {"name":"PL set aside", "data": cumulative_pl_amount},{"Disposable": cumulative_total_amount[max_length-1], "Charged": cumulative_recharged[max_length
         -1], "Selling": cumulative_sold[max_length-1]}], safe=False)
 
 
