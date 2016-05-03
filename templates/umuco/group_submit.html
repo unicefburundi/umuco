@@ -53,11 +53,14 @@
                     <p>{{form.number}}</p>
                 </div>
             {% endfor %}
-            <a href="#"><input type="submit" name="submit" value="{% trans "Submit" %}" class="button"></a>
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+            <a href="#"><input type="submit" name="submit" value="{% trans "Submit" %}" class="btn btn-primary"></a>
+            </div>
             </div>
         </form>
         {% endblock groupe %}
-        <a href="{% url 'groups' %}" class="button btn default">{% trans "Back to Groups" %}</a>
+        <a href="{% url 'groups' %}" class="button btn btn-default">{% trans "Back to Groups" %}</a>
         </div>
         <div class="tab-pane {% block activeprovince1 %}{% endblock activeprovince1 %}" id="province">
             <div class="row">

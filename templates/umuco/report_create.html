@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block contents %}
     <div class="container">
-        <h2>{% trans "Edit Report" %}</h2>
+        <h2>{% trans "Create Report" %}</h2>
         <form method="post">{% csrf_token %}
         <div class="col-md-2">
             <label for="group">{{form.group.label_tag}}</label>
@@ -29,7 +29,9 @@
             <p>{{form.date_updated.errors}}</p>
             <p>{{form.date_updated }}</p>
         </div>
+        <div class="col-md-2">
             <input type="submit" value="{% trans "Submit" %}" class="btn btn-primary" />
+        </div>
         </form>
     </div>
 {% endblock contents %}
