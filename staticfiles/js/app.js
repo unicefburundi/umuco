@@ -86,7 +86,7 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
     },
     series: $scope.chartSeries1,
     title: {
-      text: 'Montant mis de côté dans le fonds de OEV',
+      text: 'Montant epargné Total et Montant epargné PL',
     },
     subtitle: {text: 'Cumulatif pour tous les groupes'},
     credits: {

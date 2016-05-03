@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-27 14:33+0200\n"
-"PO-Revision-Date: 2016-04-27 14:35+0200\n"
+"PO-Revision-Date: 2016-05-03 14:34+0200\n"
 "Last-Translator: Allan Stockman <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -106,7 +106,7 @@ msgstr "Se déconnecter"
 #: templates/landing_page.html:67 templates/muco_layout.html:113
 #: templates/muco_layout.html.py:318 templates/muco_layout.html:333
 msgid "Login"
-msgstr "S'identifier"
+msgstr "Identification"
 
 #: templates/landing_page.html:93
 msgid "An innovative energy solution brings light to communities"

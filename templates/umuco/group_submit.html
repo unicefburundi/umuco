@@ -3,10 +3,12 @@
 {% block contentright %}
 <ul class="nav nav-tabs">
     <li {% block activegroup %}class="active"{% endblock activegroup %} ><a href="#group"   data-toggle="tab">{% trans "Group" %}</a></li>
-    <li {% block activeprovince %}{% endblock activeprovince %} ><a href="#province"   data-toggle="tab">Province</a></li>
-    <li {% block activecommune %}{% endblock activecommune %} ><a href="#commune"   data-toggle="tab">Commune</a></li>
-    <li {% block activecolline %}{% endblock activecolline %} ><a href="#colline"   data-toggle="tab">Colline</a></li>
-    </ul>
+    {% comment %}
+        <li {% block activeprovince %}{% endblock activeprovince %} ><a href="#province"   data-toggle="tab">Province</a></li>
+        <li {% block activecommune %}{% endblock activecommune %} ><a href="#commune"   data-toggle="tab">Commune</a></li>
+        <li {% block activecolline %}{% endblock activecolline %} ><a href="#colline"   data-toggle="tab">Colline</a></li>
+        </ul>
+    {% endcomment %}
 {% endblock contentright  %}
 
 {% block contents %}

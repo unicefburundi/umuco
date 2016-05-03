@@ -1,305 +1,168 @@
 {% load i18n %}
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <meta charset="utf-8">
-        <title>Umuco - {% block page_title %}
-            {% trans "Statistics" %}
-            {% endblock page_title %} </title>
-         <link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}favicon.ico">
-            <script type="text/javascript" src=" {{ STATIC_URL }}js/jquery/jquery.min.js"></script>
-            <script type="text/javascript" src=" {{ STATIC_URL }}js/jquery/jquery-ui.min.js"></script>
-            <script type="text/javascript" src=" {{ STATIC_URL }}js/angular/angular.js"></script>
-            <script type="text/javascript" src=" {{ STATIC_URL }}js/angular/angular-ui.min.js"></script>
-            <script type="text/javascript" src=" {{ STATIC_URL }}js/moment/moment.js"></script>
-            <script type="text/javascript" src=" {{ STATIC_URL }}js/moment/moment-timezone.js"></script>
-            <script type="text/javascript" src=" {{ STATIC_URL }}js/highchart/highcharts.js"></script>
-            <script type="text/javascript" src=" {{ STATIC_URL }}js/highchart/exporting.js"></script>
-            <script type="text/javascript" src=" {{ STATIC_URL }}js/bootstrap/bootstrap-select.js"></script>
-            {% block javascripts %}
-            <!-- Pivotable js -->
-            <script type="text/javascript" src=" {{ STATIC_URL }}js/pivot/pivot.min.js"></script>
-            <!--Highchart-ng-->
-            <script type="text/javascript" src=" {{ STATIC_URL }}js/highchart/highcharts-ng.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>Projet Lumière  - {% block page_title %}
+    {% trans "Statistics" %}
+    {% endblock page_title %} </title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}favicon.ico">
+    <script type="text/javascript" src=" {{ STATIC_URL }}js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src=" {{ STATIC_URL }}js/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src=" {{ STATIC_URL }}js/angular/angular.js"></script>
+    <script type="text/javascript" src=" {{ STATIC_URL }}js/angular/angular-ui.min.js"></script>
+    <script type="text/javascript" src=" {{ STATIC_URL }}js/moment/moment.js"></script>
+    <script type="text/javascript" src=" {{ STATIC_URL }}js/moment/moment-timezone.js"></script>
+    <script type="text/javascript" src=" {{ STATIC_URL }}js/highchart/highcharts.js"></script>
+    <script type="text/javascript" src=" {{ STATIC_URL }}js/highchart/exporting.js"></script>
+    <script type="text/javascript" src=" {{ STATIC_URL }}js/bootstrap/bootstrap-select.js"></script>
+    {% block javascripts %}
+    <!-- Pivotable js -->
+    <script type="text/javascript" src=" {{ STATIC_URL }}js/pivot/pivot.min.js"></script>
+    <!--Highchart-ng-->
+    <script type="text/javascript" src=" {{ STATIC_URL }}js/highchart/highcharts-ng.min.js"></script>
 
-            {% endblock javascripts %}
-            {% block stylesheets %}
-            <!-- Pivotable Css -->
-            <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/pivot/pivot.min.css">
-            {% endblock stylesheets %}
+    {% endblock javascripts %}
+    {% block stylesheets %}
+    <!-- Pivotable Css -->
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/pivot/pivot.min.css">
+    {% endblock stylesheets %}
 
-            <!-- Bootstrap core CSS -->
-            <link href="{{ STATIC_URL }}css/bootstrap/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ STATIC_URL }}css/bootstrap/bootstrap.css" rel="stylesheet">
 
-            <!-- TODC Bootstrap core CSS -->
-            <link href="{{ STATIC_URL }}css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- TODC Bootstrap core CSS -->
+    <link href="{{ STATIC_URL }}css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
-            <!-- Custom styles for this template -->
-            <link rel="stylesheet" href="{{ STATIC_URL }}css/googleplus/styles.css">
-        </head>
-        <body>
-            <nav class="navbar navbar-fixed-top header">
-              <div class="col-md-12">
-                <div class="navbar-header">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/googleplus/styles.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-fixed-top header">
+      <div class="col-md-12">
+        <div class="navbar-header">
 
-                  <a href="/" class="navbar-brand">Umuco</a>
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
-                    <i class="glyphicon glyphicon-search"></i>
-                </button>
+          <a href="/" class="navbar-brand">Projet Lumière</a>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
 
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse1">
-              <form class="navbar-form pull-left">
-                <div class="input-group" style="max-width:470px;">
-                  <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-                  <div class="input-group-btn">
-                    <button class="btn btn-default btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                </div>
-            </div>
-        </form>
-        <ul class="nav navbar-nav navbar-right">
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse1">
+          <ul class="nav navbar-nav navbar-right">
             <li><a href="{% url 'home' %}"  target="_ext">{% trans "Home+" %}</a></li>
             <li><a href="#"><i class="glyphicon glyphicon-user"></i> {% if user.is_authenticated %}
-            {{ user.name}}
-          {% endif %} </a></li>
-      </ul>
-  </div>
-</div>
-</nav>
-<div class="navbar navbar-default" id="subnav">
-    <div class="col-md-12">
-      <div class="navbar-header">
-      {% if user.is_authenticated %}
-        <div  class="nav navbar-right" id="navbar-collapse3" style="margin-left:20px;">
-    <ul class="nav navbar-nav navbar-right">
-    <div class="dropdown btn-group">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Visualization" %}
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-    <li class=""><a href="{% url 'analytics' %}">{% trans "Analytics" %}</a></li>
-     <li class=""><a href="{% url 'groups' %}">{% trans "Groups" %}</a></li>
-     <li class=""><a href="{% url 'home' %}">{% trans "Charts" %}</a></li>
-     </ul>
-     </div>
-     {% if user.is_staff %}
-     <div class="dropdown btn-group">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Create" %}
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-       <li class=""><a href="{% url 'report:submit_group' %}">{% trans "A Group/Location" %}</a></li>
-       <li><a href="{% url 'report:report_create' %}">{% trans "A Report" %}</a></li>
-      </ul>
-      </div>
-     {% endif %}
- </ul>
-</div>
+              {{ user.name}}
+              {% endif %} </a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="navbar navbar-default" id="subnav">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+          <div class="navbar-header">
+            {% if user.is_authenticated %}
+            <div  class="nav navbar-right" id="navbar-collapse3" style="margin-left:20px;">
+              <ul class="nav navbar-nav navbar-right">
+               {% if user.is_staff %}
+               <div class="dropdown btn-group">
+                <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Register" %}
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                   <li class=""><a href="{% url 'report:submit_group' %}">{% trans "Group" %}</a></li>
+                 </ul>
+               </div>
+               {% endif %}
+               <div class="dropdown btn-group">
+                <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Visualisation" %}
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                  <li class=""><a href="{% url 'home' %}">{% trans "Collective" %}</a></li>
+                        <li class=""><a href="{% url 'groups' %}">{% trans "By Groups" %}</a></li>
+                  </ul>
+                </div>
+                <div class="dropdown btn-group">
+                <a class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Statistics" %}
+                  <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                  <li class=""><a href="{% url 'analytics' %}">{% trans "Tables" %}</a></li>
+                </ul>
+                </div>
+                {% if user.is_staff %}
+                <div class="dropdown btn-group">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Reports" %}
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                    <li><a href="{% url 'report:report_create' %}">{% trans "Report" %}</a></li>
+                   </ul>
+                 </div>
+             {% endif %}
+              </ul>
+            </div>
       {% endif %}
 
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse2">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-      </button>
+             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse2">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
 
-  </div>
-  <div class="collapse navbar-collapse" id="navbar-collapse2">
-    <ul class="nav navbar-nav navbar-right">
-     <li class="active"><a href="#">Umuco</a></li>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar-collapse2">
+            <ul class="nav navbar-nav navbar-right">
+             <li class="active"><a href="#">Projet Lumière</a></li>
+             {% if user.is_authenticated %}
+             <li><a href="{% url 'logout' %}?next=/" role="button" data-toggle="modal">{% trans "Logout" %}</a></li>
+             {% else %}
+             <li><a href="#loginModal" role="button" data-toggle="modal">{% trans "Login" %}</a></li>
+             {% endif %}
+             <li><a href="#aboutModal" role="button" data-toggle="modal">{% trans "About" %}</a></li>
+           </ul>
+         </div>
+       </div>
+     </div>
+
      {% if user.is_authenticated %}
-       <li><a href="{% url 'logout' %}?next=/" role="button" data-toggle="modal">{% trans "Logout" %}</a></li>
-       {% else %}
-       <li><a href="#loginModal" role="button" data-toggle="modal">{% trans "Login" %}</a></li>
-     {% endif %}
-     <li><a href="#aboutModal" role="button" data-toggle="modal">{% trans "About" %}</a></li>
- </ul>
-</div>
-</div>
-</div>
-
-{% if user.is_authenticated %}
-<!--main-->
-<div class="container" id="main">
-{% block charts %}
-<div class="row" ng-app="myapp">
-    <div ng-controller="myctrl">
-        <div class="row">
+     <!--main-->
+     <div class="container" id="main">
+      {% block charts %}
+      <div class="row" ng-app="myapp">
+        <div ng-controller="myctrl">
+          <div class="row">
             <div class="row">
-            <div class="col-md-9 col-sm-9 ">
-              <highchart id="chart1" config="chartConfig1" ></highchart>
+              <div class="col-md-11 col-sm-11 ">
+                <highchart id="chart1" config="chartConfig1" ></highchart>
               </div>
-            <div class="col-md-3 col-sm-3 ">
-              <div class="panel panel-default">
-                      <div class="well">
-                        <div class="input-group">
-                          <span class="input-group-addon" id="basic-addon1">
-                            {% trans "Title" %}
-                        </span>
-                        <input class="form-control" ng-model="chartConfig1.title.text">
-                    </div>
-                    <div class="input-group">
-                      <span class="input-group-addon" id="basic-addon1">
-                        {% trans "Subtitle" %}
-                    </span>
-                    <input  class="form-control" ng-model="chartConfig1.subtitle.text">
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">
-                        {% trans "Width" %}
-                    </span>
-                    <input class="form-control" ng-model="chartConfig1.size.width">
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">
-                        {% trans "Height" %}
-                    </span>
-                    <input  class="form-control" ng-model="chartConfig1.size.height">
-                </div>
             </div>
             <hr>
-            <div class="btn-group">
-                <div class="input-group-addon">
-                  {% trans "Default Type" %}
-                  <select class="form-control" ng-model="chartConfig1.options.chart.type" ng-options="t.id as t.title for t in chartTypes">
-                  </select>
+            <div class="row">
+              <div class="col-md-11 col-sm-11 ">
+                <highchart id="chart2" config="chartConfig2" ></highchart>
               </div>
             </div>
-            <div class="input-group-addon" >
-                {% trans "Stack" %}
-                <select class="form-control " ng-model="chartConfig1.options.plotOptions.series.stacking" ng-options="t.id as t.title for t in chartStack">
-                </select>
-            </div>
+            <hr>
+            <div class="row">
+              <div class="col-md-11 col-sm-11 ">
+                <highchart id="chart3" config="chartConfig3" ></highchart>
+              </div>
             </div>
           </div>
-          </div>
-          <hr>
-          <div class="row">
-          <div class="col-md-9 col-sm-9 ">
-              <highchart id="chart2" config="chartConfig2" ></highchart>
-            </div>
-            <div class="col-md-3 col-sm-3 ">
-              <div class="panel panel-default">
-          <div class="well">
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">
-                {% trans "Title" %}
-            </span>
-            <input class="form-control" ng-model="chartConfig2.title.text">
         </div>
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">
-            {% trans "Subtitle" %}
-        </span>
-        <input  class="form-control" ng-model="chartConfig2.subtitle.text">
-    </div>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">
-            {% trans "Width" %}
-        </span>
-        <input class="form-control" ng-model="chartConfig2.size.width">
-    </div>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">
-            {% trans "Height" %}
-        </span>
-        <input  class="form-control" ng-model="chartConfig2.size.height">
-    </div>
-</div>
-<hr>
-<div class="btn-group">
-    <div class="input-group-addon">
-      {% trans "Default Type" %}
-      <select class="form-control" ng-model="chartConfig2.options.chart.type" ng-options="t.id as t.title for t in chartTypes">
-      </select>
+      </div>
+    </div><!--row-->
+    {% endblock charts %}
+    <!--playground-->
+
+    <br>
+
+    <div class="clearfix"></div>
+
+
+
   </div>
-</div>
-<div class="input-group-addon" >
-    {% trans "Stack" %}
-    <select class="form-control " ng-model="chartConfig2.options.plotOptions.series.stacking" ng-options="t.id as t.title for t in chartStack">
-    </select>
-</div>
-</div>
-          </div>
-          </div>
-          <hr>
-          <div class="row">
-          <div class="col-md-9 col-sm-9 ">
-              <highchart id="chart3" config="chartConfig3" ></highchart>
-          </div>
-          <div class="col-md-3 col-sm-3 ">
-            <div class="panel panel-default">
-          <div class="well">
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">
-                {% trans "Title" %}
-            </span>
-            <input class="form-control" ng-model="chartConfig3.title.text">
-        </div>
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">
-            {% trans "Subtitle" %}
-        </span>
-        <input  class="form-control" ng-model="chartConfig3.subtitle.text">
-    </div>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">
-            {% trans "Width" %}
-        </span>
-        <input class="form-control" ng-model="chartConfig3.size.width">
-    </div>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">
-            {% trans "Height" %}
-        </span>
-        <input  class="form-control" ng-model="chartConfig3.size.height">
-    </div>
-</div>
-<hr>
-<div class="btn-group">
-    <div class="input-group-addon">
-      {% trans "Default Type" %}
-      <select class="form-control" ng-model="chartConfig3.options.chart.type" ng-options="t.id as t.title for t in chartTypes">
-      </select>
-  </div>
-</div>
-<div class="input-group-addon" >
-    {% trans "Stack" %}
-    <select class="form-control " ng-model="chartConfig3.options.plotOptions.series.stacking" ng-options="t.id as t.title for t in chartStack">
-    </select>
-</div>
-</div>
-    </div>
-        </div>
-          {% if user.is_superuser %}
-            <div class="well">
-              <label for="prettyJSON"><input id="prettyJSON" type="checkbox" ng-model="prettyJSON"> {% trans "Pretty JSON" %}</label>
-          </div>
-          <div class="well">
-              <pre ng-show="prettyJSON"> {% verbatim %}
-                {{ chartConfig1 | json }}
-                {% endverbatim %}
-            </pre>
-            <pre ng-show="!prett{% verbatim %}{{ chartConfig1 | json }}{% endverbatim %}yJSON"> {% verbatim %}
-                {{ chartConfig1 }}
-                {% endverbatim %}
-            </pre>
-        </div>
-          {% endif %}
-    </div>
-    </div>
-</div>
-</div><!--row-->
-{% endblock charts %}
-<!--playground-->
-
-<br>
-
-<div class="clearfix"></div>
-
-
-
-</div>
 </div><!--/main-->
 {% else %}
 
@@ -307,93 +170,115 @@
 
 <!--login modal-->
 <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-              ×
-          </button>
-          <h2 class="text-center">
-              <br>
-              {% trans "Login" %}
-          </h2>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          ×
+        </button>
+        <h2 class="text-center">
+          <br>
+          {% trans "Login" %}
+        </h2>
       </div>
       <div class="modal-body">
-  <form class="form col-md-12 center-block" method="post" action="{% url 'login' %}"  role="form">
-    {% csrf_token %}
-    <div class="form-group">
-    <label for="login__username">{{ form.username.label_tag }}</label>
-      {{ form.username }}
+        <form class="form col-md-12 center-block" method="post" action="{% url 'login' %}"  role="form">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="login__username">{{ form.username.label_tag }}</label>
+            {{ form.username }}
+          </div>
+          <div class="form-group">
+            <label for="login__password">{{ form.password.label_tag }}</label>
+            {{ form.password }}
+            <div for="pwd"><a href="{% url 'password_reset' %}">{% trans "(forgot password)" %}</a></div>
+          </div>
+          <input type="submit" value="{% trans "Login" %}" class="btn btn-sm btn-success"/>
+          <input type="hidden" name="next" value="{{ next }}" />
+          <span class="pull-right">
+            <a href="#">
+              {% trans "Register" %}
+            </a>
+          </span>
+          <span>
+            <a href="#">
+              {% trans "Need help ?" %}
+            </a>
+          </span>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-12">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">
+            {% trans "Cancel" %}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <label for="login__password">{{ form.password.label_tag }}</label>
-    {{ form.password }}
-    <div for="pwd"><a href="{% url 'password_reset' %}">{% trans "(forgot password)" %}</a></div>
-  </div>
-    <input type="submit" value="{% trans "Login" %}" class="btn btn-sm btn-success"/>
-    <input type="hidden" name="next" value="{{ next }}" />
-    <span class="pull-right">
-        <a href="#">
-                {% trans "Register" %}
-        </a>
-    </span>
-    <span>
-      <a href="#">
-            {% trans "Need help ?" %}
-        </a>
-    </span>
-</form>
-</div>
-<div class="modal-footer">
-    <div class="col-md-12">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">
-        {% trans "Cancel" %}
-    </button>
-</div>
-</div>
-</div>
-</div>
 </div>
 
 
 <!--about modal-->
 <div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-              ×
-          </button>
-          <h2 class="text-center">
-              {% trans "About" %}
-          </h2>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          ×
+        </button>
+        <h2 class="text-center">
+          {% trans "About" %}
+        </h2>
       </div>
       <div class="modal-body">
         <div class="col-md-12 text-center">
           <a href="http://umuco.unicefburundi.org/">
-            {% trans "This dashoard displays" %}
-        </a>
-        <br>{% trans "collected data on Projet Lumiere" %}
-        <i class="glyphicon glyphicon-heart"></i>
-        {% trans "and was made by UNICEF Burundi. It's open sourced." %}
-        <br>
-        <br>
-        <a href="https://github.com/unicefburundi/umuco">GitHub Fork
-        </a>
+            {% trans "This " %}
+          </a>{% trans "dashoard displays collected data on Projet Lumiere" %}
+          {% trans "and was made by UNICEF Burundi. It's open sourced." %}
+          <br>
+          <br>
+          <a href="https://github.com/unicefburundi/umuco">GitHub Fork
+          </a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+          OK
+        </button>
+      </div>
     </div>
-</div>
-<div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">
-      OK
-  </button>
-</div>
-</div>
-</div>
+  </div>
 </div>
 <!-- script references -->
 <script src=" {{ STATIC_URL }}js/jquery/jquery.min.js"></script>
 <script src="{{ STATIC_URL }}js/bootstrap/bootstrap.min.js"></script>
 <script src=" {{ STATIC_URL }}js/googleplus/scripts.js"></script>
 <script type="text/javascript" src=" {{ STATIC_URL }}js/app.js"></script>
+<script>
+  $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
+    // Avoid following the href location when clicking
+    event.preventDefault();
+    // Avoid having the menu to close when clicking
+    event.stopPropagation();
+    // If a menu is already open we close it
+    $('ul.dropdown-menu [data-toggle=dropdown]').parent().removeClass('open');
+    // opening the one you clicked on
+    $(this).parent().addClass('open');
+
+    var menu = $(this).parent().find("ul");
+    var menupos = $(menu).offset();
+
+    if (menupos.left + menu.width() > $(window).width()) {
+        var newpos = -$(menu).width();
+        menu.css({ left: newpos });
+    } else {
+        var newpos = $(this).parent().width();
+        menu.css({ left: newpos });
+    }
+
+});
+</script>
 </body>
 </html>
