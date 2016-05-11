@@ -41,21 +41,6 @@
             <h1>{% trans "NaweNuze Groups" %}</h1>
             <label >{% trans "search:" %} </label>
             <input ng-model="query" placeholder="search for groups" autofocus>
-            <label class="formgroup">{% trans "by:" %}
-              <select ng-model="groupOrder">
-                <option value="name">{% trans "Name" %}</option>
-                <option value="location">{% trans "Location" %}</option>
-              </select>
-            </label>
-
-            <label class="formgroup">
-              <input type="radio" ng-model="direction" name="direction" checked>
-              ascending
-             </label>
-            <label class="formgroup">
-              <input type="radio" ng-model="direction" name="direction" value="reverse">
-              descending
-            </label>
         </div>
     </div>
     <div class="row">
