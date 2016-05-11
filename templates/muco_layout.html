@@ -66,17 +66,17 @@
             {% if user.is_authenticated %}
             <div  class="nav navbar-right" id="navbar-collapse3" style="margin-left:20px;">
               <ul class="nav navbar-nav navbar-right">
-                <div class="btn-group">
-                  <li class=""><a class="btn btn-default dropdown-toggle" type="button" id="menu1"  href="{% url 'analytics' %}">{% trans "Analytics" %}</a></li>
-                </div>
-               <div class="dropdown btn-group">
+              <div class="dropdown btn-group">
                 <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Visualisation" %}
                   <span class="caret"></span></button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                   <li class=""><a href="{% url 'home' %}">{% trans "Collective" %}</a></li>
-                        <li class=""><a href="{% url 'groups' %}">{% trans "By Groups" %}</a></li>
+                        <li class=""><a href="{% url 'groups' %}">{% trans "By groups" %}</a></li>
                   </ul>
                 </div>
+                <div class="btn-group">
+                  <li class=""><a class="btn btn-default dropdown-toggle" type="button" id="menu1"  href="{% url 'analytics' %}">{% trans "Analytics" %}</a></li>
+              </div>
                {% if user.is_staff %}
                <div class="dropdown btn-group">
                 <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Create" %}
@@ -128,13 +128,13 @@
             <hr>
             <div class="row">
               <div class="col-md-11 col-sm-11 ">
-                <highchart id="chart2" config="chartConfig2" ></highchart>
+                <highchart id="chart3" config="chartConfig3" ></highchart>
               </div>
             </div>
             <hr>
             <div class="row">
               <div class="col-md-11 col-sm-11 ">
-                <highchart id="chart3" config="chartConfig3" ></highchart>
+                <highchart id="chart2" config="chartConfig2" ></highchart>
               </div>
             </div>
           </div>
