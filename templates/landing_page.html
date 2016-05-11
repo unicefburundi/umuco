@@ -51,7 +51,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#section-demo">
                     {% trans "What is it ?" %}
                 </a>
             </li>
@@ -61,17 +61,19 @@
                     {% trans "Dashboard" %}
                 </a>
             </li>
-
-            <li><a href="{% url 'logout' %}?next=/" role="button" data-toggle="modal">{% trans "Logout" %}</a></li>
+            <li>
+                <a href="#section-partners">
+                    {% trans "Partners" %}
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'logout' %}?next=/" role="button" data-toggle="modal">{% trans "Logout" %}
+                </a>
+            </li>
             {% else %}
             <li><a href="{% url 'login' %}" role="button" data-toggle="modal">{% trans "Login" %}</a></li>
             {% endif %}
 
-            <li>
-                <a href="https://www.facebook.com/UNICEFBurundi">
-                    <i class="fa fa-facebook-square"></i>
-                </a>
-            </li>
         </ul>
     </div><!-- /.navbar-collapse -->
   </div>
@@ -99,7 +101,7 @@
         </div>
     </div>
 
-    <div class="section section-gray section-clients">
+    <div class="section section-gray section-partners" id="section-partners">
         <div class="container text-center">
             <h4 class="header-text">{% trans "Partners" %}</h4>
             <p>
@@ -132,7 +134,7 @@
         </div>
     </div>
 
-    <div class="section section-demo">
+    <div class="section section-demo" id="section-demo">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -151,13 +153,15 @@
                             {% endcomment %}
                         </div>
 
-                        <ol class="carousel-indicators carousel-indicators-blue">
+                        {% comment %}
+                            <ol class="carousel-indicators carousel-indicators-blue">
                             <li data-target="#description-carousel" data-slide-to="0" class=""></li>
-                            {% comment %}
+
                                 <li data-target="#description-carousel" data-slide-to="1" class="active"></li>
                             <li data-target="#description-carousel" data-slide-to="2" class=""></li>
-                            {% endcomment %}
+
                         </ol>
+                        {% endcomment %}
                     </div>
                 </div>
                 <div class="col-md-5 col-md-offset-1">
@@ -175,7 +179,7 @@
     <footer class="footer">
         <div class="container">
             <nav class="pull-left copyright">
-                © {% now "Y" %} <a href="http://www.unicef.org"> Unicef </a> Burundi <i class="fa fa-heart"></i>
+                © {% now "Y" %} <a href="http://www.unicef.org"> Unicef </a> Burundi
             </nav>
             <div class="social-area pull-right">
                 <a href="https://github.com/unicefburundi" class="btn btn-social btn-simple"><i class="fa fa-github-alt fa-fw"></i> <span class="network-name"></span></a>

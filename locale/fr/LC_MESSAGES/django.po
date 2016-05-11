@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-03 15:06+0200\n"
+"POT-Creation-Date: 2016-05-11 06:25+0200\n"
 "PO-Revision-Date: 2016-05-03 15:09+0200\n"
 "Last-Translator: Allan Stockman <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -35,7 +35,7 @@ msgstr "Le téléphone pour vous contacter."
 msgid "name"
 msgstr "nom"
 
-#: templates/bdiadmin/province_form.html:5 templates/muco_layout.html:74
+#: templates/bdiadmin/province_form.html:5 templates/muco_layout.html:85
 #: templates/umuco/group_details.html:19 templates/umuco/group_submit.html:5
 #: templates/umuco/group_submit.html:24
 msgid "Group"
@@ -98,21 +98,25 @@ msgstr "Accueil"
 msgid "What is it ?"
 msgstr "Quoi ?"
 
-#: templates/landing_page.html:65 templates/login.html:6
-#: templates/muco_layout.html:118
+#: templates/landing_page.html:66 templates/landing_page.html.py:106
+msgid "Partners"
+msgstr "Les partenaires"
+
+#: templates/landing_page.html:70 templates/login.html:6
+#: templates/muco_layout.html:106
 msgid "Logout"
 msgstr "Se déconnecter"
 
-#: templates/landing_page.html:67 templates/muco_layout.html:120
-#: templates/muco_layout.html.py:181 templates/muco_layout.html:196
+#: templates/landing_page.html:74 templates/muco_layout.html:108
+#: templates/muco_layout.html.py:169 templates/muco_layout.html:184
 msgid "Login"
-msgstr "Identification"
+msgstr "Se connecter"
 
-#: templates/landing_page.html:93
+#: templates/landing_page.html:95
 msgid "An innovative energy solution brings light to communities"
 msgstr "Une solution énergétique innovante apporte la lumière aux communautés"
 
-#: templates/landing_page.html:95
+#: templates/landing_page.html:97
 msgid ""
 "Project Lumière enables community groups to purchase a pedal-powered "
 "generator and fast-charging LED lights to sell within their community. The "
@@ -129,11 +133,7 @@ msgstr ""
 "créant des sources de revenus durables pour de nombreuses familles et de "
 "nouveaux emplois liés aux énergies renouvelables."
 
-#: templates/landing_page.html:104
-msgid "Partners"
-msgstr "Les partenaires"
-
-#: templates/landing_page.html:106
+#: templates/landing_page.html:108
 msgid ""
 "UNICEF is working to test and scale programs   that   will   combat   "
 "Burundi’s   energy   crisis  in  partnering with a local micro-finance NGO, "
@@ -148,18 +148,18 @@ msgstr ""
 "l'avenir, d'autres prix abordable technologies micro-énergie, y compris "
 "l'énergie solaire.!"
 
-#: templates/landing_page.html:123
+#: templates/landing_page.html:125
 msgid "It's beautiful and practical"
 msgstr "Beau et pratique"
 
-#: templates/landing_page.html:124
+#: templates/landing_page.html:126
 msgid ""
 "Low-cost efficient pedal-powered lights recharged by microentrepreneurs. "
 msgstr ""
 "Lampes chargées par pédales efficaces à faible coût et rechargées par des "
 "micro entrepreneurs."
 
-#: templates/landing_page.html:125
+#: templates/landing_page.html:127
 msgid ""
 "Nuru Energy has developed a rechargeable light and pedal charger. "
 "Microentrepreneur shopkeepers buy a charger and set of lights which are sold "
@@ -171,11 +171,11 @@ msgstr ""
 "sont revendues chez les clients qui paient alors d'avoir les lampes "
 "rechargées avec le générateur. "
 
-#: templates/landing_page.html:166
+#: templates/landing_page.html:170
 msgid "Easy to charge and use"
 msgstr "Facile à charger et à utiliser"
 
-#: templates/landing_page.html:168
+#: templates/landing_page.html:172
 msgid ""
 "A modular pedal-rechargeable directional LED light. It can be hung or placed "
 "on a table or desk, or carried around, or several lights can be put together "
@@ -192,64 +192,59 @@ msgstr ""
 msgid "Hello, "
 msgstr "Salut, "
 
-#: templates/muco_layout.html:8 templates/muco_layout.html.py:87
-msgid "Statistics"
+#: templates/muco_layout.html:8 templates/muco_layout.html.py:70
+msgid "Analytics"
 msgstr "Statistiques"
 
-#: templates/muco_layout.html:71 templates/muco_layout.html.py:200
-msgid "Register"
-msgstr "Enregistrer"
-
-#: templates/muco_layout.html:79
+#: templates/muco_layout.html:73
 msgid "Visualisation"
 msgstr "Visualisation"
 
-#: templates/muco_layout.html:82
+#: templates/muco_layout.html:76
 msgid "Collective"
 msgstr "Collectif"
 
-#: templates/muco_layout.html:83
+#: templates/muco_layout.html:77
 msgid "By Groups"
 msgstr "Par Groupes"
 
-#: templates/muco_layout.html:90
-msgid "Tables"
-msgstr "Tableaux"
+#: templates/muco_layout.html:82
+msgid "Create"
+msgstr "Créer"
 
-#: templates/muco_layout.html:95 templates/umuco/nawenuzegroup_detail.html:12
-#: templates/umuco/report_list.html:5
-msgid "Reports"
-msgstr "Rapports"
-
-#: templates/muco_layout.html:98
+#: templates/muco_layout.html:86
 msgid "Report"
 msgstr "Rapport"
 
-#: templates/muco_layout.html:122 templates/muco_layout.html.py:231
+#: templates/muco_layout.html:110 templates/muco_layout.html.py:219
 msgid "About"
 msgstr "A propos"
 
-#: templates/muco_layout.html:194
+#: templates/muco_layout.html:182
 msgid "(forgot password)"
 msgstr "(mot de passe oublié)"
 
-#: templates/muco_layout.html:205
+#: templates/muco_layout.html:188
+msgid "Register"
+msgstr "Créer"
+
+#: templates/muco_layout.html:193
 msgid "Need help ?"
 msgstr "Besoin d'aide ?"
 
-#: templates/muco_layout.html:213
+#: templates/muco_layout.html:201
 msgid "Cancel"
 msgstr "Annuler"
 
-#: templates/muco_layout.html:237
+#: templates/muco_layout.html:225
 msgid "This "
 msgstr "Ce"
 
-#: templates/muco_layout.html:238
+#: templates/muco_layout.html:226
 msgid "dashoard displays collected data on Projet Lumiere"
 msgstr "dashboard montre les données collectées sur le Projet Lumière"
 
-#: templates/muco_layout.html:239
+#: templates/muco_layout.html:227
 msgid "and was made by UNICEF Burundi. It's open sourced."
 msgstr "et construit par l'UNICEF Burundi. Il est open source."
 
@@ -279,7 +274,7 @@ msgstr "Groupe:"
 
 #: templates/umuco/group_details.html:55
 msgid "Displayed below are the cumulative performances of the NaweNuze Group"
-msgstr "Affichées ci-dessous, les performances cumulées des groupes NuzeNawe"
+msgstr "Affichées ci-dessous, les performances cumulées des groupes NaweNuze"
 
 #: templates/umuco/group_list.html:7
 msgid "Group Directory"
@@ -291,7 +286,7 @@ msgstr "Téléphone(s)"
 
 #: templates/umuco/group_submit.html:59 templates/umuco/group_submit.html:81
 #: templates/umuco/group_submit.html:105 templates/umuco/group_submit.html:129
-#: templates/umuco/group_submit.html:148 templates/umuco/report_create.html:32
+#: templates/umuco/group_submit.html:148 templates/umuco/report_create.html:38
 #: templates/umuco/report_form.html:44
 msgid "Submit"
 msgstr "Envoyer"
@@ -299,6 +294,11 @@ msgstr "Envoyer"
 #: templates/umuco/group_submit.html:64
 msgid "Back to Groups"
 msgstr "Retour aux groupes"
+
+#: templates/umuco/nawenuzegroup_detail.html:12
+#: templates/umuco/report_list.html:5
+msgid "Reports"
+msgstr "Rapports"
 
 #: templates/umuco/nawenuzegroup_form.html:5
 msgid "Add NaweNuze group"
@@ -406,11 +406,11 @@ msgstr "Lampes vendues"
 
 #: umuco/models.py:36
 msgid "total amount"
-msgstr "montant total"
+msgstr "épargne totale"
 
 #: umuco/models.py:37
 msgid "PL amount"
-msgstr "Montant du PL"
+msgstr "épargne du PL"
 
 #: umuco/models.py:48
 msgid "Received lamps"
@@ -448,14 +448,14 @@ msgstr "Anglais"
 msgid "French"
 msgstr "Français "
 
-#~ msgid "Analytics"
+#~ msgid "Statistics"
 #~ msgstr "Statistiques"
+
+#~ msgid "Tables"
+#~ msgstr "Tableaux"
 
 #~ msgid "Charts"
 #~ msgstr "Graphiques"
-
-#~ msgid "Create"
-#~ msgstr "Créer"
 
 #~ msgid "A Group/Location"
 #~ msgstr "Groupe/Lieu"

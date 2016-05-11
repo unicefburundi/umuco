@@ -72,9 +72,9 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
                     ]
                 },
                 marker: {
-                    radius: 2
+                    radius: 6
                 },
-                lineWidth: 1,
+                lineWidth: 4,
                 states: {
                     hover: {
                         lineWidth: 1
@@ -86,7 +86,7 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
     },
     series: $scope.chartSeries1,
     title: {
-      text: 'Montant epargné Total et Montant epargné PL',
+      text: 'Montant épargné total et Montant épargné PL',
     },
     subtitle: {text: 'Cumulatif pour tous les groupes'},
     credits: {

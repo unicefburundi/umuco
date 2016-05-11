@@ -94,13 +94,12 @@
             renderTo: 'chart_panel1',
             type: 'areaspline',
             zoomType: 'x',
-            borderWidth: 1,
             plotBackgroundColor: 'rgba(215, 255, 255, .9)',
             // plotShadow: true,
             // plotBorderWidth: 1
       },
-        legend: {enabled: false},
-        title: {text: 'Montant epargné Total et Montant epargné PL'},
+        legend: {enabled: true},
+        title: {text: 'Montant épargné total et Montant épargné PL'},
         subtitle: {text: 'Groupe de ' + group},
         xAxis: {
             type: 'datetime',
@@ -126,9 +125,9 @@
             renderTo: 'chart_panel2',
             type: 'areaspline',
             zoomType: 'x',
-            plotBackgroundColor: 'rgba(215, 240, 105, .9)',
+            plotBackgroundColor: 'rgba(215, 255, 255, .9)',
       },
-        legend: {enabled: false},
+        legend: {enabled: true},
         title: {text: 'Lampes rechargées'},
         subtitle: {text: 'Groupe de ' + group},
         xAxis: {
@@ -156,16 +155,10 @@
             renderTo: 'chart_panel3',
             type: 'areaspline',
             zoomType: 'x',
-            backgroundColor: {
-                linearGradient: [0, 0, 500, 500],
-                stops: [
-                    [0, 'rgb(255, 255, 255)'],
-                    [1, 'rgb(240, 240, 255)']
-                    ]
-            },
+            plotBackgroundColor: 'rgba(215, 255, 255, .9)',
       },
-        legend: {enabled: false},
-        title: {text: 'Lampes vendus '},
+        legend: {enabled: true},
+        title: {text: 'Lampes vendues '},
         subtitle: {text: 'Groupe de' + group},
         xAxis: {
             type: 'datetime',

@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
   <title>Projet Lumière  - {% block page_title %}
-    {% trans "Statistics" %}
+    {% trans "Analytics" %}
     {% endblock page_title %} </title>
     <link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}favicon.ico">
     <script type="text/javascript" src=" {{ STATIC_URL }}js/jquery/jquery.min.js"></script>
@@ -66,15 +66,9 @@
             {% if user.is_authenticated %}
             <div  class="nav navbar-right" id="navbar-collapse3" style="margin-left:20px;">
               <ul class="nav navbar-nav navbar-right">
-               {% if user.is_staff %}
-               <div class="dropdown btn-group">
-                <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Register" %}
-                  <span class="caret"></span></button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                   <li class=""><a href="{% url 'report:submit_group' %}">{% trans "Group" %}</a></li>
-                 </ul>
-               </div>
-               {% endif %}
+                <div class="btn-group">
+                  <li class=""><a class="btn btn-default dropdown-toggle" type="button" id="menu1"  href="{% url 'analytics' %}">{% trans "Analytics" %}</a></li>
+                </div>
                <div class="dropdown btn-group">
                 <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Visualisation" %}
                   <span class="caret"></span></button>
@@ -83,22 +77,16 @@
                         <li class=""><a href="{% url 'groups' %}">{% trans "By Groups" %}</a></li>
                   </ul>
                 </div>
-                <div class="dropdown btn-group">
-                <a class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Statistics" %}
-                  <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                  <li class=""><a href="{% url 'analytics' %}">{% trans "Tables" %}</a></li>
-                </ul>
-                </div>
-                {% if user.is_staff %}
-                <div class="dropdown btn-group">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Reports" %}
-                    <span class="caret"></span></button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                    <li><a href="{% url 'report:report_create' %}">{% trans "Report" %}</a></li>
-                   </ul>
-                 </div>
-             {% endif %}
+               {% if user.is_staff %}
+               <div class="dropdown btn-group">
+                <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Create" %}
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                   <li class=""><a href="{% url 'report:submit_group' %}">{% trans "Group" %}</a></li>
+                   <li><a href="{% url 'report:report_create' %}">{% trans "Report" %}</a></li>
+                 </ul>
+               </div>
+               {% endif %}
               </ul>
             </div>
       {% endif %}

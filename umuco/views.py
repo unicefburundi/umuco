@@ -197,7 +197,7 @@ def get_cumulative(request, colline=None):
         cumulative_sold.append([date, int(reports[k]['sold_lamps'] + cumulative_sold[k-1][1])])
         cumulative_pl_amount.append([date, int(reports[k]['pl_amount'] + cumulative_pl_amount[k-1][1])])
 
-    return JsonResponse([{"name": "Total epargné", "data": cumulative_total_amount}, {"name":"Lampes rechargées", "data": cumulative_recharged}, {"name":"Lampes vendues", "data": cumulative_sold}, {"name":"PL epargné", "data": cumulative_pl_amount},{"Disposable": cumulative_total_amount[max_length-1], "Charges": cumulative_recharged[max_length
+    return JsonResponse([{"name": "Total épargné", "data": cumulative_total_amount}, {"name":"Lampes rechargées", "data": cumulative_recharged}, {"name":"Lampes vendues", "data": cumulative_sold}, {"name":"PL épargné", "data": cumulative_pl_amount},{"Disposable": cumulative_total_amount[max_length-1], "Charges": cumulative_recharged[max_length
         -1], "Selling": cumulative_sold[max_length-1]}], safe=False)
 
 

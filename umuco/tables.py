@@ -10,7 +10,7 @@ class ReportTable(tables.Table):
     sold_lamps = tables.Column(verbose_name=_('Sold lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     recharged_lamps = tables.Column(verbose_name=_('Recharged lamps'), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
     total_amount = tables.Column(verbose_name=_('Total Set aside '), attrs={'th':{'data-footer-formatter':"sumFormatter"}})
-    pl_amount = tables.Column(verbose_name=_('PL Set aside '), attrs={'th':{'data-formatter':"percentFormater", 'data-footer-formatter':"sumpercentFormatter"}})
+    pl_amount = tables.Column(verbose_name=_('PL Set aside '), attrs={'th':{'data-formatter':"percentFormater"}})
     edit = tables.TemplateColumn('<a href="#" class="btn btn-xs btn-info">Edit</a>', verbose_name=_('Edit'))
     class Meta:
         attrs = {"class": "table ", "data-toggle":"table", "data-search":"true" ,"data-show-columns":"true" ,  "data-show-export":"true", 'data-export-types': "['csv','excel']", "data-show-footer":"true"}
@@ -58,6 +58,7 @@ class ReportTable2(tables.Table):
         return name
 
     def render_pl_amount(self, value, record):
+        # import ipdb; ipdb.set_trace()
         if record['total_amount'] == 0:
             return 0
         else :
