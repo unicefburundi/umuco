@@ -61,11 +61,13 @@
                     {% trans "Dashboard" %}
                 </a>
             </li>
-            <li>
+            {% comment %}
+                <li>
                 <a href="#section-partners">
                     {% trans "Partners" %}
                 </a>
             </li>
+            {% endcomment %}
             <li>
                 <a href="{% url 'logout' %}?next=/" role="button" data-toggle="modal">{% trans "Logout" %}
                 </a>
