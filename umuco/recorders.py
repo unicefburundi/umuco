@@ -173,7 +173,7 @@ def group_confirm(args):
     contact_phone_numbers = args['text'].split('#')
     for contact_phone_number in contact_phone_numbers:
         contact_phone_number_no_space = contact_phone_number.replace(" ", "")
-        expression = r'^(\+?(257)?)((62)|(79)|(71)|(76)|(75)|(72)|(61)|(69))([0-9]{6})$'
+        expression = r'^(\+?(257)?)((62)|(79)|(71)|(76)|(75)|(72)|(61)|(69)|(68))([0-9]{6})$'
         print(contact_phone_number_no_space)
         if re.search(expression, contact_phone_number_no_space) is None:
             #The phone number is not well written
