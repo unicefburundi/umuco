@@ -59,56 +59,56 @@ def analytics(request):
 def save_report(request):
     response_data = split_message(request)
     if PhoneModel.objects.filter(number=response_data['phone']).count() == 0:
-        return {'Ok': "Pas", 'info_to_contact': "Vous n etes pas inscrit. Veuillez vous inscrire "}
+        return {'Ok': "Pas", 'info_to_contact': "Ntimwanditse. Banza mwiyandikishe."}
     if response_data['text']:
         if response_data['text'] != "":
             message = response_data['text'].split("#")
             if len(message)  < 5:
-                return {'Ok': "False", 'info_to_contact' : 'Vous avez donne peu de valeurs. Renvoyer le message corrige', 'raba': message }
+                return {'Ok': "False", 'info_to_contact' : 'Mwatanze ibiharuro bike. Subira murungike mesaje yanditse neza.', 'raba': message }
             if len(message)  > 5 :
-                return {'Ok': "False", 'info_to_contact' : 'Vous avez donne beaucoup de valeurs. Renvoyer le message corrige', 'raba': message }
+                return {'Ok': "False", 'info_to_contact' : 'Mwatanze ibitigiri vyinshi. Subirurungike ibiharuro.', 'raba': message }
 
             if len(message) == 5:
                 group = PhoneModel.objects.get(number=response_data['phone']).group
                 date_updated = validate_date(message[0])
 
                 if date_updated.date() > datetime.datetime.today().date():
-                    return {'Ok': "False", 'info_to_contact' : 'La date ne peut etre dans le futur. Renvoyer le message corrige', 'raba': date_updated}
+                    return {'Ok': "False", 'info_to_contact' : 'Itariki ntishobora kuba muri kazoza. SUbira urungike mesaje.', 'raba': date_updated}
                 if (date_updated.weekday() +1 ) != group.day_of_meeting:
-                    return {'Ok': "False", 'info_to_contact' : 'La date doit etre le jours de votre rencontre. Renvoyer le message corrige', 'raba': date_updated}
+                    return {'Ok': "False", 'info_to_contact' : 'Itariko itegerezwa kuba umusi muhurirako. Subira urungike mesage yanditse neza.', 'raba': date_updated}
                 if (datetime.datetime.today() - date_updated).days > 7 :
-                    return {'Ok': "Pas", 'info_to_contact' : 'Vous ne pouvez plus envoyer de rapports. Contacter le partenaire', 'error': (datetime.datetime.today() - date_updated).days }
+                    return {'Ok': "Pas", 'info_to_contact' : 'Ntibigishoboka ko murungika raporo. Vugana na C.P.E.S.', 'error': (datetime.datetime.today() - date_updated).days }
 
                 try:
                     message_1 = int(message[1])
                 except Exception:
-                    return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige', 'error': message[1]}
+                    return {'Ok': "False", 'info_to_contact' : 'Amatara yagurishijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[1]}
                 else:
                     if not isinstance(message_1, (int)) or  message_1 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Les lampes vendues ne sont pas valides. Renvoyer le message corrige', 'error': message_1}
+                        return {'Ok': "False", 'info_to_contact' : 'Amatara yagurishijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message_1}
                 try:
                     message_2= int(message[2])
                 except Exception:
-                    return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. Renvoyer le message corrige', 'error': message[2]}
+                    return {'Ok': "False", 'info_to_contact' : 'Amatara yasharijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[2]}
                 else:
                     if not isinstance(message_2, (int)) or  message_2 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Les lampes rechargees ne sont pas valides. Renvoyer le message corrige', 'error': message_2}
+                        return {'Ok': "False", 'info_to_contact' : 'Amatara yasharijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message_2}
 
                 try:
                     message_3 = int(message[3])
                 except Exception:
-                    return {'Ok': "False", 'info_to_contact' : 'Le montant total epargnee n est pas valide. Renvoyer le message corrige ', 'error': message[3]}
+                    return {'Ok': "False", 'info_to_contact' : 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[3]}
                 else:
                     if not isinstance(message_3, (int)) or  message_3 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Le montant total epargnee n est pas valide. Renvoyer le message corrige', 'error': message_3}
+                        return {'Ok': "False", 'info_to_contact' : 'Le montant total epargnee n est pas valide. Subira urungike raporo neza.', 'error': message_3}
 
                 try:
                     message_4 = int(message[4])
                 except Exception:
-                    return {'Ok': "False", 'info_to_contact' : 'Le montant du projet lumiere epargnee n est pas valide. Renvoyer le message corrige ', 'error': message[4]}
+                    return {'Ok': "False", 'info_to_contact' : 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[4]}
                 else:
                     if not isinstance(message_4, (int)) or  message_4 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Le montant du projet lumiere epargnee n est pas valide. Renvoyer le message corrige', 'error': message_4}
+                        return {'Ok': "False", 'info_to_contact' : 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message_4}
 
                 repport,  created = Report.objects.get_or_create(group=group, date_updated=date_updated)
                 if created:
@@ -118,26 +118,19 @@ def save_report(request):
                     repport.pl_amount = message_4
                     repport.save()
                 elif (datetime.datetime.today() - date_updated).days > 6 :
-                    return {'Ok': "Pas", 'info_to_contact' : 'Vous ne pouvez plus mettre a jours le rapport. Contacter le partenaire', 'error': (datetime.datetime.today() - date_updated).days }
+                    return {'Ok': "Pas", 'info_to_contact' : 'Ntaruhusha mugifise bwugutanga iyi raporo. Vugana na C.P.E.S.', 'error': (datetime.datetime.today() - date_updated).days }
                 # sold
                 solds = Report.objects.filter(group=group).aggregate(Sum('sold_lamps'))
                 if message_1 != 0 and group.lamps_in_stock < solds['sold_lamps__sum']:
-                    sent = email_report_flagged(Organization.objects.get(name='CPES').partner.user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir vendu plus de lampes ({3}) qu il n en restait en stock({4})'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_1, (group.lamps_in_stock - solds['sold_lamps__sum'])))
+                    sent = email_report_flagged(Organization.objects.get(name='CPES').partner.user.email, 'Umugwi {0} (womuri komine {1}) wavuze kuwa {2} kowagurishije amatara {3} ariko hari hasigaye muri stoc amatara {4}'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_1, (group.lamps_in_stock - solds['sold_lamps__sum'])))
                     print sent
-                    return {'Ok': False, 'info_to_contact': "Il ne vous restait pas de lampes. Contacter le partenaire"}
+                    return {'Ok': False, 'info_to_contact': "Nta matara mwari mugisigaranye. Vugana na C.P.E.S."}
                 else:
                     repport.sold_lamps = message_1
                     repport.recharged_lamps = message_2
                     repport.total_amount = message_3
                     repport.pl_amount = message_4
                     repport.save()
-
-                # cost
-                # cost_expected = (message_2*group.cost_recharge)
-                # if message_3 != 0 and message_3 > cost_expected :
-                #     sent = email_report_flagged(Organization.objects.get(name='CPES').partner.user.email, 'le groupe {0} (de la commune {1}) a raporte le {2} avoir avoir epargne {3} fbu alors que cela valait juste {4}'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_3, cost_expected))
-                #     print sent
-
 
 
             return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'total_amount': message_3, 'pl_amount': message_4, 'date': date_updated}, safe=False)
@@ -235,25 +228,25 @@ def add_lamps(request):
         message = response_data['text'].split("#")
         response_data['message'] =  message
         if message[1] not in settings.PASSWORD:
-            return {'Ok': "Pas", 'info_to_contact' : 'Le message est faux. Contacter le partenaire. ',  'error' : message[1]}
+            return {'Ok': "Pas", 'info_to_contact' : 'Mesaje siyo. Vugana na C.P.E.S.. ',  'error' : message[1]}
         if NawenuzeGroup.objects.filter(colline__name=message[2].title()).count() == 0:
-            return {'Ok': "False", 'info_to_contact' : "Le groupe n'existe pas. Contacter le partenaire." ,  'error' : message[2]}
+            return {'Ok': "False", 'info_to_contact' : "Umugwi ntubaho. Vugana na C.P.E.S.." ,  'error' : message[2]}
         try:
             lamps= int(message[3])
         except Exception:
-            return {'Ok': "False", 'info_to_contact' : 'Les lampes recues ne sont pas valides. Renvoyer le message corrige.', 'error': message[3]}
+            return {'Ok': "False", 'info_to_contact' : 'Amatara mwaronse ntiyanditswe neza. Subira urungike raporo neza..', 'error': message[3]}
         else:
             if not isinstance(lamps, (int)) or  lamps < 0 :
-                return {'Ok': "False", 'info_to_contact' : 'Les lampes recues ne sont pas valides. Renvoyer le message corrige.', 'error': lamps}
+                return {'Ok': "False", 'info_to_contact' : 'Amatara mwaronse ntiyanditswe neza. Subira urungike raporo neza.', 'error': lamps}
         date_received = validate_date(message[4])
         if date_received.date() > datetime.datetime.today().date():
-            return {'Ok': "False", 'info_to_contact' : 'La date ne peut etre dans le futur. Renvoyer le message corrige.', 'raba': date_received}
+            return {'Ok': "False", 'info_to_contact' : 'Itariki ntishobora kuba muri kazoza. Subira urungike raporo neza.', 'raba': date_received}
         group = NawenuzeGroup.objects.get(colline__name=message[2].title())
         reception , created = Reception.objects.get_or_create(group=group, lamps_received=lamps, date_received=date_received)
         if created:
             group.lamps_in_stock += lamps
             group.save()
-    return {'Ok': "True", 'info_to_contact' : 'Le groupe de la colline {0} (commune {3}) a recu {1} lampes le {2}. Merci a bientot.'.format(group, lamps, date_received.strftime("%d-%m-%Y"), group.colline.commune) , 'raba': date_received.strftime("%d-%m-%Y")}
+    return {'Ok': "True", 'info_to_contact' : 'Umugwi ku mutumba {0} (komine {3}) waronse amatara {1} kuwa{2}. Murakoze.'.format(group, lamps, date_received.strftime("%d-%m-%Y"), group.colline.commune) , 'raba': date_received.strftime("%d-%m-%Y")}
 
 
 class ReportList(ListView):
