@@ -7,7 +7,6 @@ from django.utils.translation import ugettext_lazy as _
 
 
 def make_custom_datefield(f):
-    # import ipdb; ipdb.set_trace()
     formfield = f.formfield()
     if isinstance(f, models.DateField):
         formfield.widget.format = '%m/%d/%Y'

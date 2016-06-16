@@ -7,7 +7,7 @@ from umuco.utils import get_or_none
 from bdiadmin.models import *
 
 
-days = {1:'Lundi',2:'Mardi', 3:'Mercredi', 4:'Jeudi', 5:'Vendredi', 6:'Samedi', 7:'Dimanche'}
+days = {1:'mbere',2:'kabiri', 3:'gatatu', 4:'kane', 5:'gatanu', 6:'gatandatu', 7:'imana'}
 
 def check_number_of_values(args):
     #This function checks if the message sent is composed by an expected number of values
@@ -105,7 +105,7 @@ def check_phone(args):
             args['info_to_contact'] = "Ikosa. Iyo nimero ya terefone isanzwe irimwo kuyundi mugwi."
         else:
             args['valide'] = (args['valide'] and True)
-            args['info_to_contact'] = "Inimero ya terefone y umukuru w umugwi yanditswe neza"
+            args['info_to_contact'] = "Inimero ya terefone y umukuru w umugwi yanditswe neza."
 
 def check_report_day(args):
     ''' This function checks if the day on wich this new group will report is valid '''
@@ -119,7 +119,7 @@ def check_report_day(args):
         args['info_to_contact'] = "Ikosa. Umusi wugutangirako raporo ntiwanditswe neza."
     else:
         args['valide'] = True
-        args['info_to_contact'] = "Umusi w ugutangirako raporo wanditswe neza"
+        args['info_to_contact'] = "Umusi w ugutangirako raporo wanditswe neza."
 
 def record_reporter(args):
     #Let's check if the message sent is composed by an expected number of values
@@ -159,7 +159,7 @@ def record_reporter(args):
         the_concerned_group.day_of_meeting = the_meetting_day
         the_concerned_group.text = args['text']
         the_concerned_group.save()
-        args['info_to_contact'] = "Subira wandike i nimero ya terefone"
+        args['info_to_contact'] = "Subira wandike i nimero ya terefone."
         return args
 
 
@@ -208,7 +208,7 @@ def group_confirm(args):
         url = "https://app.rapidpro.io/api/v1/broadcasts.json"
         for i in numbers:
             print 'envoi a %s' % (i)
-            the_message_to_send = "Mwandikishijwe nkuwuzotanga raporo kumugwi {0} muri komine {1}. Turindiriye i raporo misi yose kuwa {2}".format(the_colline, the_commune, days[int(the_meetting_day)])
+            the_message_to_send = "Mwandikishijwe nkuwuzotanga raporo kumugwi {0} muri komine {1}. Turindiriye i raporo misi yose kuwa {2}.".format(the_colline, the_commune, days[int(the_meetting_day)])
             data = {"urns": ['tel:' + i],"text": the_message_to_send}
             requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
         args['envoye'] = the_message_to_send
