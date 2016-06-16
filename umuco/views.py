@@ -75,7 +75,7 @@ def save_report(request):
                 if date_updated.date() > datetime.datetime.today().date():
                     return {'Ok': "False", 'info_to_contact' : 'Itariki ntishobora kuba muri kazoza. SUbira urungike mesaje.', 'raba': date_updated}
                 if (date_updated.weekday() +1 ) != group.day_of_meeting:
-                    return {'Ok': "False", 'info_to_contact' : 'Itariko itegerezwa kuba umusi muhurirako. Subira urungike mesage yanditse neza.', 'raba': date_updated}
+                    return {'Ok': "False", 'info_to_contact' : 'Itariki itegerezwa kuba umusi muhurirako. Subira urungike mesaje yanditse neza.', 'raba': date_updated}
                 if (datetime.datetime.today() - date_updated).days > 7 :
                     return {'Ok': "Pas", 'info_to_contact' : 'Ntibigishoboka ko murungika raporo. Vugana na C.P.E.S.', 'error': (datetime.datetime.today() - date_updated).days }
 
@@ -234,7 +234,7 @@ def add_lamps(request):
         try:
             lamps= int(message[3])
         except Exception:
-            return {'Ok': "False", 'info_to_contact' : 'Amatara mwaronse ntiyanditswe neza. Subira urungike raporo neza..', 'error': message[3]}
+            return {'Ok': "False", 'info_to_contact' : 'Amatara mwaronse ntiyanditswe neza. Subira urungike raporo neza.', 'error': message[3]}
         else:
             if not isinstance(lamps, (int)) or  lamps < 0 :
                 return {'Ok': "False", 'info_to_contact' : 'Amatara mwaronse ntiyanditswe neza. Subira urungike raporo neza.', 'error': lamps}
