@@ -3,6 +3,7 @@ from django.utils.safestring import SafeString
 from umuco.models import  NawenuzeGroup, Report
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
+from bdiadmin.models import Colline, Commune, Province
 
 
 class ReportTable(tables.Table):
@@ -54,11 +55,10 @@ class ReportTable2(tables.Table):
         return name
 
     def render_commune(self, record):
-        name = NawenuzeGroup.objects.get(colline__commune=record['commune']).colline.commune.name
+        name = Commune.objects.get(pk=record['commune']).name
         return name
 
     def render_pl_amount(self, value, record):
-        # import ipdb; ipdb.set_trace()
         if record['total_amount'] == 0:
             return 0
         else :
