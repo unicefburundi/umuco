@@ -10,3 +10,4 @@ static/
 *~
 *.json
 celerybe*
+*.sql

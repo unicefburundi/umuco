@@ -73,7 +73,7 @@ class NawenuzeGroupAdminResource(resources.ModelResource):
 class NawenuzeGroupAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = NawenuzeGroupAdminResource
     list_display = ('colline', 'commune', 'day_of_meeting', 'lamps_in_stock', 'province', 'cost_lamp', 'cost_recharge')
-    search_fields = ('colline', 'colline__commune',  'colline__commune__province')
+    search_fields = ('colline__name', 'colline__commune__name',  'colline__commune__province__name')
     list_filter = ( 'day_of_meeting',)
 
 
