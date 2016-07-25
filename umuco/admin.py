@@ -86,7 +86,7 @@ class NawenuzeGroupAdmin(ExportMixin, admin.ModelAdmin):
 class PhoneModelAdminResource(resources.ModelResource):
     class Meta:
         model =PhoneModel
-        fields = ('number',  'group__colline',)
+        fields = ('number',  'group__colline__name', 'group__colline__commune__name', 'group__colline__commune__province__name')
 
 class PhoneModelAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = PhoneModelAdminResource
