@@ -3,7 +3,7 @@ from django.utils.safestring import SafeString
 from umuco.models import  NawenuzeGroup, Report
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
-from bdiadmin.models import Colline, Commune, Province
+from bdiadmin.models import  Commune
 
 
 class ReportTable(tables.Table):
