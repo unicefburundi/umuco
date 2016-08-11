@@ -66,4 +66,4 @@ class ReportTable2(tables.Table):
             return percent
 
     class Meta:
-        attrs = {"class": "table ", "data-toggle":"table", "data-search":"true" ,"data-show-columns":"true" ,  "data-show-export":"true", 'data-export-types': "['csv','excel']", "data-show-footer":"true"}
+        attrs = {"class": "table ", "data-toggle":"table", "data-search":"true" ,"data-show-columns":"true" ,  "data-show-export":"true", "data-side-pagination":"server", "data-pagination":"true", "data-page-list":[25, 50, 100] ,"data-export-types": "['csv','excel']", "data-show-footer":"true"}

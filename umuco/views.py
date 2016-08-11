@@ -50,7 +50,7 @@ def analytics(request):
         statistics.append(group)
     statistics = ReportTable2(statistics)
     statistics.exclude = ('date_updated', )
-    RequestConfig(request).configure(statistics)
+    RequestConfig(request, paginate={"per_page": 100}).configure(statistics)
     return render(request, 'umuco/analytics.html', {'statistics': statistics})
 
 
