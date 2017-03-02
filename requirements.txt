@@ -1,5 +1,5 @@
 Django==1.10.6
-Markdown==2.5.2
+Markdown==2.6.8
 MarkupSafe==0.23
 Unidecode==0.04.17
 argparse==1.2.1
