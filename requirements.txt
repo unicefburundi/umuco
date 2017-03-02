@@ -12,7 +12,7 @@ ipython==5.3.0
 python-slugify==1.2.1
 pytz==2016.10
 requests==2.13.0
-six==1.9.0
+six==1.10.0
 wsgiref==0.1.2
 xlwt==0.7.5
 psycopg2==2.6.1
