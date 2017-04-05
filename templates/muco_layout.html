@@ -78,6 +78,13 @@
                   <li class=""><a class="btn btn-default dropdown-toggle" type="button" id="menu1"  href="{% url 'analytics' %}">{% trans "Analytics" %}</a></li>
               </div>
                {% if user.is_staff %}
+              <div class="btn btn-group">
+              <li>
+                  <a class="btn btn-default dropdown-toggle" type="button" id="menu1" href="/explorer/">
+                      {% trans "Downloads" %}
+                  </a>
+              </li>
+              </div>
                <div class="dropdown btn-group">
                 <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{% trans "Create" %}
                   <span class="caret"></span></button>

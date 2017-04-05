@@ -189,6 +189,12 @@ EXPLORER_SCHEMA_EXCLUDE_TABLE_PREFIXES = (
     'auth.group'
     )
 
+EXPLORER_SCHEMA_INCLUDE_TABLE_PREFIXES = (
+    'umuco',
+    'bdiadmin')
+
+EXPLORER_PERMISSION_CHANGE = lambda u: u.is_superuser
+
 ##################
 # LOCAL SETTINGS #
 ##################
