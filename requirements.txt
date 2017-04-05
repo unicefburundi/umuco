@@ -7,8 +7,6 @@ django-bower==5.0.2
 django-filter==0.9.2
 django-jsonview==0.4.3
 djangorestframework==3.0.5
-ipdb==0.8
-ipython==2.4.1
 python-slugify==0.0.9
 pytz==2014.10
 requests==2.5.1
@@ -18,9 +16,9 @@ xlwt==0.7.5
 psycopg2==2.6.1
 celery==3.1.18
 redis==2.10.3
-django-import-export
-django-authtools
-django-tables2
+django-import-export==0.3.1
+django-authtools==1.4.0
+django-tables2==1.0.4
 django-celery==3.1.17
-
-
+XlsxWriter==0.9.6
+django-sql-explorer==1.1.1
