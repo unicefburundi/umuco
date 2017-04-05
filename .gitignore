@@ -11,3 +11,5 @@ static/
 *.json
 celerybe*
 *.sql
+*.pot
+*.dot

@@ -163,6 +163,11 @@ LOGOUT_REDIRECT_URL = reverse_lazy("home")
 
 TOKEN = 'rapidprotoken'
 
+SERVICES = (
+    ('MC', 'Medical care'),
+    
+    )
+
 # store schedule in the DB:
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 

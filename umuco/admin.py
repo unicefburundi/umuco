@@ -10,6 +10,7 @@ from authtools.admin import NamedUserAdmin
 
 User = get_user_model()
 
+
 class UserAdmin(NamedUserAdmin):
     """
     A UserAdmin that sends a password-reset email when creating a new user,
@@ -54,28 +55,31 @@ class UserAdmin(NamedUserAdmin):
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
+
 class ReportAdminResource(resources.ModelResource):
     class Meta:
-        model =Report
+        model = Report
         fields = ('date_updated', 'recharged_lamps', 'sold_lamps', 'total_amount', 'pl_amount', 'group__colline__name', 'group__colline__commune__name', 'group__colline__commune__province__name')
+
 
 class ReportAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = ReportAdminResource
     date_hierarchy = 'date_updated'
-    list_display = ('date_updated', 'group','recharged_lamps', 'sold_lamps', 'total_amount', 'pl_amount',)
+    list_display = ('date_updated', 'group', 'recharged_lamps', 'sold_lamps', 'total_amount', 'pl_amount',)
     search_fields = ('group__colline__name', 'group__colline__commune__name', )
+
 
 class NawenuzeGroupAdminResource(resources.ModelResource):
     class Meta:
-        model =NawenuzeGroup
+        model = NawenuzeGroup
         fields = ('colline__name', 'colline__commune__name', 'colline__commune__province__name', 'day_of_meeting', 'lamps_in_stock', 'cost_lamp', 'cost_recharge')
+
 
 class NawenuzeGroupAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = NawenuzeGroupAdminResource
     list_display = ('colline', 'commune', 'day_of_meeting', 'lamps_in_stock', 'province', 'cost_lamp', 'cost_recharge')
     search_fields = ('colline__name', 'colline__commune__name',  'colline__commune__province__name')
-    list_filter = ( 'day_of_meeting',)
-
+    list_filter = ('day_of_meeting',)
 
     def commune(self, obj):
         return obj.colline.commune
@@ -83,14 +87,16 @@ class NawenuzeGroupAdmin(ExportMixin, admin.ModelAdmin):
     def province(self, obj):
         return obj.colline.commune.province
 
+
 class PhoneModelAdminResource(resources.ModelResource):
     class Meta:
-        model =PhoneModel
+        model = PhoneModel
         fields = ('number',  'group__colline__name', 'group__colline__commune__name', 'group__colline__commune__province__name')
+
 
 class PhoneModelAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = PhoneModelAdminResource
-    list_display = ('number', 'colline','commune')
+    list_display = ('number', 'colline', 'commune')
     search_fields = ('number', 'group__colline__name', 'group__colline__commune__name', )
 
     def colline(self, obj):
@@ -99,15 +105,18 @@ class PhoneModelAdmin(ExportMixin, admin.ModelAdmin):
     def commune(self, obj):
         return obj.group.colline.commune
 
+
 class ReceptionAdminResource(resources.ModelResource):
     class Meta:
-        model =Reception
+        model = Reception
         fields = ('lamps_received',  'group__colline__name', 'date_received', 'group__colline__commune__name', 'group__colline__commune__province__name')
 
+
 class ReceptionAdmin(ExportMixin, admin.ModelAdmin):
-    resource_class =ReceptionAdminResource
-    list_display = ('group', 'lamps_received', 'date_received', 'colline','commune')
-    search_fields = ( 'group__colline__name', 'group__colline__commune__name', )
+    resource_class = ReceptionAdminResource
+    list_display = ('group', 'lamps_received', 'date_received', 'colline', 'commune')
+    date_hierarchy = 'date_received'
+    search_fields = ('group__colline__name', 'group__colline__commune__name', )
 
     def colline(self, obj):
         return obj.group.colline
@@ -115,15 +124,42 @@ class ReceptionAdmin(ExportMixin, admin.ModelAdmin):
     def commune(self, obj):
         return obj.group.colline.commune
 
+
 class OrganizationAdminResource(resources.ModelResource):
     class Meta:
-        model =Organization
+        model = Organization
         fields = ('name',   'partner')
 
+
 class OrganizationAdmin(ExportMixin, admin.ModelAdmin):
-    resource_class =OrganizationAdminResource
+    resource_class = OrganizationAdminResource
     list_display = ('name',  'partner')
-    search_fields = ( 'name',  'partner')
+    search_fields = ('name',  'partner')
+
+
+class CathegoryAdminResource(resources.ModelResource):
+    class Meta:
+        model = Cathegory
+        fields = ('name',   'code')
+
+
+class CathegoryAdmin(ExportMixin, admin.ModelAdmin):
+    resource_class = CathegoryAdminResource
+    list_display = ('name',  'code')
+    search_fields = ('name',  'code')
+
+
+class ReportServicesAdminResource(resources.ModelResource):
+    class Meta:
+        model = ReportServices
+        fields = ('service',   'date_updated', 'beneficiary')
+
+
+class ReportServicesAdmin(ExportMixin, admin.ModelAdmin):
+    resource_class = ReportServicesAdminResource
+    list_display = ('service',   'date_updated', 'beneficiary')
+    search_fields = ('service',)
+
 
 admin.site.register(Report, ReportAdmin)
 admin.site.register(NawenuzeGroup, NawenuzeGroupAdmin)
@@ -131,3 +167,5 @@ admin.site.register(PhoneModel, PhoneModelAdmin)
 admin.site.register(Reception, ReceptionAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(Temporaly)
+admin.site.register(Cathegory, CathegoryAdmin)
+admin.site.register(ReportServices, ReportServicesAdmin)

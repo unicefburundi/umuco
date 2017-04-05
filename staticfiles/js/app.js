@@ -58,7 +58,7 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
   $scope.chartConfig1 = {
     options: {
       chart: {
-        type: 'areaspline',
+        type: 'area',
         zoomType: 'x'
       },
       plotOptions: {
@@ -115,7 +115,7 @@ myapp.controller('myctrl',['$scope', '$http', function ($scope, $http)  {
 $scope.chartConfig2 = {
     options: {
       chart: {
-        type: 'areaspline',
+        type: 'area',
         zoomType: 'x'
       },
       plotOptions: {
@@ -172,7 +172,7 @@ $scope.chartConfig2 = {
   $scope.chartConfig3 = {
     options: {
       chart: {
-        type: 'areaspline',
+        type: 'area',
         zoomType: 'x'
       },
       plotOptions: {

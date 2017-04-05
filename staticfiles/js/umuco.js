@@ -1,14 +1,12 @@
 'use strict';
 
 $(document).ready(function() {
-    console.log({{data|safe}});
-    console.log({{nawenuze_group|safe});
-    // var chartData = {{data|safe}};
+    var chartData = {{data|safe}};
     // Group details charts
      var groupDetailsOptions = {
         chart: {
             renderTo: 'chart_panel',
-            type: 'areaspline',
+            type: 'area',
             zoomType: 'x'
       },
         legend: {enabled: false},

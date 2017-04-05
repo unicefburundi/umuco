@@ -21,7 +21,7 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-     url(r'^accounts/', include('authtools.urls')),
+    url(r'^accounts/', include('authtools.urls')),
     url(r'^report/', include('umuco.urls', namespace='report', app_name='umuco')),
     url(r'^groups/$', all_groups, name="groups"),
     url(r'^analytics/$', analytics, name="analytics"),

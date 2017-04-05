@@ -38,7 +38,7 @@ def home(request):
 
 
 def analytics(request):
-    groups = Report.objects.annotate(colline=F('group__colline')).annotate(commune=F('group__colline__commune')).values('colline','commune').distinct()
+    groups = Report.objects.annotate(colline=F('group__colline')).annotate(commune=F('group__colline__commune')).values('colline', 'commune').distinct()
     statistics = []
     for i in groups:
         reports = Report.objects.filter(group__colline=i['colline'], group__colline__commune=i['commune'])
@@ -63,52 +63,45 @@ def save_report(request):
     if response_data['text']:
         if response_data['text'] != "":
             message = response_data['text'].split("#")
-            if len(message)  < 5:
-                return {'Ok': "False", 'info_to_contact' : 'Mwatanze ibiharuro bike. Subira murungike mesaje yanditse neza.', 'raba': message }
-            if len(message)  > 5 :
-                return {'Ok': "False", 'info_to_contact' : 'Mwatanze ibitigiri vyinshi. Subirurungike ibiharuro.', 'raba': message }
 
             if len(message) == 5:
                 group = PhoneModel.objects.get(number=response_data['phone']).group
                 date_updated = validate_date(message[0])
 
                 if date_updated.date() > datetime.datetime.today().date():
-                    return {'Ok': "False", 'info_to_contact' : 'Itariki ntishobora kuba muri kazoza. SUbira urungike mesaje.', 'raba': date_updated}
-                if (date_updated.weekday() +1 ) != group.day_of_meeting:
-                    return {'Ok': "False", 'info_to_contact' : 'Itariki itegerezwa kuba umusi muhurirako. Subira urungike mesaje yanditse neza.', 'raba': date_updated}
-                if (datetime.datetime.today() - date_updated).days > 7 :
-                    return {'Ok': "Pas", 'info_to_contact' : 'Ntibigishoboka ko murungika raporo. Vugana na C.P.E.S.', 'error': (datetime.datetime.today() - date_updated).days }
-
+                    return {'Ok': "False", 'info_to_contact': 'Itariki ntishobora kuba muri kazoza. SUbira urungike mesaje.', 'raba': date_updated}
+                if (date_updated.weekday()+1) != group.day_of_meeting:
+                    return {'Ok': "False", 'info_to_contact': 'Itariki itegerezwa kuba umusi muhurirako. Subira urungike mesaje yanditse neza.', 'raba': date_updated}
+                if (datetime.datetime.today() - date_updated).days > 7:
+                    return {'Ok': "Pas", 'info_to_contact': 'Ntibigishoboka ko murungika raporo. Vugana na C.P.E.S.', 'error': (datetime.datetime.today() - date_updated).days}
                 try:
                     message_1 = int(message[1])
                 except Exception:
-                    return {'Ok': "False", 'info_to_contact' : 'Amatara yagurishijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[1]}
+                    return {'Ok': "False", 'info_to_contact': 'Amatara yagurishijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[1]}
                 else:
-                    if not isinstance(message_1, (int)) or  message_1 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Amatara yagurishijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message_1}
+                    if not isinstance(message_1, (int)) or message_1 < 0:
+                        return {'Ok': "False", 'info_to_contact': 'Amatara yagurishijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message_1}
                 try:
-                    message_2= int(message[2])
+                    message_2 = int(message[2])
                 except Exception:
-                    return {'Ok': "False", 'info_to_contact' : 'Amatara yasharijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[2]}
+                    return {'Ok': "False", 'info_to_contact': 'Amatara yasharijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[2]}
                 else:
-                    if not isinstance(message_2, (int)) or  message_2 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Amatara yasharijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message_2}
-
+                    if not isinstance(message_2, (int)) or message_2 < 0:
+                        return {'Ok': "False", 'info_to_contact': 'Amatara yasharijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message_2}
                 try:
                     message_3 = int(message[3])
                 except Exception:
-                    return {'Ok': "False", 'info_to_contact' : 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[3]}
+                    return {'Ok': "False", 'info_to_contact': 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[3]}
                 else:
-                    if not isinstance(message_3, (int)) or  message_3 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Le montant total epargnee n est pas valide. Subira urungike raporo neza.', 'error': message_3}
-
+                    if not isinstance(message_3, (int)) or message_3 < 0:
+                        return {'Ok': "False", 'info_to_contact': 'Le montant total epargnee n est pas valide. Subira urungike raporo neza.', 'error': message_3}
                 try:
                     message_4 = int(message[4])
                 except Exception:
-                    return {'Ok': "False", 'info_to_contact' : 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[4]}
+                    return {'Ok': "False", 'info_to_contact': 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[4]}
                 else:
-                    if not isinstance(message_4, (int)) or  message_4 < 0 :
-                        return {'Ok': "False", 'info_to_contact' : 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message_4}
+                    if not isinstance(message_4, (int)) or message_4 < 0 :
+                        return {'Ok': "False", 'info_to_contact': 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message_4}
 
                 repport,  created = Report.objects.get_or_create(group=group, date_updated=date_updated)
                 if created:
@@ -117,8 +110,8 @@ def save_report(request):
                     repport.total_amount = message_3
                     repport.pl_amount = message_4
                     repport.save()
-                elif (datetime.datetime.today() - date_updated).days > 6 :
-                    return {'Ok': "Pas", 'info_to_contact' : 'Ntaruhusha mugifise bwugutanga iyi raporo. Vugana na C.P.E.S.', 'error': (datetime.datetime.today() - date_updated).days }
+                elif (datetime.datetime.today() - date_updated).days > 6:
+                    return {'Ok': "Pas", 'info_to_contact': 'Ntaruhusha mugifise bwugutanga iyi raporo. Vugana na C.P.E.S.', 'error': (datetime.datetime.today() - date_updated).days}
                 # sold
                 solds = Report.objects.filter(group=group).aggregate(Sum('sold_lamps'))
                 if message_1 != 0 and group.lamps_in_stock < solds['sold_lamps__sum']:
@@ -131,7 +124,17 @@ def save_report(request):
                     repport.total_amount = message_3
                     repport.pl_amount = message_4
                     repport.save()
+            if len(message) == 3:
+                # import ipdb; ipdb.set_trace()
+                group = PhoneModel.objects.get(number=response_data['phone']).group.colline
+                print group
+                date_updated = validate_date(message[0])
+                return JsonResponse({'Ok': "True", 'group': group.name, "date": date_updated}, safe=False)
 
+            if len(message) < 5:
+                return {'Ok': "False", 'info_to_contact': 'Mwatanze ibiharuro bike. Subira murungike mesaje yanditse neza.', 'raba': message}
+            if len(message) > 5:
+                return {'Ok': "False", 'info_to_contact': 'Mwatanze ibitigiri vyinshi. Subirurungike ibiharuro.', 'raba': message}
 
             return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'total_amount': message_3, 'pl_amount': message_4, 'date': date_updated}, safe=False)
 
@@ -173,7 +176,7 @@ def get_cumulative(request, colline=None):
     if not colline:
         reports = Report.objects.values('total_amount', 'sold_lamps', 'recharged_lamps', 'date_updated', 'pl_amount').order_by('date_updated')
     else:
-        reports = Report.objects.filter(group__colline__name=colline).values('total_amount','sold_lamps', 'recharged_lamps', 'date_updated', 'pl_amount').order_by('date_updated')
+        reports = Report.objects.filter(group__colline__name=colline).values('total_amount', 'sold_lamps', 'recharged_lamps', 'date_updated', 'pl_amount').order_by('date_updated')
     if not reports:
         return JsonResponse(None, safe=False)
 
@@ -226,46 +229,49 @@ def add_lamps(request):
     response_data = split_message(request)
     if response_data['text'] != "":
         message = response_data['text'].split("#")
-        response_data['message'] =  message
+        response_data['message'] = message
         if message[1] not in settings.PASSWORD:
-            return {'Ok': "Pas", 'info_to_contact' : 'Mesaje siyo. Vugana na C.P.E.S.. ',  'error' : message[1]}
+            return {'Ok': "Pas", 'info_to_contact': 'Mesaje siyo. Vugana na C.P.E.S.. ',  'error': message[1]}
         if NawenuzeGroup.objects.filter(colline__name=message[2].title()).count() == 0:
-            return {'Ok': "False", 'info_to_contact' : "Umugwi ntubaho. Vugana na C.P.E.S.." ,  'error' : message[2]}
+            return {'Ok': "False", 'info_to_contact': "Umugwi ntubaho. Vugana na C.P.E.S.." ,  'error': message[2]}
         try:
-            lamps= int(message[3])
+            lamps = int(message[3])
         except Exception:
-            return {'Ok': "False", 'info_to_contact' : 'Amatara mwaronse ntiyanditswe neza. Subira urungike raporo neza.', 'error': message[3]}
+            return {'Ok': "False", 'info_to_contact': 'Amatara mwaronse ntiyanditswe neza. Subira urungike raporo neza.', 'error': message[3]}
         else:
-            if not isinstance(lamps, (int)) or  lamps < 0 :
-                return {'Ok': "False", 'info_to_contact' : 'Amatara mwaronse ntiyanditswe neza. Subira urungike raporo neza.', 'error': lamps}
+            if not isinstance(lamps, (int)) or lamps < 0:
+                return {'Ok': "False", 'info_to_contact': 'Amatara mwaronse ntiyanditswe neza. Subira urungike raporo neza.', 'error': lamps}
         date_received = validate_date(message[4])
         if date_received.date() > datetime.datetime.today().date():
-            return {'Ok': "False", 'info_to_contact' : 'Itariki ntishobora kuba muri kazoza. Subira urungike raporo neza.', 'raba': date_received}
+            return {'Ok': "False", 'info_to_contact': 'Itariki ntishobora kuba muri kazoza. Subira urungike raporo neza.', 'raba': date_received}
         group = NawenuzeGroup.objects.get(colline__name=message[2].title())
-        reception , created = Reception.objects.get_or_create(group=group, lamps_received=lamps, date_received=date_received)
+        reception, created = Reception.objects.get_or_create(group=group, lamps_received=lamps, date_received=date_received)
         if created:
             group.lamps_in_stock += lamps
             group.save()
-    return {'Ok': "True", 'info_to_contact' : 'Umugwi ku mutumba {0} (komine {3}) waronse amatara {1} kuwa{2}. Murakoze.'.format(group, lamps, date_received.strftime("%d-%m-%Y"), group.colline.commune) , 'raba': date_received.strftime("%d-%m-%Y")}
+    return {'Ok': "True", 'info_to_contact': 'Umugwi ku mutumba {0} (komine {3}) waronse amatara {1} kuwa{2}. Murakoze.'.format(group, lamps, date_received.strftime("%d-%m-%Y"), group.colline.commune), 'raba': date_received.strftime("%d-%m-%Y")}
 
 
 class ReportList(ListView):
     model = Report
 
+
 class ReportUpdate(UpdateView):
     model = Report
-    fields = ['recharged_lamps','sold_lamps','total_amount','group', 'date_updated', 'pl_amount']
+    fields = ['recharged_lamps', 'sold_lamps', 'total_amount', 'group', 'date_updated', 'pl_amount']
     # print(self)
 
     def get_success_url(self, **kwargs):
         return reverse('reports_by_groups2', kwargs={'pk': self.object.group.id})
 
     def get_initial(self):
-        return {'group' : self.object.group}
+        return {'group': self.object.group}
+
 
 class ReportDelete(DeleteView):
     model = Report
     success_url = reverse_lazy('report_list')
+
 
 class ReportCreate(CreateView):
     template_name = 'umuco/report_create.html'
@@ -285,11 +291,13 @@ class PhoneModelCreate(CreateView):
     fields = '__all__'
     success_url = reverse_lazy('groups')
 
+
 class NaweNuzeCreate(CreateView):
     model = NawenuzeGroup
     fields = ('province', 'commune', 'colline')
-    exclude = ('lamps_in_stock','cost_lamp','cost_recharge')
+    exclude = ('lamps_in_stock', 'cost_lamp', 'cost_recharge')
     success_url = reverse_lazy('groups')
+
 
 @login_required
 def submit_group(request):
@@ -300,7 +308,7 @@ def submit_group(request):
     colline_form = CollineForm()
     phone_form = PhoneModelForm()
     if request.POST:
-        form = NaweNuzeForm({'province': request.POST.get('province'), 'day_of_meeting': request.POST.get('day_of_meeting'), 'colline' : request.POST.get('colline'), 'commune' : request.POST.get('commune')})
+        form = NaweNuzeForm({'province': request.POST.get('province'), 'day_of_meeting': request.POST.get('day_of_meeting'), 'colline': request.POST.get('colline'), 'commune': request.POST.get('commune')})
         try:
             colline = Colline.objects.get(id=int(request.POST.get('colline')))
         except:
@@ -323,7 +331,7 @@ def submit_group(request):
                 group.save()
                 phonemodel_formset.save()
                 messages.add_message(request, messages.SUCCESS, 'Saved group and sent SMS')
-                return HttpResponseRedirect(reverse('report:group_detail', kwargs={'colline':group.colline}))
+                return HttpResponseRedirect(reverse('report:group_detail', kwargs={'colline': group.colline}))
 
         else:
             form = form
@@ -333,8 +341,8 @@ def submit_group(request):
     return render(request, "umuco/group_submit.html", {
         "form": form,
         "phonemodel_formset": phonemodel_formset,
-        "province_form" : province_form,
-        "commune_form" : commune_form,
-        "colline_form" : colline_form,
-        "phone_form" : phone_form
+        "province_form": province_form,
+        "commune_form": commune_form,
+        "colline_form": colline_form,
+        "phone_form": phone_form
     })
