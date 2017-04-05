@@ -34,7 +34,7 @@ class CollineResource(resources.ModelResource):
 class CollineAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = CollineResource
     search_fields = ('name', 'code')
-    list_display = ('name', 'code', 'commune', 'province')
+    list_display = ('id', 'name', 'code', 'commune', 'province')
     list_filter = ('commune__province__name',)
 
     def province(self, obj):

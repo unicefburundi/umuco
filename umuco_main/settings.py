@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'django_tables2',
+    'explorer',
     'djcelery',
     'import_export',
     'umuco',
@@ -179,6 +180,20 @@ except ImportError:
 else:
     INSTALLED_APPS = INSTALLED_APPS + ('django_extensions',)
 
+
+EXPLORER_SCHEMA_EXCLUDE_TABLE_PREFIXES = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.admin',
+    'auth.group'
+    )
+
+EXPLORER_SCHEMA_INCLUDE_TABLE_PREFIXES = (
+    'umuco',
+    'bdiadmin')
+
+EXPLORER_PERMISSION_CHANGE = lambda u: u.is_superuser
 
 ##################
 # LOCAL SETTINGS #

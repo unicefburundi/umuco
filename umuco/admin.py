@@ -65,7 +65,8 @@ class ReportAdminResource(resources.ModelResource):
 class ReportAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = ReportAdminResource
     date_hierarchy = 'date_updated'
-    list_display = ('date_updated', 'group', 'recharged_lamps', 'sold_lamps', 'total_amount', 'pl_amount',)
+    readonly_fields=('id',)
+    list_display = ('id', 'date_updated', 'group', 'recharged_lamps', 'sold_lamps', 'total_amount', 'pl_amount',)
     search_fields = ('group__colline__name', 'group__colline__commune__name', )
 
 
@@ -77,7 +78,7 @@ class NawenuzeGroupAdminResource(resources.ModelResource):
 
 class NawenuzeGroupAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = NawenuzeGroupAdminResource
-    list_display = ('colline', 'commune', 'day_of_meeting', 'lamps_in_stock', 'province', 'cost_lamp', 'cost_recharge')
+    list_display = ('id', 'colline', 'commune', 'day_of_meeting', 'lamps_in_stock', 'province', 'cost_lamp', 'cost_recharge')
     search_fields = ('colline__name', 'colline__commune__name',  'colline__commune__province__name')
     list_filter = ('day_of_meeting',)
 

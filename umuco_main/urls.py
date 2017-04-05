@@ -25,6 +25,7 @@ urlpatterns += i18n_patterns(
     url(r'^report/', include('umuco.urls', namespace='report', app_name='umuco')),
     url(r'^groups/$', all_groups, name="groups"),
     url(r'^analytics/$', analytics, name="analytics"),
+    url(r'^explorer/', include('explorer.urls')),
     url(r'^home/$', home, name="home"),
     url(r'^$', landing, name="landing_page"),
     url(r'^create/group/$', NaweNuzeCreate.as_view(), name='add_nawenuze'),
