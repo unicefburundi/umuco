@@ -1,0 +1,74 @@
+{% extends "admin/change_list.html" %}
+{% load humanize %}
+
+{% block content_title %}
+    <h1> Report Summary </h1>
+{% endblock %}
+{% block result_list %}
+    <div class="results">
+    <table>
+        
+    <thead>
+      <tr>
+        <th>
+          <div class="text">
+            <a href="#">Groups</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Total</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Total Sold</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">
+              <strong>Total Recharged</strong>
+            </a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">
+              <strong>Total Amount</strong>
+            </a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">
+              <strong>Total Amount from PL</strong>
+            </a>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in summary %}
+      <tr class="{% cycle 'row1' 'row2' %}">
+        <td> {{ row.group__colline__name }} </td>
+        <td> {{ row.total | intcomma }} </td>
+        <td> {{ row.total_sold | default:0 | intcomma }} Lamps </td>
+        <td> {{ row.total_soldtotal_recharged | default:0 | intcomma }} Lamps </td>
+        <td> {{ row.total_amount | default:0 | intcomma }} Bif </td>
+        <td> {{ row.total_pl | default:0 | intcomma }} Bif </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tr style=”font-weight:bold; border-top:2px solid #DDDDDD;”>
+            <td> Total </td>
+            <td> {{ summary_total.total | intcomma }} </td>
+            <td> {{ summary_total.total_sold | default:0 }} Lamps </td>
+            <td> {{ summary_total.total_soldtotal_recharged | default:0 }} Lamps </td>
+            <td> {{ summary_total.total_amount | default:0 }} Bif </td>
+            <td> {{ summary_total.total_pl | default:0 }} Bif </td>
+        </tr>
+  </table>
+</div>
+{% endblock %}
+{% block pagination %}{% endblock %}

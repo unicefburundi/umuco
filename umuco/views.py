@@ -22,6 +22,8 @@ from bdiadmin.forms import *
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import re
+
 
 User = get_user_model()
 
@@ -64,7 +66,7 @@ def save_report(request):
         if response_data['text'] != "":
             message = response_data['text'].split("#")
 
-            if len(message) == 5:
+            if re.match(r'^\d{6}\#\d+\#\d+\#\d+\#\d+\#\d+\#[a-zA-Z]+$', response_data['text'], re.I):
                 group = PhoneModel.objects.get(number=response_data['phone']).group
                 date_updated = validate_date(message[0])
 
@@ -99,10 +101,17 @@ def save_report(request):
                     message_4 = int(message[4])
                 except Exception:
                     return {'Ok': "False", 'info_to_contact': 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[4]}
+                try:
+                    message_5 = int(message[5])
+                except Exception:
+                    return {'Ok': "False", 'info_to_contact': 'Igitigiri c abana mwafashije sico.', 'error': message[4]}
+                try:
+                    message_6 = str(message[6])
+                except Exception:
+                    return {'Ok': "False", 'info_to_contact': 'Urwo rudome ntirubaho', 'error': message[4]}
                 else:
                     if not isinstance(message_4, (int)) or message_4 < 0 :
                         return {'Ok': "False", 'info_to_contact': 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message_4}
-
                 repport,  created = Report.objects.get_or_create(group=group, date_updated=date_updated)
                 if created:
                     repport.sold_lamps = message_1
@@ -110,12 +119,13 @@ def save_report(request):
                     repport.total_amount = message_3
                     repport.pl_amount = message_4
                     repport.save()
+
                 elif (datetime.datetime.today() - date_updated).days > 6:
                     return {'Ok': "Pas", 'info_to_contact': 'Ntaruhusha mugifise bwugutanga iyi raporo. Vugana na C.P.E.S.', 'error': (datetime.datetime.today() - date_updated).days}
                 # sold
                 solds = Report.objects.filter(group=group).aggregate(Sum('sold_lamps'))
                 if message_1 != 0 and group.lamps_in_stock < solds['sold_lamps__sum']:
-                    sent = email_report_flagged(Organization.objects.get(name='CPES').partner.user.email, 'Umugwi {0} (womuri komine {1}) wavuze kuwa {2} kowagurishije amatara {3} ariko hari hasigaye muri stoc amatara {4}'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_1, (group.lamps_in_stock - solds['sold_lamps__sum'])))
+                    sent = email_report_flagged(Organization.objects.get(name='C.P.E.S').partner.user.email, 'Umugwi {0} (womuri komine {1}) wavuze kuwa {2} kowagurishije amatara {3} ariko hari hasigaye muri stoc amatara {4}'.format(group, group.colline.commune, date_updated.strftime("%d-%m-%Y"), message_1, (group.lamps_in_stock - solds['sold_lamps__sum'])))
                     print sent
                     return {'Ok': False, 'info_to_contact': "Nta matara mwari mugisigaranye. Vugana na C.P.E.S."}
                 else:
@@ -124,19 +134,21 @@ def save_report(request):
                     repport.total_amount = message_3
                     repport.pl_amount = message_4
                     repport.save()
+                support, sp_created = SupportReport.objects.get_or_create(report=repport, kind_of_support__support_name=message[6])
+                support.childred_supported = message[5]
+                support.save()
             if len(message) == 3:
-                # import ipdb; ipdb.set_trace()
                 group = PhoneModel.objects.get(number=response_data['phone']).group.colline
                 print group
                 date_updated = validate_date(message[0])
                 return JsonResponse({'Ok': "True", 'group': group.name, "date": date_updated}, safe=False)
 
-            if len(message) < 5:
+            if len(message) < 7:
                 return {'Ok': "False", 'info_to_contact': 'Mwatanze ibiharuro bike. Subira murungike mesaje yanditse neza.', 'raba': message}
-            if len(message) > 5:
+            if len(message) > 7:
                 return {'Ok': "False", 'info_to_contact': 'Mwatanze ibitigiri vyinshi. Subirurungike ibiharuro.', 'raba': message}
 
-            return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'total_amount': message_3, 'pl_amount': message_4, 'date': date_updated}, safe=False)
+            return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'total_amount': message_3, 'pl_amount': message_4, 'date': date_updated, 'childred_supported': message_5, 'support_name': message_6}, safe=False)
 
 
 @json_view
@@ -165,6 +177,7 @@ def by_group(request, colline=None):
     rapporteurs = PhoneModel.objects.filter(group__colline__name=colline)
     print response
     return render(request, "umuco/group_details.html", {"data": response.content, "nawenuze_group": colline.title(), 'groupe': groupe, 'rapporteurs': rapporteurs})
+
 
 @login_required
 def all_groups(request):

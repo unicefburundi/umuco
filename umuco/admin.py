@@ -7,6 +7,8 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.utils.crypto import get_random_string
 from umuco.forms import UserCreationForm
 from authtools.admin import NamedUserAdmin
+from django.db.models import Count, Sum
+from import_export.admin import ImportExportModelAdmin
 
 User = get_user_model()
 
@@ -138,28 +140,47 @@ class OrganizationAdmin(ExportMixin, admin.ModelAdmin):
     search_fields = ('name',  'partner')
 
 
-class CathegoryAdminResource(resources.ModelResource):
-    class Meta:
-        model = Cathegory
-        fields = ('name',   'code')
+@admin.register(KindOfSupport)
+class KindOfSupportAdmin(ImportExportModelAdmin):
+    pass
 
 
-class CathegoryAdmin(ExportMixin, admin.ModelAdmin):
-    resource_class = CathegoryAdminResource
-    list_display = ('name',  'code')
-    search_fields = ('name',  'code')
+@admin.register(SupportReport)
+class SupportReportAdmin(ImportExportModelAdmin):
+    pass
 
 
-class ReportServicesAdminResource(resources.ModelResource):
-    class Meta:
-        model = ReportServices
-        fields = ('service',   'date_updated', 'beneficiary')
+@admin.register(ReportSummary)
+class ReportSummaryAdmin(admin.ModelAdmin):
+    change_list_template = 'admin/report_summary_change_list.html'
+    date_hierarchy = 'date_updated'
 
-
-class ReportServicesAdmin(ExportMixin, admin.ModelAdmin):
-    resource_class = ReportServicesAdminResource
-    list_display = ('service',   'date_updated', 'beneficiary')
-    search_fields = ('service',)
+    def changelist_view(self, request, extra_context=None):
+        response = super(ReportSummaryAdmin, self).changelist_view(
+            request,
+            extra_context=extra_context,
+        )
+        try:
+            qs = response.context_data['cl'].queryset
+        except (AttributeError, KeyError):
+            return response
+        metrics = {
+            'total': Count('id'),
+            'total_sold': Sum('sold_lamps'),
+            'total_recharged': Sum('recharged_lamps'),
+            'total_amount': Sum('total_amount'),
+            'total_pl': Sum('pl_amount'),
+        }
+        response.context_data['summary'] = list(
+            qs
+            .values('group__colline__name')
+            .annotate(**metrics)
+            .order_by('-total_sold')
+        )
+        response.context_data['summary_total'] = dict(
+            qs.aggregate(**metrics)
+        )
+        return response
 
 
 admin.site.register(Report, ReportAdmin)
@@ -168,5 +189,3 @@ admin.site.register(PhoneModel, PhoneModelAdmin)
 admin.site.register(Reception, ReceptionAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(Temporaly)
-admin.site.register(Cathegory, CathegoryAdmin)
-admin.site.register(ReportServices, ReportServicesAdmin)

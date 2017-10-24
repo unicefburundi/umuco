@@ -54,21 +54,24 @@ class Reception(models.Model):
         return u'%s %s %s' % (self.group, self.lamps_received, self.date_received)
 
 
-class Cathegory(models.Model):
-    code = models.PositiveIntegerField(unique=True)
-    name = models.CharField(max_length=255, verbose_name=_('Type of service'))
+class KindOfSupport(models.Model):
+    support_name = models.CharField(max_length=50, verbose_name=_('Type of service'), blank=True)
 
     def __unicode__(self):
         return u'%s - %s' % (self.name, self.code)
 
+    class Meta:
+        verbose_name_plural = 'Kinds of support'
 
-class ReportServices(models.Model):
-    service = models.ForeignKey(Cathegory)
-    date_updated = models.DateField(verbose_name=_('Date of report'), default=timezone.now)
-    beneficiary = models.PositiveIntegerField(default=0)
+
+class SupportReport(models.Model):
+    kind_of_support = models.ForeignKey(KindOfSupport, blank=True, null=True)
+    childred_supported = models.PositiveIntegerField(verbose_name=_('Children supported'), default=0)
+    report = models.ForeignKey(Report)
+    comment = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
-        return u'%s - %s' % (self.service, self.beneficiary)
+        return u'{0} - {1}'.format(self.group, self.childred_supported)
 
 
 class Organization(Group):
@@ -89,3 +92,10 @@ class Temporaly(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.colline
+
+
+class ReportSummary(Report):
+    class Meta:
+        proxy = True
+        verbose_name = 'Report Summary'
+        verbose_name_plural = 'Reports Summaries'
