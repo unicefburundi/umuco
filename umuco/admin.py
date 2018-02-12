@@ -140,14 +140,22 @@ class OrganizationAdmin(ExportMixin, admin.ModelAdmin):
     search_fields = ('name',  'partner')
 
 
-@admin.register(KindOfSupport)
-class KindOfSupportAdmin(ImportExportModelAdmin):
-    pass
-
 
 @admin.register(SupportReport)
 class SupportReportAdmin(ImportExportModelAdmin):
-    pass
+    list_display = ['group', 'when', 'support_name', 'childred_supported', ]
+
+    def support_name(self, obj):
+        return obj.get_kind_of_support_display()
+
+    support_name.short_description = 'Support'
+
+    def group(self, obj):
+        return obj.report.group
+
+    def when(self, obj):
+        return obj.report.date_updated
+
 
 
 @admin.register(ReportSummary)

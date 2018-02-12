@@ -54,24 +54,14 @@ class Reception(models.Model):
         return u'%s %s %s' % (self.group, self.lamps_received, self.date_received)
 
 
-class KindOfSupport(models.Model):
-    support_name = models.CharField(max_length=50, verbose_name=_('Type of service'), blank=True)
-
-    def __unicode__(self):
-        return u'%s - %s' % (self.name, self.code)
-
-    class Meta:
-        verbose_name_plural = 'Kinds of support'
-
-
 class SupportReport(models.Model):
-    kind_of_support = models.ForeignKey(KindOfSupport, blank=True, null=True)
+    kind_of_support = models.CharField(max_length=1, choices=settings.SERVICES, verbose_name=_('Type of service'), default="A")
     childred_supported = models.PositiveIntegerField(verbose_name=_('Children supported'), default=0)
     report = models.ForeignKey(Report)
     comment = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
-        return u'{0} - {1}'.format(self.group, self.childred_supported)
+        return u'{0} - {1}'.format(self.kind_of_support, self.childred_supported)
 
 
 class Organization(Group):
@@ -85,7 +75,7 @@ class Organization(Group):
 class Temporaly(models.Model):
     text = models.CharField(max_length=500)
     colline = models.OneToOneField(Colline, help_text=_('Required'))
-    day_of_meeting = models.PositiveIntegerField(verbose_name=_("Day of reporting"), help_text=_('Number. Ex : For Monday put 1, Tuesday put 2, ...'), null=True, validators=[MaxValueValidator(7),])
+    day_of_meeting = models.PositiveIntegerField(verbose_name=_("Day of reporting"), help_text=_('Number. Ex : For Monday put 1, Tuesday put 2, ...'), null=True, validators=[MaxValueValidator(7), ])
     lamps_in_stock = models.PositiveIntegerField(default=0, null=True, blank=True)
     cost_lamp = models.PositiveIntegerField(default=8000, null=True, blank=True)
     cost_recharge = models.PositiveIntegerField(default=300, null=True, blank=True)
