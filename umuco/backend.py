@@ -4,6 +4,19 @@ import re
 from django.conf import settings
 from recorders import *
 import urllib
+import json
+
+
+def byteify(input):
+    if isinstance(input, dict):
+        return {byteify(key): byteify(value)
+                for key, value in input.iteritems()}
+    elif isinstance(input, list):
+        return [byteify(element) for element in input]
+    elif isinstance(input, unicode):
+        return input.encode('utf-8')
+    else:
+        return input
 
 
 def identify_message(args):
@@ -42,21 +55,17 @@ def handel_rapidpro_request(request):
     # We will put all data sent by RapidPro in this variable
     incoming_data = {}
 
-    # Two couples of variable/value are separated by &
-    # Let's put couples of variable/value in a list called 'list_of_data'
-    list_of_data = request.body.split("&")
-
     # Let's put all the incoming data in the dictionary 'incoming_data'
-    for couple in list_of_data:
-        incoming_data[couple.split("=")[0]] = couple.split("=")[1]
+    incoming_data = byteify(json.loads(request.body))
 
-    # Let's assume that the incoming data is valide
+    # Let's assume that the incoming data is valid
     incoming_data['valide'] = True
     incoming_data['info'] = "The default information."
 
-    # Because RapidPro sends the contact phone number by replacing "+" by "%2B"
-    # let's rewrite the phone number in a right way.
-    incoming_data['phone'] = incoming_data['phone'].replace("%2B","+")
+    # Because RapidPro sends the contact phone number in the format "tel:+12345678925"
+    # let's get it from incomming_data
+    incoming_data['phone'] = incoming_data['contact']['urn'].replace("tel:", "")
+    incoming_data['text'] = response_data['results']['rapport1']['input']
 
     # Let's instantiate the variable this function will return
     response = {}

@@ -19,6 +19,7 @@ class CommuneResource(resources.ModelResource):
         model = Commune
         fields = ('name', 'code', 'province__name')
 
+
 class CommuneAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = CommuneResource
     search_fields = ('name', 'code')
@@ -31,6 +32,7 @@ class CollineResource(resources.ModelResource):
         model = Colline
         fields = ('name', 'code', 'commune__name', 'commune__province__name')
 
+
 class CollineAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = CollineResource
     search_fields = ('name', 'code')
@@ -40,10 +42,12 @@ class CollineAdmin(ExportMixin, admin.ModelAdmin):
     def province(self, obj):
         return obj.commune.province.name
 
+
 class ProfileUserResource(resources.ModelResource):
     class Meta:
         model = ProfileUser
         fields = ('user', 'telephone')
+
 
 class ProfileUserAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = ProfileUserResource

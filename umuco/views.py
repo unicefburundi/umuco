@@ -28,9 +28,25 @@ import re
 User = get_user_model()
 
 
+import json
+
+
+def byteify(input):
+    if isinstance(input, dict):
+        return {byteify(key): byteify(value)
+                for key, value in input.iteritems()}
+    elif isinstance(input, list):
+        return [byteify(element) for element in input]
+    elif isinstance(input, unicode):
+        return input.encode('utf-8')
+    else:
+        return input
+
+
 def landing(request):
     form = AuthenticationForm()
     return render(request, "landing_page.html", {'form': form})
+
 
 @login_required
 @csrf_exempt
@@ -59,14 +75,19 @@ def analytics(request):
 @csrf_exempt
 @json_view
 def save_report(request):
-    response_data = split_message(request)
+    response_data = byteify(json.loads(request.body))
+    # Because RapidPro sends the contact phone number in the format "tel:+12345678925"
+    # let's get it from incomming_data
+    response_data['phone'] = response_data['contact']['urn'].replace("tel:", "")
+    response_data['text'] = response_data['results']['rapport1']['input']
     if PhoneModel.objects.filter(number=response_data['phone']).count() == 0:
         return {'Ok': "Pas", 'info_to_contact': "Ntimwanditse. Banza mwiyandikishe."}
     if response_data['text']:
         if response_data['text'] != "":
             message = response_data['text'].split("#")
-
-            if re.match(r'^\d{6}\#\d+\#\d+\#\d+\#\d+\#\d+\#[a-zA-Z]+$', response_data['text'], re.I):
+            matches = re.match(r'^(\d{6}\#\d+\#\d+\#\d+\#\d+)(\#\d+\#[a-zA-Z]+)*$', response_data['text'], re.I)
+            if matches:
+                # import ipdb; ipdb.set_trace()
                 group = PhoneModel.objects.get(number=response_data['phone']).group
                 date_updated = validate_date(message[0])
 
@@ -101,14 +122,16 @@ def save_report(request):
                     message_4 = int(message[4])
                 except Exception:
                     return {'Ok': "False", 'info_to_contact': 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message[4]}
-                try:
-                    message_5 = int(message[5])
-                except Exception:
-                    return {'Ok': "False", 'info_to_contact': 'Igitigiri c abana mwafashije sico.', 'error': message[4]}
-                try:
-                    message_6 = str(message[6])
-                except Exception:
-                    return {'Ok': "False", 'info_to_contact': 'Urwo rudome ntirubaho', 'error': message[4]}
+                message_5, message_6 = None, None
+                if matches.group(2):
+                    try:
+                        message_5 = int(message[5])
+                    except Exception:
+                        return {'Ok': "False", 'info_to_contact': 'Igitigiri c abana mwafashije sico.', 'error': message[5]}
+                    try:
+                        message_6 = str(message[6])
+                    except Exception:
+                        return {'Ok': "False", 'info_to_contact': 'Urwo rudome ntirubaho', 'error': message[6]}
                 else:
                     if not isinstance(message_4, (int)) or message_4 < 0 :
                         return {'Ok': "False", 'info_to_contact': 'Amafaranga yaziganijwe ntiyanditse neza. Subira urungike raporo neza.', 'error': message_4}
@@ -134,19 +157,15 @@ def save_report(request):
                     repport.total_amount = message_3
                     repport.pl_amount = message_4
                     repport.save()
-                support, sp_created = SupportReport.objects.get_or_create(report=repport, kind_of_support__support_name=message[6])
-                support.childred_supported = message[5]
-                support.save()
+                if matches.group(2):
+                    support, sp_created = SupportReport.objects.get_or_create(report=repport, kind_of_support__support_name=message[6])
+                    support.childred_supported = message[5]
+                    support.save()
             if len(message) == 3:
                 group = PhoneModel.objects.get(number=response_data['phone']).group.colline
                 print group
                 date_updated = validate_date(message[0])
                 return JsonResponse({'Ok': "True", 'group': group.name, "date": date_updated}, safe=False)
-
-            if len(message) < 7:
-                return {'Ok': "False", 'info_to_contact': 'Mwatanze ibiharuro bike. Subira murungike mesaje yanditse neza.', 'raba': message}
-            if len(message) > 7:
-                return {'Ok': "False", 'info_to_contact': 'Mwatanze ibitigiri vyinshi. Subirurungike ibiharuro.', 'raba': message}
 
             return JsonResponse({'Ok': "True", 'sold_lamps': message_1, 'recharged_lamps': message_2, 'total_amount': message_3, 'pl_amount': message_4, 'date': date_updated, 'childred_supported': message_5, 'support_name': message_6}, safe=False)
 
@@ -238,8 +257,11 @@ class NaweNuzeDetail(DetailView):
 @csrf_exempt
 @json_view
 def add_lamps(request):
-    """Add reception of lamps"""
-    response_data = split_message(request)
+    response_data = byteify(json.loads(request.body))
+    # Because RapidPro sends the contact phone number in the format "tel:+12345678925"
+    # let's get it from incomming_data
+    response_data['phone'] = response_data['contact']['urn'].replace("tel:", "")
+    response_data['text'] = response_data['results']['rapport1']['input']
     if response_data['text'] != "":
         message = response_data['text'].split("#")
         response_data['message'] = message
