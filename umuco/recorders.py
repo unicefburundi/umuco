@@ -166,6 +166,7 @@ def record_reporter(args):
         args['Ok'] = False
         args['valide'] = False
         args['info_to_contact'] = "Umutumba {0} muri komine {1} ntubaho.".format(the_colline, the_commune)
+    return args
 
 
 def group_confirm(args):
@@ -185,11 +186,16 @@ def group_confirm(args):
     if not temp:
         return {'Ok': False, 'info_to_contact': 'Mwarungitse inimero itandukanye niyomwarungitse ubwambere.', 'valide': False}
     else:
+        group = get_or_none(NawenuzeGroup, colline=temp.colline)
         the_colline = temp.colline
         the_commune = temp.colline.commune
         the_meetting_day = temp.day_of_meeting
-        the_concerned_group, created = NawenuzeGroup.objects.get_or_create(colline=temp.colline, day_of_meeting=temp.day_of_meeting, lamps_in_stock=temp.lamps_in_stock, cost_lamp=temp.cost_lamp, cost_recharge=temp.cost_recharge)
-        the_concerned_group.save()
+        if not group:
+            group, created = NawenuzeGroup.objects.get_or_create(colline=temp.colline, day_of_meeting=temp.day_of_meeting, lamps_in_stock=temp.lamps_in_stock, cost_lamp=temp.cost_lamp, cost_recharge=temp.cost_recharge)
+            group.save()
+        else:
+            group.day_of_meeting = temp.day_of_meeting  # update the day of meeting
+            group.save()
         temp.delete()
         args['valide'] = True
         args['info_to_contact'] = "Wandikisije umugwi {0} muri komine {1} kugira muzokwame mutanga raporo kuwa {2}.".format(the_colline, the_commune, days[int(the_meetting_day)])
@@ -201,7 +207,7 @@ def group_confirm(args):
             if len(the_phone_number) == 11:
                 the_phone_number = "+"+the_phone_number
 
-            the_phone_object, created = PhoneModel.objects.get_or_create(number=the_phone_number, group=the_concerned_group)
+            the_phone_object, created = PhoneModel.objects.get_or_create(number=the_phone_number, group=group)
             numbers.append(the_phone_number)
 
         url = "https://app.rapidpro.io/api/v2/broadcasts.json"
