@@ -80,9 +80,9 @@ class NawenuzeGroupAdminResource(resources.ModelResource):
 
 class NawenuzeGroupAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = NawenuzeGroupAdminResource
-    list_display = ('id', 'colline', 'commune', 'day_of_meeting', 'lamps_in_stock', 'province', 'cost_lamp', 'cost_recharge')
+    list_display = ('id', 'province', 'commune', 'colline', 'day_of_meeting', 'lamps_in_stock', 'cost_lamp', 'cost_recharge')
     search_fields = ('colline__name', 'colline__commune__name',  'colline__commune__province__name')
-    list_filter = ('day_of_meeting',)
+    list_filter = ('day_of_meeting', 'colline__commune__province__name')
 
     def commune(self, obj):
         return obj.colline.commune
@@ -99,8 +99,9 @@ class PhoneModelAdminResource(resources.ModelResource):
 
 class PhoneModelAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = PhoneModelAdminResource
-    list_display = ('number', 'colline', 'commune')
+    list_display = ('number', 'colline', 'commune', 'is_active')
     search_fields = ('number', 'group__colline__name', 'group__colline__commune__name', )
+    list_filter = ('group__colline__commune__province__name', 'is_active')
 
     def colline(self, obj):
         return obj.group.colline
@@ -190,6 +191,14 @@ class ReportSummaryAdmin(admin.ModelAdmin):
         )
         return response
 
+
+@admin.register(AnimateurSocial)
+class AnimateurSocialAdmin(ImportExportModelAdmin):
+    list_display = ('name',  'telephone', 'groupes')
+    search_fields = ('name',  'telephone')
+
+    def groupes(self, obj):
+        return ",\n".join([p.colline.name for p in obj.groups.all()])
 
 admin.site.register(Report, ReportAdmin)
 admin.site.register(NawenuzeGroup, NawenuzeGroupAdmin)

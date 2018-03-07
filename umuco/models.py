@@ -18,9 +18,21 @@ class NawenuzeGroup(models.Model):
         return u'%s' % self.colline
 
 
+class AnimateurSocial(models.Model):
+    name = models.CharField(_('Name'), help_text=_('The name of the AS'), max_length=40)
+    # The additional attributes we wish to include.
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=_("Phone number in the format: '+999999999'. Up to 15 digits allowed."))
+    telephone = models.CharField(_('telephone'), validators=[phone_regex], blank=True, help_text=_('The telephone to contact you.'), max_length=16)
+    groups = models.ManyToManyField(NawenuzeGroup, blank=True)
+
+    def __unicode__(self):
+        return u"%s" % self.name
+
+
 class PhoneModel(models.Model):
     number = models.CharField(primary_key=True, max_length=15, verbose_name=_('phone number'), unique=True)
     group = models.ForeignKey(NawenuzeGroup, verbose_name=_('group'))
+    is_active = models.BooleanField(default=False)
 
     def __unicode__(self):
         return u'%s' % self.number
