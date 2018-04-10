@@ -49,6 +49,7 @@ def validate_date(date_text):
     else:
         return date
 
+
 def split_message(request):
     response_data = {}
     liste_data = request.body.split("&")
@@ -57,11 +58,13 @@ def split_message(request):
 
     return response_data
 
+
 def flag_report(receiver, message):
     url = "https://app.rapidpro.io/api/v2/broadcasts.json"
-    data = {"urns": ['tel:' + receiver],"text": message}
-    sending = requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data = json.dumps(data))
+    data = {"urns": ['tel:' + receiver], "text": message}
+    sending = requests.post(url, headers={'Content-type': 'application/json', 'Authorization': 'Token %s' % settings.TOKEN}, data=json.dumps(data))
     print sending.content
+
 
 def email_report_flagged(receiver, message):
     try:
@@ -71,6 +74,7 @@ def email_report_flagged(receiver, message):
         raise e
     else:
         return 'Sent'
+
 
 def get_or_none(model, *args, **kwargs):
     try:
