@@ -4,7 +4,7 @@ from umuco.models import *
 from celery.decorators import periodic_task
 import datetime
 from umuco.utils import flag_report
-
+from celery.task.schedules import crontab
 
 logger = get_task_logger(__name__)
 
