@@ -25,12 +25,12 @@
     </div>
 <ul class="grouplist" ng-show="query">
     <li ng-animate="'animate'" class="group cf" ng-repeat="item in groups | filter: query | orderBy: groupOrder:direction">
-    <a href="#/group/details/{{item.name}}">
-            <div class="info">
+    <a href="#/group/details/{{item.id}}">
+        <div class="info">
             <h2>{{item.name  }}</h2>
             <h3>{{item.location }}</h3>
         </div>
-        </a>
+    </a>
     </li>
 </ul>
 </section>

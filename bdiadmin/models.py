@@ -62,4 +62,3 @@ class Colline(models.Model):
 
     class Meta:
         ordering = ('name',)
-

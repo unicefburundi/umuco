@@ -167,9 +167,12 @@ def save_report(request):
 
 
 @json_view
-def get_reports(request, colline=None):
-    jsonresponses = get_cumulative(request=request, colline=colline)
-    return jsonresponses
+def get_reports(request, group=None):
+    if not group:
+        jsonresponses = get_cumulative(request=request, group=group)
+        return jsonresponses
+    else:
+        group, created = NawenuzeGroup.objects.get_or_create(pk=int(group))
 
 
 @login_required
@@ -186,12 +189,11 @@ def download_reports(request):
     return response
 
 
-def by_group(request, colline=None):
-    response = get_cumulative(request=request, colline=colline)
-    groupe, created = NawenuzeGroup.objects.get_or_create(colline__name=colline)
-    rapporteurs = PhoneModel.objects.filter(group__colline__name=colline)
-    print response
-    return render(request, "umuco/group_details.html", {"data": response.content, "nawenuze_group": colline.title(), 'groupe': groupe, 'rapporteurs': rapporteurs})
+def by_group(request, group=None):
+    group, created = NawenuzeGroup.objects.get_or_create(pk=int(group))
+    response = get_cumulative(request=request, group=group)
+    rapporteurs = PhoneModel.objects.filter(group=group)
+    return render(request, "umuco/group_details.html", {"data": response.content, "nawenuze_group": "{1}-{0}".format(group.colline.name.title(), group.colline.commune.name.title()), 'groupe': group, 'rapporteurs': rapporteurs})
 
 
 @login_required
@@ -199,12 +201,13 @@ def all_groups(request):
     return render(request, "umuco/group_list.html")
 
 
-def get_cumulative(request, colline=None):
+def get_cumulative(request, group=None):
+    # import ipdb; ipdb.set_trace() 
     reports = None
-    if not colline:
+    if not group:
         reports = Report.objects.values('total_amount', 'sold_lamps', 'recharged_lamps', 'date_updated', 'pl_amount').order_by('date_updated')
     else:
-        reports = Report.objects.filter(group__colline__name=colline).values('total_amount', 'sold_lamps', 'recharged_lamps', 'date_updated', 'pl_amount').order_by('date_updated')
+        reports = Report.objects.filter(group=group).values('total_amount', 'sold_lamps', 'recharged_lamps', 'date_updated', 'pl_amount').order_by('date_updated')
     if not reports:
         return JsonResponse(None, safe=False)
 
