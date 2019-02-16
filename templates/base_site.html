@@ -11,8 +11,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
       {% endblock meta %}
 
+      <!-- jQuery -->
+      <script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
+      <!-- Bootstrap -->
+      <script src="{% static 'vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
       <title>Umuco | {% block title %}Main{% endblock %}</title>
-
+      <script type="text/javascript" src="{% static 'js/angular/angular.js' %}"></script>
       {% block stylesheets %}
         <!-- Bootstrap -->
         <link href="{% static 'vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -53,9 +57,9 @@
             </div>
           {% endblock top_navigation %}
 
+          <div class="right_col" role="main">
           {% block content %}
             {% block charts %}
-            <div class="right_col" role="main">
               <div class="row" ng-app="myapp">
                 <div ng-controller="myctrl">
                   <div class="row">
@@ -79,10 +83,10 @@
                   </div>
                 </div>
               </div>
-            </div>
             {% endblock charts %}
             <!--playground-->
           {% endblock content %}
+          </div>
 
           {% block footer %}
             <footer>
@@ -93,10 +97,6 @@
       </div>
 
       {% block javascripts %}
-        <!-- jQuery -->
-        <script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
-        <!-- Bootstrap -->
-        <script src="{% static 'vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
         <!-- FastClick -->
         <script src="{% static 'vendors/fastclick/lib/fastclick.js' %}"></script>
         <!-- NProgress -->
@@ -130,6 +130,18 @@
       <!-- Custom Theme Scripts -->
       <script src="{% static 'build/js/custom.js' %}"></script>
       {% block extra_javascripts %}
+      <script type="text/javascript" src="{% static "js/angular/angular.js" %}"></script>
+      <script type="text/javascript" src="{% static "js/angular/angular-ui.min.js" %}"></script>
+      <script type="text/javascript" src="{% static "js/moment/moment.js" %}"></script>
+      <script type="text/javascript" src="{% static "js/moment/moment-timezone.js" %}"></script>
+      <script type="text/javascript" src="{% static "js/highchart/highcharts.js" %}"></script>
+      <script type="text/javascript" src="{% static "js/highchart/exporting.js" %}"></script>
+      <script type="text/javascript" src="{% static "js/bootstrap/bootstrap-select.js" %}"></script>
+       <!-- Pivotable js -->
+      <script type="text/javascript" src=" {% static "js/pivot/pivot.min.js" %}"></script>
+      <!--Highchart-ng-->
+      <script type="text/javascript" src=" {% static "js/highchart/highcharts-ng.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/app.js" %}"></script>
       {% endblock extra_javascripts %}
     {% endblock body %}
   </body>
