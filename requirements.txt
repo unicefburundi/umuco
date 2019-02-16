@@ -1,4 +1,4 @@
-Django==1.8.4
+django>=1.11.19
 Markdown==2.5.2
 MarkupSafe==0.23
 Unidecode==0.04.17
@@ -9,7 +9,7 @@ django-jsonview==0.4.3
 djangorestframework==3.0.5
 python-slugify==0.0.9
 pytz==2014.10
-requests==2.5.1
+requests>=2.20.0
 six>=1.10.0
 wsgiref==0.1.2
 xlwt==0.7.5

@@ -1,6 +1,6 @@
-{% extends "home.html" %}
+{% extends "base_site.html" %}
 {% load i18n %}
-{% block contents %}
+{% block content %}
     <div class="container">
         <h2>{% trans "Create Report" %}</h2>
         <form method="post">{% csrf_token %}
@@ -39,4 +39,4 @@
         </div>
         </form>
     </div>
-{% endblock contents %}
+{% endblock content %}

@@ -2,13 +2,9 @@
 {% load i18n %}
 {% load render_table from django_tables2 %}
 {% block charts %}
-<div class="container" style='background-color:#FFFFFF'>
     {% render_table statistics %}
-</div>
-
 <script>
 function totalTextFormatter(data) {
-        console.log(data);
           return '<strong class="text-primary" >Total</strong>';
       }
 
