@@ -1,7 +1,6 @@
 from django.conf.urls import include, patterns, url
 from umuco import views
-from umuco.api import (NawenuzeGroupDetail, NawenuzeGroupList,
-                       NawenuzeGroupReportList)
+from umuco.api import NawenuzeGroupDetail, NawenuzeGroupList, NawenuzeGroupReportList
 
 group_urls = patterns("", url(r"^$", NawenuzeGroupList.as_view(), name="group-list"))
 

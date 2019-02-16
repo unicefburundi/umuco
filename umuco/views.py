@@ -22,8 +22,12 @@ from jsonview.decorators import json_view
 from umuco.forms import *
 from umuco.models import *
 from umuco.tables import ReportTable, ReportTable2
-from umuco.utils import (ExcelResponse, email_report_flagged, split_message,
-                         validate_date)
+from umuco.utils import (
+    ExcelResponse,
+    email_report_flagged,
+    split_message,
+    validate_date,
+)
 
 User = get_user_model()
 
@@ -48,7 +52,7 @@ def landing(request):
 @csrf_exempt
 def home(request):
     form = AuthenticationForm()
-    return render(request, "muco_layout.html", {"form": form})
+    return render(request, "base_site.html", {"form": form})
 
 
 def analytics(request):
