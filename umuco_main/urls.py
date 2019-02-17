@@ -30,7 +30,7 @@ urlpatterns += i18n_patterns(
     url(r"^groups/$", login_required(all_groups), name="groups"),
     url(r"^analytics/$", login_required(analytics), name="analytics"),
     url(r"^home/$", login_required(home), name="home"),
-    url(r"^$", login_required(landing), name="landing_page"),
+    url(r"^$", landing, name="landing_page"),
     url(
         r"^create/group/$",
         login_required(NaweNuzeCreate.as_view()),
