@@ -1,8 +1,7 @@
 from bdiadmin.views import *
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-urlpatterns = patterns(
-    "",
+urlpatterns = [
     url(r"^get_commune/(?P<pk>\d+)/$", get_commune, name="get_commune"),
     url(r"^get_colline/(?P<pk>\d+)/$", get_colline, name="get_colline"),
     # Provinces
@@ -14,4 +13,4 @@ urlpatterns = patterns(
     # Collines
     url(r"^colline/$", CollineListView.as_view(), name="colline_list"),
     url(r"^colline/add/$", CollineCreateView.as_view(), name="colline_add"),
-)
+]

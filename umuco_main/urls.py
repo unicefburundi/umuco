@@ -20,20 +20,32 @@ urlpatterns = [
     ),
     url(r"^add_reception/$", add_lamps, name="add_reception"),
     url(r"^group_confirm/$", backend.group_confirmation, name="group_confirm"),
+    url(r"^explorer/", include("explorer.urls")),
 ]
 
 urlpatterns += i18n_patterns(
     url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     url(r"^accounts/", include("authtools.urls")),
     url(r"^report/", include("umuco.urls", namespace="report", app_name="umuco")),
-    url(r"^groups/$", all_groups, name="groups"),
-    url(r"^analytics/$", analytics, name="analytics"),
-    url(r"^explorer/", include("explorer.urls")),
-    url(r"^home/$", home, name="home"),
-    url(r"^$", landing, name="landing_page"),
-    url(r"^create/group/$", NaweNuzeCreate.as_view(), name="add_nawenuze"),
-    url(r"^create/number/$", PhoneModelCreate.as_view(), name="add_number"),
-    url(r"^reports/(?P<pk>\d+)$", NaweNuzeDetail.as_view(), name="reports_by_groups2"),
+    url(r"^groups/$", login_required(all_groups), name="groups"),
+    url(r"^analytics/$", login_required(analytics), name="analytics"),
+    url(r"^home/$", login_required(home), name="home"),
+    url(r"^$", login_required(landing), name="landing_page"),
+    url(
+        r"^create/group/$",
+        login_required(NaweNuzeCreate.as_view()),
+        name="add_nawenuze",
+    ),
+    url(
+        r"^create/number/$",
+        login_required(PhoneModelCreate.as_view()),
+        name="add_number",
+    ),
+    url(
+        r"^reports/(?P<pk>\d+)$",
+        login_required(NaweNuzeDetail.as_view()),
+        name="reports_by_groups2",
+    ),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # In development, static files should be served from app static directories

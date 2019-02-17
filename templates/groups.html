@@ -33,11 +33,11 @@
     <div class="col-md-3"></div>
     </div>
 
-{% endblock %}
-</div>
+{% endblock content%}
+
+{% block extra_javascripts %}
 <script src="{% static "js/angular/angular.js" %}"></script>
 <script src="{% static "js/angular/angular-resource.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/highchart/highcharts-ng.min.js"  %}"></script>
 <script src="{% static "js/script.js"  %}"></script>
-</body>
-</html>
+{% endblock extra_javascripts %}

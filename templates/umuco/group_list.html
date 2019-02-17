@@ -1,6 +1,8 @@
 {% extends "groups.html" %}
 {% load i18n %}
-{% block charts %}
+{% block ng_app %}ng-app="myApp"{% endblock ng_app%}
+{% block ng_controller %}ng-controller="ListController"{% endblock ng_controller %}
+{% block content %}
     <section>
     <div class="search">
         <h1>
@@ -34,4 +36,4 @@
     </li>
 </ul>
 </section>
-{% endblock charts %}
+{% endblock content %}

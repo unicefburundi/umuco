@@ -1,11 +1,10 @@
-from django.conf.urls import include, patterns, url
+from django.conf.urls import include, url
 from umuco import views
 from umuco.api import NawenuzeGroupDetail, NawenuzeGroupList, NawenuzeGroupReportList
 
-group_urls = patterns("", url(r"^$", NawenuzeGroupList.as_view(), name="group-list"))
+group_urls = [url(r"^$", NawenuzeGroupList.as_view(), name="group-list")]
 
-urlpatterns = patterns(
-    "",
+urlpatterns = [
     url(r"^$", views.home, name="report_home"),
     url(r"^overview/$", views.get_reports, name="get_reports"),
     url(
@@ -14,7 +13,7 @@ urlpatterns = patterns(
         name="get_groups_reports",
     ),
     url(r"^export/$", views.download_reports, name="download_reports"),
-    url(r"^group/$", include(group_urls)),
+    url(r"^group/", include(group_urls)),
     url(r"^add/group/$", views.submit_group, name="submit_group"),
     # for the api
     url(
@@ -45,4 +44,4 @@ urlpatterns = patterns(
     url(r"^list/$", views.ReportList.as_view(), name="report_list"),
     url(r"^edit/(?P<pk>\d+)$", views.ReportUpdate.as_view(), name="report_edit"),
     url(r"^delete/(?P<pk>\d+)$", views.ReportDelete.as_view(), name="report_delete"),
-)
+]

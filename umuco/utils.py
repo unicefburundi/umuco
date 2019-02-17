@@ -7,7 +7,7 @@ import requests
 
 from django.conf import settings
 from django.core.mail import EmailMessage
-from django.db.models.query import QuerySet, ValuesQuerySet
+from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from pytz import timezone
 
@@ -25,11 +25,9 @@ class ExcelResponse(HttpResponse):
         font="",
     ):
         valid_data = False
-        if isinstance(data, ValuesQuerySet):
-            data = list(data)
-        elif isinstance(data, QuerySet):
+        if isinstance(data, QuerySet):
             data = list(data.values())
-        if hasattr(data, "__getitem__"):
+        elif hasattr(data, "__getitem__"):
             if isinstance(data[0], dict):
                 if headers is None:
                     headers = data[0].keys()
@@ -37,6 +35,8 @@ class ExcelResponse(HttpResponse):
                 data.insert(0, headers)
             if hasattr(data[0], "__getitem__"):
                 valid_data = True
+        else:
+            data = list(data)
         assert valid_data is True, "ExcelResponse requires a sequence of sequences"
 
         import StringIO

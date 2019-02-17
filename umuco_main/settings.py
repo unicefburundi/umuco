@@ -61,17 +61,6 @@ MIDDLEWARE_CLASSES = (
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.core.context_processors.request",
-    "django.contrib.messages.context_processors.messages",
-)
-
 ROOT_URLCONF = "umuco_main.urls"
 
 WSGI_APPLICATION = "umuco_main.wsgi.application"
@@ -114,7 +103,26 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_ROOT = BASE_DIR + "/media/"
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, "templates"),)
+
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.debug",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
+                "django.template.context_processors.request",
+                "django.contrib.messages.context_processors.messages",
+            ]
+        },
+    }
+]
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 # Django-authtools
@@ -186,7 +194,8 @@ EXPLORER_SCHEMA_EXCLUDE_TABLE_PREFIXES = (
 EXPLORER_SCHEMA_INCLUDE_TABLE_PREFIXES = ("umuco", "bdiadmin")
 
 EXPLORER_PERMISSION_CHANGE = lambda u: u.is_superuser
-
+EXPLORER_CONNECTIONS = {"Default": "default"}
+EXPLORER_DEFAULT_CONNECTION = "default"
 ##################
 # LOCAL SETTINGS #
 ##################

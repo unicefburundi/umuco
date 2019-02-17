@@ -97,6 +97,8 @@
       </div>
 
       {% block javascripts %}
+      <script type="text/javascript" src="{% static "js/angular/angular.js" %}"></script>
+      <script type="text/javascript" src="{% static "js/angular/angular-ui.min.js" %}"></script>
         <!-- FastClick -->
         <script src="{% static 'vendors/fastclick/lib/fastclick.js' %}"></script>
         <!-- NProgress -->
@@ -130,9 +132,6 @@
       <!-- Custom Theme Scripts -->
       <script src="{% static 'build/js/custom.js' %}"></script>
       {% block extra_javascripts %}
-      <script type="text/javascript" src="{% static "js/angular/angular.js" %}"></script>
-      <script type="text/javascript" src="{% static "js/angular/angular-ui.min.js" %}"></script>
-      <script type="text/javascript" src="{% static "js/moment/moment.js" %}"></script>
       <script type="text/javascript" src="{% static "js/moment/moment-timezone.js" %}"></script>
       <script type="text/javascript" src="{% static "js/highchart/highcharts.js" %}"></script>
       <script type="text/javascript" src="{% static "js/highchart/exporting.js" %}"></script>
