@@ -1,0 +1,147 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+      {% block meta %}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+      {% endblock meta %}
+
+      <!-- jQuery -->
+      <script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
+      <!-- Bootstrap -->
+      <script src="{% static 'vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+      <title>Umuco | {% block title %}Main{% endblock %}</title>
+      <script type="text/javascript" src="{% static 'js/angular/angular.js' %}"></script>
+      {% block stylesheets %}
+        <!-- Bootstrap -->
+        <link href="{% static 'vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="{% static 'vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+        <!-- NProgress -->
+        <link href="{% static 'vendors/nprogress/nprogress.css' %}" rel="stylesheet">
+        <!-- bootstrap-daterangepicker -->
+        <link href="{% static 'vendors/bootstrap-daterangepicker/daterangepicker.css' %}" rel="stylesheet">
+        <!-- iCheck -->
+        <link href="{% static 'vendors/iCheck/skins/flat/green.css' %}" rel="stylesheet">
+        <!-- bootstrap-progressbar -->
+        <link href="{% static 'vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css' %}" rel="stylesheet">
+        <!-- JQVMap -->
+        <link href="{% static 'vendors/jqvmap/dist/jqvmap.min.css' %}" rel="stylesheet"/>
+      {% endblock stylesheets %}
+      <!-- Custom Theme Style -->
+      <link href="{% static 'build/css/custom.css' %}" rel="stylesheet">
+      {% block extra_stylesheets %}
+      {% endblock extra_stylesheets %}
+    {% endblock head %}
+  </head>
+
+  <body class="{% block body_class %}nav-md {% endblock body_class %}" {% block ng_app %}{% endblock ng_app%}>
+    {% block body %}
+      <div class="container body" {% block ng_controller %}{% endblock ng_controller %}>
+        <div class="main_container">
+
+          {% block sidebar %}
+            <div class="col-md-3 left_col {% block sidebar_class %} {% endblock sidebar_class %}">
+              {% include "umuco/sidebar.html" %}
+            </div>
+          {% endblock sidebar %}
+
+          {% block top_navigation %}
+            <div class="top_nav">
+              {% include "umuco/top_navigation.html" %}
+            </div>
+          {% endblock top_navigation %}
+
+          <div class="right_col" role="main">
+          {% block content %}
+            {% block charts %}
+              <div class="row" ng-app="myapp">
+                <div ng-controller="myctrl">
+                  <div class="row">
+                    <div class="row">
+                      <div class="col-md-11 col-sm-11 ">
+                        <highchart id="chart1" config="chartConfig1" ></highchart>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-11 col-sm-11 ">
+                        <highchart id="chart3" config="chartConfig3" ></highchart>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-11 col-sm-11 ">
+                        <highchart id="chart2" config="chartConfig2" ></highchart>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endblock charts %}
+            <!--playground-->
+          {% endblock content %}
+          </div>
+
+          {% block footer %}
+            <footer>
+              {% include "umuco/footer.html" %}
+            </footer>
+          {% endblock footer %}
+        </div>
+      </div>
+
+      {% block javascripts %}
+      <script type="text/javascript" src="{% static "js/angular/angular.js" %}"></script>
+      <script type="text/javascript" src="{% static "js/angular/angular-ui.min.js" %}"></script>
+        <!-- FastClick -->
+        <script src="{% static 'vendors/fastclick/lib/fastclick.js' %}"></script>
+        <!-- NProgress -->
+        <script src="{% static 'vendors/nprogress/nprogress.js' %}"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="{% static 'vendors/bootstrap-progressbar/bootstrap-progressbar.min.js' %}"></script>
+        <!-- iCheck -->
+        <script src="{% static 'vendors/iCheck/icheck.min.js' %}"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="{% static 'vendors/moment/min/moment.min.js' %}"></script>
+        <script src="{% static 'vendors/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+        <!-- bootstrap-wysiwyg -->
+        <script src="{% static 'vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js' %}"></script>
+        <script src="{% static 'vendors/jquery.hotkeys/jquery.hotkeys.js' %}"></script>
+        <script src="{% static 'vendors/google-code-prettify/src/prettify.js' %}"></script>
+        <!-- jQuery Tags Input -->
+        <script src="{% static 'vendors/jquery.tagsinput/src/jquery.tagsinput.js' %}"></script>
+        <!-- Switchery -->
+        <script src="{% static 'vendors/switchery/dist/switchery.min.js' %}"></script>
+        <!-- Select2 -->
+        <script src="{% static 'vendors/select2/dist/js/select2.full.min.js' %}"></script>
+        <!-- Parsley -->
+        <script src="{% static 'vendors/parsleyjs/dist/parsley.min.js' %}"></script>
+        <!-- Autosize -->
+        <script src="{% static 'vendors/autosize/dist/autosize.min.js' %}"></script>
+        <!-- jQuery autocomplete -->
+        <script src="{% static 'vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js' %}"></script>
+        <!-- starrr -->
+        <script src="{% static 'vendors/starrr/dist/starrr.js' %}"></script>
+      {% endblock %}
+      <!-- Custom Theme Scripts -->
+      <script src="{% static 'build/js/custom.js' %}"></script>
+      {% block extra_javascripts %}
+      <script type="text/javascript" src="{% static "js/moment/moment-timezone.js" %}"></script>
+      <script type="text/javascript" src="{% static "js/highchart/highcharts.js" %}"></script>
+      <script type="text/javascript" src="{% static "js/highchart/exporting.js" %}"></script>
+      <script type="text/javascript" src="{% static "js/bootstrap/bootstrap-select.js" %}"></script>
+       <!-- Pivotable js -->
+      <script type="text/javascript" src=" {% static "js/pivot/pivot.min.js" %}"></script>
+      <!--Highchart-ng-->
+      <script type="text/javascript" src=" {% static "js/highchart/highcharts-ng.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/app.js" %}"></script>
+      {% endblock extra_javascripts %}
+    {% endblock body %}
+  </body>
+</html>

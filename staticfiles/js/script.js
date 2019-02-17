@@ -18,7 +18,6 @@ $(document).ready(function(){
                 url: request_url,
                 success: function(data){
                     $('select[name=districts]').val(''); // remove the value from the input
-                    console.log(data); // log the returned json to the console
                     $.each(data[0], function(key, value){
                         $('select[name=districts]').append('<option value="' + key + '">' + value +'</option>');
                     });

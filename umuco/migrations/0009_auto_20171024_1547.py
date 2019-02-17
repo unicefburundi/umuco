@@ -1,18 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('umuco', '0008_reportsummary'),
-    ]
+    dependencies = [("umuco", "0008_reportsummary")]
 
-    operations = [
-        migrations.RenameModel(
-            old_name='Cathegory',
-            new_name='Category',
-        ),
-    ]
+    operations = [migrations.RenameModel(old_name="Cathegory", new_name="Category")]

@@ -1,6 +1,6 @@
-{% extends "home.html" %}
+{% extends "base_site.html" %}
 {% load i18n %}
-{% block contents %}
+{% block content %}
     <div class="container">
         <h1>{% trans "Reports" %}</h1>
         <div class="list-group">
@@ -10,4 +10,4 @@
         </div>
         <a href="/">{% trans "New" %}</a>
     </div>
-{% endblock contents %}
+{% endblock content %}

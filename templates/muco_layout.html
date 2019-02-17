@@ -112,7 +112,7 @@
              {% if user.is_authenticated %}
              <li><a href="{% url 'logout' %}?next=/" role="button" data-toggle="modal">{% trans "Logout" %}</a></li>
              {% else %}
-             <li><a href="#loginModal" role="button" data-toggle="modal">{% trans "Login" %}</a></li>
+             <li><a href="{% url "login" %}" >{% trans "Login" %}</a></li>
              {% endif %}
              <li><a href="#aboutModal" role="button" data-toggle="modal">{% trans "About" %}</a></li>
            </ul>
@@ -123,6 +123,8 @@
      {% if user.is_authenticated %}
      <!--main-->
      <div class="container" id="main">
+      {% block content %}
+        
       {% block charts %}
       <div class="row" ng-app="myapp">
         <div ng-controller="myctrl">
@@ -150,6 +152,7 @@
     </div><!--row-->
     {% endblock charts %}
     <!--playground-->
+  {% endblock content %}
 
     <br>
 

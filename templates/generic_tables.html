@@ -1,26 +1,7 @@
-{% extends "muco_layout.html" %}
+{% extends "base_site.html" %}
 {% load i18n %}
 {% load staticfiles  %}
-    <script type="text/javascript" src="{% static 'js/libs/jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/libs/jquery-ui.min.js' %}"></script>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap-table.min.css' %}">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="{% static 'js/bootstrap-table/bootstrap-table.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap-table/extensions/export/tableExport.js' %}"></script>
-    <script src="{% static 'js/bootstrap-table/extensions/export/jquery.base64.js' %}"></script>
-    <script src="{% static 'js/bootstrap-table/extensions/export/bootstrap-table-export.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
-{% block javascripts %}
-    <script type="text/javascript" src="{% static 'js/jquery/jquery-ui.min.js' %}"></script>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap-table.min.css' %}">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="{% static 'js/bootstrap-table/bootstrap-table.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap-table/extensions/export/tableExport.js' %}"></script>
-    <script src="{% static 'js/bootstrap-table/extensions/export/jquery.base64.js' %}"></script>
-    <script src="{% static 'js/bootstrap-table/extensions/export/bootstrap-table-export.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
-{% endblock javascripts %}
+{% block extra_stylesheets %}
+{% endblock extra_stylesheets %}
+{% block extra_javascripts %}
+{% endblock extra_javascripts %}

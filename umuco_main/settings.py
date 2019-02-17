@@ -10,91 +10,79 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 from django.core.urlresolvers import reverse_lazy
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 from django.utils.translation import ugettext_lazy as _
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'yz@q%2pw2s%#v48)9#5r=za$zv!ho3v^wt0u--wws)3o*+*+n)'
+SECRET_KEY = "yz@q%2pw2s%#v48)9#5r=za$zv!ho3v^wt0u--wws)3o*+*+n)"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.humanize',
-    'rest_framework',
-    'django_tables2',
-    'explorer',
-    'djcelery',
-    'import_export',
-    'umuco',
-    'authtools',
-    'bdiadmin',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.humanize",
+    "rest_framework",
+    "django_tables2",
+    "explorer",
+    "djcelery",
+    "import_export",
+    "umuco",
+    "authtools",
+    "bdiadmin",
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.core.context_processors.request',
-    'django.contrib.messages.context_processors.messages',
-)
+ROOT_URLCONF = "umuco_main.urls"
 
-ROOT_URLCONF = 'umuco_main.urls'
-
-WSGI_APPLICATION = 'umuco_main.wsgi.application'
+WSGI_APPLICATION = "umuco_main.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGES = (
-    ('en', _('English')),
-    ('fr', _('French')),
-)
-LANGUAGE_CODE = 'en-uk'
+LANGUAGES = (("en", _("English")), ("fr", _("French")))
+LANGUAGE_CODE = "en-uk"
 
-TIME_ZONE = 'Africa/Bujumbura'
+TIME_ZONE = "Africa/Bujumbura"
 
 USE_I18N = True
 
@@ -102,50 +90,61 @@ USE_L10N = True
 
 USE_TZ = True
 
-KNOWN_PREFIXES = {
-    'RG':'PHONE_REGISTRATION',
-}
+KNOWN_PREFIXES = {"RG": "PHONE_REGISTRATION"}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'staticfiles'),
-)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "staticfiles"),)
 
-STATIC_ROOT =  os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-MEDIA_ROOT = BASE_DIR + '/media/'
+MEDIA_ROOT = BASE_DIR + "/media/"
 
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, "templates"),
-)
 
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
-)
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.debug",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
+                "django.template.context_processors.request",
+                "django.contrib.messages.context_processors.messages",
+            ]
+        },
+    }
+]
+
+LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 # Django-authtools
-AUTH_USER_MODEL = 'authtools.User'
+AUTH_USER_MODEL = "authtools.User"
 
 # CELERY STUFF
-BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = TIME_ZONE
-PASSWORD = '12ab'
-CELERY_RESULT_BACKEND='djcelery.backends.cache:CacheBackend'
+PASSWORD = "12ab"
+CELERY_RESULT_BACKEND = "djcelery.backends.cache:CacheBackend"
 
-INTERNAL_IPS = '127.0.0.1'
+INTERNAL_IPS = "127.0.0.1"
 
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = "smtp.gmail.com"
 
-EMAIL_HOST_USER = 'youremail@gmail.com'
+EMAIL_HOST_USER = "youremail@gmail.com"
 
-EMAIL_HOST_PASSWORD = 'abcdefghijklmnopqr'
+EMAIL_HOST_PASSWORD = "abcdefghijklmnopqr"
 
 EMAIL_PORT = 587
 
@@ -155,25 +154,25 @@ SITE_ID = 1
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-#-----------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
 # Login / Logout
-#-----------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
 LOGIN_URL = reverse_lazy("login")
 LOGOUT_URL = reverse_lazy("logout")
 LOGIN_REDIRECT_URL = reverse_lazy("analytics")
 LOGOUT_REDIRECT_URL = reverse_lazy("home")
 
-TOKEN = 'rapidprotoken'
+TOKEN = "rapidprotoken"
 
 SERVICES = (
     ("A", _("Medical Assistance")),
     ("B", _("School fees")),
     ("C", _("Legal Assistance")),
     ("D", _("Orphans Assistance")),
-    ("E", _("Other Assistances"))
+    ("E", _("Other Assistances")),
 )
 # store schedule in the DB:
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 
 # Django extensions
 try:
@@ -181,23 +180,22 @@ try:
 except ImportError:
     pass
 else:
-    INSTALLED_APPS = INSTALLED_APPS + ('django_extensions',)
+    INSTALLED_APPS = INSTALLED_APPS + ("django_extensions",)
 
 
 EXPLORER_SCHEMA_EXCLUDE_TABLE_PREFIXES = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.admin',
-    'auth.group'
-    )
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.admin",
+    "auth.group",
+)
 
-EXPLORER_SCHEMA_INCLUDE_TABLE_PREFIXES = (
-    'umuco',
-    'bdiadmin')
+EXPLORER_SCHEMA_INCLUDE_TABLE_PREFIXES = ("umuco", "bdiadmin")
 
 EXPLORER_PERMISSION_CHANGE = lambda u: u.is_superuser
-
+EXPLORER_CONNECTIONS = {"Default": "default"}
+EXPLORER_DEFAULT_CONNECTION = "default"
 ##################
 # LOCAL SETTINGS #
 ##################

@@ -1,42 +1,12 @@
+{% extends "base_site.html" %}
 {% load staticfiles %}
 {% load i18n %}
-<html>
-<head>
-<title> {% block title %}
-{% trans "All Nawe Nuze Groups" %}
-{% endblock title %}</title>
- <link rel="shortcut icon" type="image/x-icon" href="{% static "favicon.ico" %}">
-<link rel="stylesheet" type="text/css" href="{% static "css/bootstrap/bootstrap.css" %}">
-<link rel="stylesheet" type="text/css" href="{% static "css/umuco.css" %}">
-<link rel="stylesheet" href="{% static "css/googleplus/styles.css" %}">
-</head>
-<body ng-app="{% block ng_app %}myApp{% endblock %}">
-<div class="content" ng-controller="{% block ng_controller %}ListController{% endblock %}">
+
+{% block ng_app %}ng-app="myApp"{% endblock ng_app%}
+{% block ng_controller %}ng-controller="ListController"{% endblock ng_controller %}
 {% block content %}
-<nav class="navbar navbar-fixed-top header">
-<div class="col-md-12">
-    <div class="navbar-header">
-        <a href="{% url 'home' %}" class="navbar-brand">Umuco</a>
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
-                <i class="glyphicon glyphicon-search"></i>
-            </button>
-    </div>
-    <div class="collapse navbar-collapse" id="navbar-collapse1">
-    <ul class="nav navbar-nav navbar-left">
-     {% if user.is_staff %}
-       <li class=""><a href="/report/add/group/">{% trans "Register Group" %}</a></li>
-       {% endif %}
-      </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'home' %}"  target="_ext">{% trans "Home+" %}</a></li>
-            <li><a href="#"><i class="glyphicon glyphicon-user"></i> {% if user.is_authenticated %}
-            {{ user.name}}
-          {% endif %} </a></li>
-      </ul>
-  </div>
-    </div>
-</nav>
     <div class="row">
+       <li class=""><a href="/report/add/group/">{% trans "Register Group" %}</a></li>
         <div class="search">
             <h1>{% trans "NaweNuze Groups" %}</h1>
             <label >{% trans "search:" %} </label>
@@ -49,10 +19,10 @@
         <ul class="grouplist">
         <li class="list-group cf" ng-repeat="group in groups | filter : query | orderBy: groupOrder:direction">
         {% verbatim firstblock%}
-        <a href="/report/group/details/{{group.colline}}">
+        <a href="/report/group/details/{{group.id}}">
             <div class="list-group-item info">
                 <h2 id="id_{{group.colline}">
-                 {{group.colline}}
+                 {{group.commune}}- {{group.colline}} 
                 </h2>
             </div>
         </a>
@@ -63,11 +33,11 @@
     <div class="col-md-3"></div>
     </div>
 
-{% endblock %}
-</div>
+{% endblock content%}
+
+{% block extra_javascripts %}
 <script src="{% static "js/angular/angular.js" %}"></script>
 <script src="{% static "js/angular/angular-resource.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/highchart/highcharts-ng.min.js"  %}"></script>
 <script src="{% static "js/script.js"  %}"></script>
-</body>
-</html>
+{% endblock extra_javascripts %}

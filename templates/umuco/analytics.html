@@ -1,14 +1,10 @@
 {% extends "generic_tables.html" %}
 {% load i18n %}
 {% load render_table from django_tables2 %}
-{% block charts %}
-<div class="container" style='background-color:#FFFFFF'>
+{% block content %}
     {% render_table statistics %}
-</div>
-
 <script>
 function totalTextFormatter(data) {
-        console.log(data);
           return '<strong class="text-primary" >Total</strong>';
       }
 
@@ -49,4 +45,4 @@ function sumFormatter(data) {
           return '<strong>'+ (total/counter).toFixed(2) + '</strong> %';
       }
 </script>
-{% endblock charts %}
+{% endblock content %}
