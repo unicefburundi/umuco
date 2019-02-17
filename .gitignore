@@ -13,3 +13,4 @@ celerybe*
 *.sql
 *.pot
 *.dot
+gunicorn_start
